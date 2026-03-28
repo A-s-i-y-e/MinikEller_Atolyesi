@@ -34,6 +34,10 @@ from ui import DrawingUI
 from gesture_icons import draw_active_gesture_display
 from menu import MainMenu
 from game import BalloonGame
+from ui_engine import PointerParticleSystem
+
+
+# -----------------------------------------------------------------------
 
 
 # -----------------------------------------------------------------------
@@ -92,13 +96,15 @@ def main():
     canvas   = DrawingCanvas(w, h)
     ui       = DrawingUI(w, h)
     menu     = MainMenu(w, h)
-    game     = None # Oyun her basladiginda sifirlanacak
+    game     = None 
+    magic_vfx = PointerParticleSystem(max_particles=150)
 
     # Durum değişkenleri (Çizim Modu)
     msg_text   = ""
     msg_expire = 0.0
     last_color_gesture_time = 0.0   
     COLOR_CHANGE_COOLDOWN = 1.2     
+    last_magic_toggle_time = 0.0
 
     cv2.namedWindow(WINDOW_TITLE, cv2.WINDOW_NORMAL)
     cv2.resizeWindow(WINDOW_TITLE, w, h)
@@ -257,6 +263,15 @@ def main():
                             ui.set_tool(selected_tool)
                             canvas.reset_stroke() # Tüm çizgileri kes
 
+                    # Sihirli Mod (Rainbow) Hover
+                    if ui.check_magic_hover(h_dict['index_tip']):
+                        if now - last_magic_toggle_time > 1.0:
+                            canvas.toggle_magic_mode()
+                            ui.magic_active = canvas.magic_mode
+                            last_magic_toggle_time = now
+                            msg_text = "SIHIRLI MOD: " + ("ACIK" if canvas.magic_mode else "KAPALI")
+                            msg_expire = now + MSG_DURATION
+
             # --- Çizim / Silgi / Damga Uygulama ---
             menu_btn_pressed = False
             next_btn_pressed = False
@@ -282,6 +297,10 @@ def main():
                         canvas.set_color(ui.get_active_color())
                         canvas.set_brush_size(ui.brush_size)
                         
+                        # Add VFX particles
+                        p_color = canvas._get_magic_color() if canvas.magic_mode else ui.get_active_color()
+                        magic_vfx.add_particle(tip_x, tip_y, p_color)
+
                         if ui.active_tool == 'draw':
                             if current_state == 'template':
                                 fill_mask = template_mgr.get_fill_mask(template_mgr.active_template)
@@ -329,6 +348,9 @@ def main():
                 frame = template_mgr.draw_template(frame, template_mgr.active_template)
 
             frame = canvas.overlay(frame)
+            
+            # --- VFX Ekle ---
+            magic_vfx.update_and_draw(frame)
 
             # --- UI Çiz ---
             ui.brush_size = canvas.brush_size

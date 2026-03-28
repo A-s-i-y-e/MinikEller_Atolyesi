@@ -65,7 +65,7 @@ class DrawingUI:
                 cv2.circle(frame, (cx, cy), 20, (200, 200, 200), 2, cv2.LINE_AA)
 
         # 2. Left Toolbar Glass Bar
-        toolbar_h = len(self.tools) * 100 + 40
+        toolbar_h = len(self.tools) * 100 + 140 # Increased height for magic button
         draw_glass_panel(frame, 20, 100, 120, toolbar_h, 20, color=(50, 50, 150), alpha=0.2)
         
         x_base, y_base = 30, 120
@@ -106,6 +106,29 @@ class DrawingUI:
                 cv2.circle(frame, (ic_x, ic_y+5), 5, (0, 255, 0), -1, cv2.LINE_AA)
             
             y_base += gap_y
+
+        # 3. Magic Rainbow Button (At the bottom of toolbar)
+        mbx, mby = 30, y_base
+        mbw, mbh = 100, 80
+        magic_on = getattr(self, 'magic_active', False)
+        
+        if magic_on:
+            draw_glowing_rect(frame, mbx, mby, mbw, mbh, 15, color=(255, 100, 255), thickness=3, glow_radius=15)
+        
+        _draw_rounded_rect(frame, mbx, mby, mbw, mbh, 15, (40, 40, 40), -1)
+        _draw_rounded_rect(frame, mbx, mby, mbw, mbh, 15, (255, 255, 255), 2)
+        
+        draw_neon_text(frame, "SIHIR", mbx + 20, mby + 35, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 50, 255), 1)
+        cv2.putText(frame, "MODU", (mbx + 26, mby + 55), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 1, cv2.LINE_AA)
+
+    def check_magic_hover(self, pt):
+        if pt is None: return False
+        x, y = pt
+        # Find magic button Y (it depends on number of tools)
+        y_magic = 120 + len(self.tools) * 100
+        if 30 <= x <= 130 and y_magic <= y <= y_magic + 80:
+            return True
+        return False
 
     def check_color_hover(self, pt):
         if pt is None: return False

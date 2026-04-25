@@ -195,6 +195,12 @@ Uygulamanın kararlılığını ölçmek amacıyla yapılan manuel test sonuçla
 | **Gecikme (Latency)** | < 100ms | ✅ Başarılı | MediaPipe Tasks API ile gecikme minimize edildi. |
 | **Çoklu El Tespiti** | 2 Elin aynı anda takibi | ✅ Başarılı | İşlemci yükü artsa da takip stabil kaldı. |
 
+### 5.3. Hata Ayıklama ve Geliştirmeler (Bug Fixes)
+Kullanıcı testleri sırasında tespit edilen bazı kritik entegrasyon hataları orijinal mimari korunarak çözülmüştür:
+
+*   **Elma Oyununda Hibrit Kontrol:** Performans optimizasyonu amacıyla Elma oyununda (Pose Game) devre dışı bırakılan "el algılayıcı", uygulamanın navigasyon sistemini tıkamaktaydı. Kod revize edilerek el algılayıcısı bu oyunda da aktif hale getirilmiş ve oyun içerisinde hem burun hem parmak kullanımı (Hibrit Kontrol) sağlanmıştır.
+*   **Değişken Yaşam Döngüsü Çökmeleri (UnboundLocalError & NameError):** Şablon Boyama veya Serbest Çizim modlarına geçiş sırasında değişkenlerin (`nose_pos`, `tx`, `ty`) ön tanımlarının yapılmamasından kaynaklı meydana gelen anlık uygulama çökmeleri, güvenli değişken başlatma (safe initialization) yöntemiyle tamamen giderilmiştir.
+
 ---
 
 ## 6. Sonuç ve Gelecek Çalışmalar

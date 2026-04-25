@@ -147,6 +147,7 @@ def main():
             draw_neon_text(frame, welcome_msg, 450, 40, cv2.FONT_HERSHEY_DUPLEX, 0.8, (255, 100, 255), 2)
 
         # --- El Algılama / Pose Algılama ---
+        nose_pos = None
         if current_state == 'pose_game':
             if 'pose_detector' not in locals():
                 from pose_detector import PoseDetector

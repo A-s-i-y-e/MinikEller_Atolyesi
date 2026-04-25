@@ -112,12 +112,12 @@ def main():
     print("=" * 50)
     print("  Okul Öncesi El Hareketi ile Resim Çizimi")
     print("=" * 50)
-    print("  Q veya ESC → Çıkış")
-    print("  S          → Kaydet")
-    print("  C          → Temizle")
-    print("  D/E        → Çizim / Silgi")
-    print("  N/P        → Sonraki / Önceki renk")
-    print("  + / -      → Fırça büyüt / küçült")
+    print("  Q veya ESC -> Cikis")
+    print("  S          -> Kaydet")
+    print("  C          -> Temizle")
+    print("  D/E        -> Cizim / Silgi")
+    print("  N/P        -> Sonraki / Onceki renk")
+    print("  + / -      -> Firca buyut / kucult")
     print("=" * 50)
 
     while True:

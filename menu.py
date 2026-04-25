@@ -40,7 +40,22 @@ class MainMenu:
             'template': {'row': 0, 'col': 1, 'color': (255, 180, 50), 'hover_anim': 0.0, 'progress': 0.0},
             'game': {'row': 1, 'col': 0, 'color': (255, 120, 100), 'hover_anim': 0.0, 'progress': 0.0},
             'pose_game': {'row': 1, 'col': 1, 'color': (100, 255, 100), 'hover_anim': 0.0, 'progress': 0.0},
-            'emotion_game': {'row': 2, 'col': 0, 'color': (255, 255, 100), 'hover_anim': 0.0, 'progress': 0.0, 'is_centered': True}
+            'emotion_game': {
+                'row': 2, 'col': 0,
+                'color': (255, 255, 100),
+                'text': 'DUYGU AYNASI',
+                'icon_type': 'smiley',
+                'hover_anim': 0.0,
+                'progress': 0.0
+            },
+            'quit': {
+                'row': 2, 'col': 1,
+                'color': (50, 50, 255), # Kırmızımsı (BGR)
+                'text': 'KAPAT',
+                'icon_type': 'power',
+                'hover_anim': 0.0,
+                'progress': 0.0
+            }
         }
         self.last_time = time.time()
 
@@ -70,11 +85,7 @@ class MainMenu:
         selected_btn = None
         
         for key, info in self.buttons.items():
-            if info.get('is_centered'):
-                bx = (self.w - self.btn_w) // 2
-            else:
-                bx = self.start_x + info['col'] * (self.btn_w + self.gap_x)
-                
+            bx = self.start_x + info['col'] * (self.btn_w + self.gap_x)
             by = self.start_y + info['row'] * (self.btn_h + self.gap_y)
             bw, bh = self.btn_w, self.btn_h
             
@@ -96,22 +107,20 @@ class MainMenu:
 
             draw_glass_panel(frame, cbx, cby, cbw, cbh, r=30, color=info['color'], alpha=0.1 + anim*0.1)
             
-            # --- GÜVENLİ İKON ÇİZİMİ ---
+            # --- İKONU ÇİZ ---
             icon = self.icons.get(key)
             if icon is not None:
-                isize = 160
-                ix, iy = cbx + (cbw - isize)//2, cby + (cbh - isize)//2
-                
-                # Ekran sınırlarını kontrol et
-                x1, y1 = max(0, ix), max(0, iy)
-                x2, y2 = min(self.w, ix + isize), min(self.h, iy + isize)
-                
-                if x2 > x1 and y2 > y1:
-                    # İkonun ilgili kısmını kes (eğer ekrana tam sığmıyorsa)
-                    icon_part = icon[(y1-iy):(y2-iy), (x1-ix):(x2-ix)]
-                    roi = frame[y1:y2, x1:x2]
-                    # Karıştırma
-                    frame[y1:y2, x1:x2] = cv2.max(roi, icon_part)
+                # İkonu merkeze yerleştir
+                ix, iy = cbx + (cbw - 200)//2, cby + (cbh - 200)//2
+                roi = frame[iy:iy+200, ix:ix+200]
+                icon_colored = cv2.addWeighted(icon, 1.0, np.zeros_like(icon), 0, 0)
+                frame[iy:iy+200, ix:ix+200] = cv2.max(roi, icon_colored)
+            elif key == 'quit':
+                # Eğer ikon yoksa (Kapat için) elden çiz
+                isize = 100
+                cx, cy = cbx + cbw // 2, cby + cbh // 2
+                cv2.circle(frame, (cx, cy), 40, info['color'], 5, cv2.LINE_AA)
+                cv2.line(frame, (cx, cy-40), (cx, cy), info['color'], 8, cv2.LINE_AA)
 
             # İlerleme Çubuğu
             if info['progress'] > 0:

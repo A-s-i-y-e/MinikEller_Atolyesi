@@ -25,6 +25,7 @@ Kontroller:
 """
 
 import cv2
+import numpy as np
 import time
 import os
 
@@ -212,6 +213,8 @@ def main():
             elif selected == 'emotion_game':
                 current_state = 'emotion_game'
                 emotion_game_inst = EmotionGame(w, h)
+            elif selected == 'quit':
+                running = False
 
         elif current_state == 'game':
             # Oyun Ekranı İşlemleri

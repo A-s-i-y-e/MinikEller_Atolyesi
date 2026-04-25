@@ -56,6 +56,25 @@ Uygulama, **Modüler Katmanlı Mimari** kullanılarak geliştirilmiştir. Ayrıc
 ![Katmanlı Sistem Mimarisi Şeması (Layered Architecture)](images/katmanli_mimari_semasi_v3_1777135367523.png)
 ![Gerçek Ana Menü Arayüzü](images/gercek_menu.png)
 
+### 3.2. Hibrit Kontrol (Hybrid Control) Veri Akış Diyagramı
+Son yapılan güncellemelerle birlikte uygulamaya entegre edilen eşzamanlı izleme sisteminin mantığı aşağıdaki şemada (Mermaid) gösterilmektedir. Bu yapı, kullanıcının oyun esnasında sistemle etkileşime girmek için hem parmaklarını hem de vücudunu (burun) kullanmasına olanak tanır:
+
+```mermaid
+graph TD
+    A[Kamera Görüntüsü] --> B{Tespit Katmanı <br/> AI Modelleri}
+    B -->|PoseLandmarker| C[Burun Koordinatı]
+    B -->|HandLandmarker| D[İşaret Parmağı Koordinatları]
+    
+    C --> E{Mantık Katmanı <br/> Hibrit Tetikleyici}
+    D --> E
+    
+    E -->|Menü Alanı Kontrolü <br/> Sağ Alt Köşe| F[Geri Dönüş Navigasyonu]
+    E -->|Gövde Çakışması| G[Oyun İçi Etkileşim <br/> Elma Yakalama]
+    
+    F --> H[Ana Menüye Geçiş]
+    G --> I[Skor Güncellemesi ve UI]
+```
+
 ---
 
 ## 4. Uygulamanın İşlevselliği

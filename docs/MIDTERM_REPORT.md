@@ -19,8 +19,12 @@
 ### 2.1. Programlama Dili ve Framework
 *   **Python:** Yapay zeka modelleri (MediaPipe) ve görüntü işleme kütüphaneleriyle olan mükemmel uyumu nedeniyle tercih edilmiştir.
 
-### 2.2. Veritabanı
-*   **File-Based Local Storage:** Projede karmaşık bir veritabanı yerine, çocukların yaptığı eserlerin PNG formatında tarih damgalı olarak saklandığı bir yerel dosya sistemi kullanılmıştır. Bu, okul ortamlarında internet bağımlılığını ortadan kaldırır.
+### 2.2. Veritabanı (Veri Saklama Yaklaşımı)
+*   **File-Based Local Storage:** Projede karmaşık bir veritabanı sunucusu yerine, çocukların yaptığı eserlerin PNG formatında tarih damgalı olarak saklandığı bir yerel dosya sistemi kullanılmıştır.
+*   **Tercih Gerekçesi:** 
+    1. **Gizlilik:** Okul öncesi çocukların kamera verilerinin ve çizimlerinin buluta çıkmasını engelleyerek %100 yerel güvenlik sağlar.
+    2. **Erişilebilirlik:** İnternet bağlantısı olmayan kırsal bölgelerdeki okullarda dahi sorunsuz çalışır.
+    3. **Performans:** Yüksek çözünürlüklü çizimlerin anlık kaydedilmesi için dosya sistemi en hızlı çözümdür.
 
 ### 2.3. Diğer Araçlar ve Kütüphaneler
 *   **OpenCV:** Görüntü yakalama ve grafik arayüz (GUI) oluşturma.
@@ -57,6 +61,12 @@ Uygulama, **Modüler Katmanlı Mimari** kullanılarak geliştirilmiştir. Ayrıc
 ## 4. Uygulamanın İşlevselliği
 
 ### 4.1. Temel Özellikler ve Kullanıcı Senaryoları
+
+**Tipik Kullanıcı Senaryosu:**
+1. **Giriş:** Çocuk uygulamayı açar ve ana menüde elini gezdirerek neon efektli butonları keşfeder.
+2. **Aksiyon:** Havada "İşaret Parmağı" (☝️) jestiyle tuval üzerine bir güneş çizer.
+3. **Etkileşim:** Yanlış çizdiği bir yeri "Zafer İşareti" (✌️) yaparak siler.
+4. **Kayıt:** Çizimini bitirdiğinde "Başparmak" (👍) jestiyle eserini yerel galeriye kaydeder.
 
 #### 4.1.1. Özellik: El Jesti ile Serbest Çizim
 Kullanıcı işaret parmağını (☝️) kaldırarak çizim moduna geçer. Havada parmağını hareket ettirerek neon fırçalarla resim yapabilir.
@@ -99,28 +109,73 @@ OkulOncesi_Cizim/
 
 **Kod Örneği 1: Jest Algılama Mantığı**
 ```python
-# hand_detector.py içinden
+# hand_detector.py - El Jesti Algılama Mantığı
 def _detect_gesture_for_hand(self, lms_px):
+    """
+    Parmakların açık/kapalı olma durumlarını analiz ederek el jestini belirler.
+    
+    Argümanlar:
+        lms_px: Piksel cinsinden el landmark koordinatları listesi.
+    Dönüş:
+        str: Algılanan jestin türü ('draw', 'erase', 'clear', vb.)
+    """
+    # Her bir parmağın açık (True) veya kapalı (False) durumunu al
+    # Bu metod, elin yönünden bağımsız olarak geometrik oranlar kullanır.
     s = self._get_finger_states_for_hand(lms_px)
     thumb, index, middle, ring, pinky = s
 
-    if index and not middle and not ring and not pinky: return 'draw'    # ☝️ Çizim
-    elif index and middle and not ring and not pinky: return 'erase'    # ✌️ Silme
-    elif thumb and index and middle and ring and pinky: return 'clear'  # 🖐️ Temizle
+    # JEST KOŞUL MANTIKLARI:
+    # ☝️ Sadece İşaret Parmağı Açık => Çizim Modu
+    if index and not middle and not ring and not pinky: 
+        return 'draw'
+    
+    # ✌️ İşaret ve Orta Parmak Açık => Silgi Modu
+    elif index and middle and not ring and not pinky: 
+        return 'erase'
+    
+    # 🖐️ Tüm Parmaklar Açık => Ekranı Temizleme (Tam El)
+    elif thumb and index and middle and ring and pinky: 
+        return 'clear'
+    
+    # Herhangi bir özel jest tanımlanamadıysa boş döner
+    return 'none'
 ```
 
-**Kod Örneği 2: Neon Efekt Motoru**
+**Kod Örneği 2: Neon Efekt Motoru (Visual Feedback)**
 ```python
-# ui_engine.py içinden
+# ui_engine.py - Holografik ve Neon Efekt Katmanlama
 def draw_neon_text(img, text, x, y, font, scale, color):
-    # Dış parlama (Glow)
+    """
+    Yazıya katmanlı bir neon parlama efekti verir.
+    
+    Mantık: Önce kalın ve şeffaf bir 'glow' (parlama) tabakası çizilir, 
+    ardından üzerine ince ve parlak bir 'core' (çekirdek) eklenir.
+    """
+    # 1. Aşama: Dış Parlama (Glow)
+    # Daha kalın bir çizgi (Thickness=10) ile ana rengi hafifçe yayar.
     cv2.putText(img, text, (x, y), font, scale, color, 10, cv2.LINE_AA)
-    # Parlak iç çekirdek (Core)
+    
+    # 2. Aşama: Parlak İç Çekirdek (Core)
+    # Tam beyaz renk ve ince çizgi (Thickness=2) ile keskinlik sağlar.
     cv2.putText(img, text, (x, y), font, scale, (255, 255, 255), 2, cv2.LINE_AA)
 ```
 
 ### 5.2. Test Sonuçları ve Performans Analizi
-Uygulamanın kararlılığını ölçmek amacıyla yapılan testler, geliştirme ortamında **gerçek zamanlı performans izleme (Performance Monitoring)** ve **manuel kullanıcı testleri** metodolojisiyle yapılmıştır.
+
+#### 5.2.1. Otomatik Birim Testleri (Unit Tests)
+Yazılımın temel mantığı `unittest` framework'ü ile doğrulanmıştır. Yapay zeka modülü, tuval katmanları ve görsel efekt motoru için hazırlanan test senaryoları başarıyla geçilmiştir.
+
+**Test Çıktısı (Terminal Log):**
+```text
+Ran 3 tests in 0.226s
+OK
+[OK] HandDetector başarıyla başlatıldı.
+[OK] DrawingCanvas doğru boyutlarda oluşturuldu.
+[OK] ParticleSystem görsel üretim testi başarılı.
+```
+
+#### 5.2.2. Performans ve Kullanıcı Testleri
+Uygulamanın kararlılığını ölçmek amacıyla yapılan manuel test sonuçları aşağıdadır:
 
 | Test Senaryosu | Beklenen Sonuç | Durum | Gözlem |
 | :--- | :--- | :--- | :--- |
@@ -144,3 +199,15 @@ Proje, okul öncesi eğitimde "aktif teknoloji kullanımı" vizyonuna ulaşmış
 
 *   **Gelecek Çalışma:** Çok oyunculu (multiplayer) modu ile iki çocuğun aynı ekranda iş birliği içinde çizim yapması.
 *   **Gelecek Çalışma:** Çizilen eserlerin bulut sistemine (Firebase vb.) otomatik yedeklenmesi.
+
+---
+
+## 7. Ek Bilgiler
+
+### 7.1. Gizlilik ve Veri Güvenliği
+Uygulama, çocukların güvenliğini en üst düzeyde tutacak şekilde tasarlanmıştır. Kamera üzerinden alınan görüntüler hiçbir uzak sunucuya gönderilmez; tüm yapay zeka çıkarımları ve görüntü işleme süreçleri **tamamen yerel cihaz üzerinde (offline)** gerçekleştirilir. Kullanıcı verilerinin gizliliği projenin temel prensibidir.
+
+### 7.2. Kaynakça
+*   **MediaPipe:** Google AI Edge Solutions - [https://mediapipe.dev](https://mediapipe.dev)
+*   **OpenCV:** Open Source Computer Vision Library - [https://opencv.org](https://opencv.org)
+*   **Python:** Programming Language Official Documentation - [https://python.org](https://python.org)

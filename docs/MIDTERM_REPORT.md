@@ -74,7 +74,24 @@ Ekranda beliren hazır şablonların (Ayı, Araba vb.) üzerine gelindiğinde, u
 ## 5. Kod Kalitesi ve Yazılım Geliştirme Pratikleri
 
 ### 5.1. Kod Organizasyonu ve Okunabilirlik
-Proje, anlamlı isimlendirme ve PEP8 standartlarına uygun yazılmıştır.
+Proje, her modülün tek bir sorumluluğu olduğu (Single Responsibility Principle) modüler bir dosya yapısına sahiptir.
+
+**Klasör Yapısı:**
+```text
+OkulOncesi_Cizim/
+├── main.py              # Ana döngü ve State yönetimi
+├── menu.py              # Holografik menü sınıfları
+├── ui_engine.py         # Neon efektler ve Parçacık motoru
+├── hand_detector.py     # MediaPipe el tespit sarmalayıcı
+├── pose_detector.py     # Vücut takip modülü
+├── canvas.py            # Çizim katmanları ve fırça mantığı
+├── game.py              # Balon patlatma oyunu mantığı
+├── pose_game.py         # Elma yakalama oyunu mantığı
+├── templates.py         # Boyama şablonları (Ayı, Araba vb.)
+├── docs/                # Raporlar ve dökümantasyon
+│   └── images/          # Ekran görüntüleri ve diyagramlar
+└── README.md            # Proje kurulum ve kullanım kılavuzu
+```
 
 **Kod Örneği 1: Jest Algılama Mantığı**
 ```python
@@ -103,12 +120,13 @@ def draw_neon_text(img, text, x, y, font, scale, color):
 ## 6. Sonuç ve Gelecek Çalışmalar
 
 ### 6.1. Elde Edilen Sonuçlar
-Proje, hedeflenen tüm işlevleri (temassız çizim, oyunlar, şablonlar) başarıyla yerine getirmektedir. Çocukların fiziksel hareketliliğini artırma hedefi, test sürecinde el ve vücut koordinasyonunun aktif kullanımıyla doğrulanmıştır.
+Proje, okul öncesi eğitimde "aktif teknoloji kullanımı" vizyonuna ulaşmıştır. Tüm oyun ve çizim modları stabil olarak çalışmaktadır.
 
 ### 6.2. Karşılaşılan Zorluklar ve Sınırlılıklar
-*   **Sınırlılık:** MediaPipe, yetersiz ışık ortamlarında el landmarklarını takip etmekte zorlanabilmektedir.
-*   **Çözüm:** Görüntüye uygulanan `CLAHE` (Kontrast Sınırlı Adaptif Eşikleme) algoritmasıyla düşük ışık performansı artırılmıştır.
+*   **Teknik Zorluk (Karakter Kodlama):** Windows işletim sisteminde kullanıcı adlarında Türkçe karakter (Ö, Ş, İ gibi) bulunduğunda, MediaPipe modellerinin dosya yolunu okuyamaması gibi kritik bir sorunla karşılaşıldı.
+*   **Çözüm/Özeleştiri:** Bu sorun tam olarak kütüphane seviyesinde çözülemese de, modellerin bayt olarak okunup bellek üzerinden yüklenmesi (buffer loading) yöntemiyle baypas edilmiştir. Bu durum, yazılım geliştirmede dış kütüphanelerin yerel dosya sistemlerine olan bağımlılıklarının ne kadar kritik olduğunu öğretmiştir.
 
 ### 6.3. Geliştirme Önerileri
+
 *   **Gelecek Çalışma:** Çok oyunculu (multiplayer) modu ile iki çocuğun aynı ekranda iş birliği içinde çizim yapması.
 *   **Gelecek Çalışma:** Çizilen eserlerin bulut sistemine (Firebase vb.) otomatik yedeklenmesi.

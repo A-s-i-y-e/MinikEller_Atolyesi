@@ -315,6 +315,7 @@ def main():
                     time.sleep(0.5); break
                 
                 # Renk Ileri/Geri (Ok ikonları)
+                tx, ty = p[0], p[1]
                 if 25 <= ty <= 65:
                     if 10 <= tx <= 50: # Geri Oku
                         ui.prev_color()

@@ -30,6 +30,7 @@
 ### 2.4. Geliştirme Ortamı ve Versiyon Kontrolü
 *   **IDE:** Visual Studio Code.
 *   **Versiyon Kontrol:** Git & GitHub.
+*   **Dal (Branch) Stratejisi:** Projede `main` branch (ana dal) üzerinden stabil geliştirme stratejisi izlenmiştir. Her özellik tamamlandığında anlamlı commit mesajlarıyla ana dala entegre edilmiştir.
 *   **Repo Linki:** [https://github.com/A-s-i-y-e/MinikEller_Atolyesi](https://github.com/A-s-i-y-e/MinikEller_Atolyesi)
 
 ---
@@ -116,7 +117,7 @@ def draw_neon_text(img, text, x, y, font, scale, color):
 ```
 
 ### 5.2. Test Sonuçları ve Performans Analizi
-Uygulamanın kararlılığını ölçmek amacıyla yapılan testlerin sonuçları aşağıdadır:
+Uygulamanın kararlılığını ölçmek amacıyla yapılan testler, geliştirme ortamında **gerçek zamanlı performans izleme (Performance Monitoring)** ve **manuel kullanıcı testleri** metodolojisiyle yapılmıştır.
 
 | Test Senaryosu | Beklenen Sonuç | Durum | Gözlem |
 | :--- | :--- | :--- | :--- |

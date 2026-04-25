@@ -43,12 +43,11 @@ Uygulama, **Modüler Katmanlı Mimari** kullanılarak geliştirilmiştir. Ayrıc
 *   **View:** OpenCV ve Neon Efekt Motoru ile sunulan kullanıcı arayüzü.
 *   **Controller:** `main.py` ve jest algılama mantığıyla sağlanan kontrol mekanizması.
 
-| Katman | Sorumluluk | İlgili Dosya |
-| :--- | :--- | :--- |
-| **Giriş (Input)** | Kamera akışı ve görüntü ön işleme | `main.py` |
-| **Tespit (Detection)** | AI modelleriyle el/vücut koordinat tespiti | `hand_detector.py`, `pose_detector.py` |
-| **Mantık (Logic)** | Koordinatların jeste dönüştürülmesi | `hand_detector.py` (detect_gesture) |
-| **Arayüz (UI/UX)** | Neon efektler ve görsel geribildirim | `ui_engine.py`, `menu.py` |
+**Sistem Katmanları ve Sorumlulukları:**
+*   **Giriş (Input) Katmanı:** Kamera akışının alınması ve görüntü ön işleme işlemlerinden sorumludur. (İlgili Dosya: `main.py`)
+*   **Tespit (Detection) Katmanı:** MediaPipe AI modellerini kullanarak el ve vücut koordinatlarını tespit eder. (İlgili Dosya: `hand_detector.py`, `pose_detector.py`)
+*   **Mantık (Logic) Katmanı:** Tespit edilen koordinatları analiz ederek çizim, silme veya oyun hamlelerine dönüştürür. (İlgili Dosya: `hand_detector.py` - detect_gesture)
+*   **Arayüz (UI/UX) Katmanı:** OpenCV kullanarak neon görsel efektlerini, parçacık sistemlerini ve oyun arayüzlerini ekrana basar. (İlgili Dosya: `ui_engine.py`, `menu.py`)
 
 ![Katmanlı Sistem Mimarisi Şeması (Layered Architecture)](images/katmanli_mimari_semasi_v3_1777135367523.png)
 ![Gerçek Ana Menü Arayüzü](images/gercek_menu.png)

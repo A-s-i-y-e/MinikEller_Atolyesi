@@ -42,7 +42,7 @@ Uygulama **Katmanlı Mimari (Layered Architecture)** prensiplerini takip eder:
 2.  **Logic Layer (Mantık Katmanı):** Çıkarılan landmark'ları yorumlayarak "Çiz", "Sil" veya "Seç" gibi jestleri belirler.
 3.  **UI/Rendering Layer (Arayüz Katmanı):** OpenCV kullanarak neon efektleri, parçacık sistemleri ve kullanıcı arayüzünü ekrana basar.
 
-![Sistem Mimarisi Diyagramı](images/system_architecture_diagram_1777131399041.png)
+![Sistem Mimarisi Diyagramı (Türkçe)](images/sistem_mimarisi_turkce_1777132720909.png)
 
 ---
 
@@ -53,12 +53,12 @@ Uygulama **Katmanlı Mimari (Layered Architecture)** prensiplerini takip eder:
 #### 4.1.1. Özellik: El Jesti ile Serbest Çizim
 **Açıklama:** Kullanıcı sadece işaret parmağını (☝️) havaya kaldırarak ekranda farklı renklerde çizim yapabilir. Yapay zeka, parmağın ucunu 1280x720 çözünürlüğünde takip eder.
 
-![Ana Menü Arayüzü](images/main_menu_screenshot_1777131416542.png)
+![Gerçek Ana Menü Arayüzü](images/gercek_menu.png)
 
 #### 4.1.2. Özellik: Sihirli Şablon Boyama
 **Açıklama:** Ekranda beliren hazır şablonların (Araba, Ayı vb.) üzerine gelip parmağıyla dokunan çocuk, o alanı taşırmadan otomatik olarak boyar. Bu özellik çocukların başarı hissini artırır.
 
-![Çizim Modu Uygulaması](images/drawing_mode_action_1777131436226.png)
+![Gerçek Çizim Arayüzü](images/gercek_cizim_ekrani.png)
 
 #### 4.1.3. Özellik: Eğitici Oyunlar (Balon Patlatma)
 **Açıklama:** El koordinasyonunu geliştirmek için ekrandaki balonları parmakla dokunarak patlatma oyunudur. Neon görsel efektler ve sesli geri bildirimlerle desteklenmiştir.

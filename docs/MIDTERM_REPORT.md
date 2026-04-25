@@ -3,32 +3,32 @@
 ## 1. Giriş
 
 ### 1.1. Projenin Amacı ve Kapsamı
-**Minik Eller Atölyesi**, okul öncesi dönemdeki çocukların (3-6 yaş) ince motor becerilerini geliştirmeyi ve dijital ortamda sanatsal üretim yapmalarını sağlamayı amaçlayan, yapay zeka (MediaPipe) destekli bir uygulamadır. 
+**Minik Eller Atölyesi**, okul öncesi dönemdeki çocukların (3-6 yaş) motor becerilerini geliştirmeyi amaçlayan, yapay zeka destekli temassız bir dijital sanat ve oyun platformudur.
 
-*   **Çözdüğü Problem:** Geleneksel dijital araçlar çocukları pasif ve hareketsiz bir konuma iterken, bu proje çocukların **fiziksel olarak hareket etmesini** zorunlu kılar. Hem ince motor becerilerini (parmak hareketleri) hem de kaba motor becerilerini (vücut hareketleri ile elma yakalama vb.) aktif tutarak teknolojinin getirdiği hareketsizlik problemini kırar.
-*   **Kullanıcı Kitlesi:** Okul öncesi çocuklar, anaokulu öğretmenleri ve teknoloji meraklısı aileler.
-*   **Sınırlar:** Uygulama şu an için tek kamera üzerinden gerçek zamanlı el takibi yapar ve internet bağlantısı gerektirmeden yerel olarak çalışır.
+*   **Hangi Problemi Çözüyor?** Geleneksel ekran kullanımı çocukları pasif ve hareketsiz bırakmaktadır. Bu proje, çocukların ekrana dokunmadan, ellerini ve vücutlarını havada hareket ettirerek etkileşime girmesini sağlar. Böylece dijital oyun süreci fiziksel bir aktiviteye dönüşür.
+*   **Kimler Kullanacak?** Okul öncesi çocuklar, anaokulu öğretmenleri ve aileler.
+*   **Sınırlar:** Tek kamera (RGB) üzerinden el ve vücut takibi yapar, düşük donanımlı cihazlarda dahi akıcı çalışacak şekilde optimize edilmiştir.
 
 ### 1.2. Motivasyon
-Geleneksel boyama kitapları ve dijital boyama uygulamaları arasındaki köprüyü kurmak temel motivasyonumuzdur. Pandemi sonrası dönemde artan ekran süresini, çocukları pasif içerik tüketicisi olmaktan çıkarıp aktif birer sanatçıya dönüştürecek bir "akıllı oyun" haline getirmek istedik. Mevcut dijital oyunların çocukları fiziksel olarak pasifleştirmesine bir alternatif olarak, çocukların kollarını, ellerini ve tüm vücutlarını kullanarak etkileşime girdiği bir ekosistem yaratmayı hedefledik.
+Çocukların teknolojiyle olan ilişkisini "pasif izleyicilikten" çıkarıp "aktif üreticiliğe" dönüştürmek temel motivasyonumuzdur. Mevcut uygulamaların fiziksel hareket kısıtlılığına bir çözüm olarak, MediaPipe teknolojisinin sağladığı imkanları pedagojik bir yaklaşımla birleştirdik.
 
 ---
 
 ## 2. Kullanılan Yazılım Araçları ve Teknolojiler
 
 ### 2.1. Programlama Dili ve Framework
-*   **Python:** Zengin kütüphane desteği (AI, Computer Vision) ve hızlı prototipleme yeteneği nedeniyle ana dil olarak seçilmiştir.
+*   **Python:** Yapay zeka modelleri (MediaPipe) ve görüntü işleme kütüphaneleriyle olan mükemmel uyumu nedeniyle tercih edilmiştir.
 
 ### 2.2. Veritabanı
-*   **Yerel Dosya Sistemi (Local Storage):** Projede kullanıcı verilerini saklayan karmaşık bir veritabanı yerine, çocukların yaptığı resimlerin korunması için yerel depolama (PNG formatında kayıt) tercih edilmiştir. Bu, uygulamanın hafif ve taşınabilir olmasını sağlar.
+*   **File-Based Local Storage:** Projede karmaşık bir veritabanı yerine, çocukların yaptığı eserlerin PNG formatında tarih damgalı olarak saklandığı bir yerel dosya sistemi kullanılmıştır. Bu, okul ortamlarında internet bağımlılığını ortadan kaldırır.
 
 ### 2.3. Diğer Araçlar ve Kütüphaneler
-*   **OpenCV:** Görüntü işleme, GUI yönetimi ve gerçek zamanlı video akışı için kullanılmıştır.
-*   **MediaPipe (Google):** El (Hand) ve Vücut (Pose) takibi için optimize edilmiş, düşük gecikmeli yapay zeka modelleri sunması nedeniyle kritik öneme sahiptir.
-*   **NumPy:** Matris tabanlı çizim işlemleri ve veri manipülasyonu için kullanılmıştır.
+*   **OpenCV:** Görüntü yakalama ve grafik arayüz (GUI) oluşturma.
+*   **MediaPipe Tasks API:** El ve vücut landmark tespiti için kullanılan derin öğrenme modelleri.
+*   **NumPy:** Yüksek performanslı matris işlemleriyle çizim katmanlarının yönetimi.
 
 ### 2.4. Geliştirme Ortamı ve Versiyon Kontrolü
-*   **IDE:** Visual Studio Code (VSC).
+*   **IDE:** Visual Studio Code.
 *   **Versiyon Kontrol:** Git & GitHub.
 *   **Repo Linki:** [https://github.com/A-s-i-y-e/MinikEller_Atolyesi](https://github.com/A-s-i-y-e/MinikEller_Atolyesi)
 
@@ -37,10 +37,14 @@ Geleneksel boyama kitapları ve dijital boyama uygulamaları arasındaki köprü
 ## 3. Sistem Mimarisi ve Teknik Tasarım
 
 ### 3.1. Genel Mimari
-Uygulama **Katmanlı Mimari (Layered Architecture)** prensiplerini takip eder:
-1.  **Detection Layer (Tespit Katmanı):** Kamera verisini alır, MediaPipe kullanarak el ve vücut landmark'larını çıkarır.
-2.  **Logic Layer (Mantık Katmanı):** Çıkarılan landmark'ları yorumlayarak "Çiz", "Sil" veya "Seç" gibi jestleri belirler.
-3.  **UI/Rendering Layer (Arayüz Katmanı):** OpenCV kullanarak neon efektleri, parçacık sistemleri ve kullanıcı arayüzünü ekrana basar.
+Uygulama **Modüler Katmanlı Mimari** kullanılarak geliştirilmiştir:
+
+| Katman | Sorumluluk | İlgili Dosya |
+| :--- | :--- | :--- |
+| **Giriş (Input)** | Kamera akışı ve görüntü ön işleme | `main.py` |
+| **Tespit (Detection)** | AI modelleriyle el/vücut koordinat tespiti | `hand_detector.py`, `pose_detector.py` |
+| **Mantık (Logic)** | Koordinatların jeste dönüştürülmesi | `hand_detector.py` (detect_gesture) |
+| **Arayüz (UI/UX)** | Neon efektler ve görsel geribildirim | `ui_engine.py`, `menu.py` |
 
 ![Sistem Mimarisi Diyagramı (Türkçe)](images/sistem_mimarisi_turkce_1777132720909.png)
 ![Gerçek Ana Menü Arayüzü](images/gercek_menu.png)
@@ -52,18 +56,17 @@ Uygulama **Katmanlı Mimari (Layered Architecture)** prensiplerini takip eder:
 ### 4.1. Temel Özellikler ve Kullanıcı Senaryoları
 
 #### 4.1.1. Özellik: El Jesti ile Serbest Çizim
-**Açıklama:** Kullanıcı sadece işaret parmağını (☝️) havaya kaldırarak ekranda farklı renklerde çizim yapabilir. Yapay zeka, parmağın ucunu 1280x720 çözünürlüğünde takip eder.
-
+Kullanıcı işaret parmağını (☝️) kaldırarak çizim moduna geçer. Havada parmağını hareket ettirerek neon fırçalarla resim yapabilir.
 ![Gerçek Serbest Çizim Arayüzü](images/gercek_serbest_cizim.png)
 
 #### 4.1.2. Özellik: Sihirli Şablon Boyama
-**Açıklama:** Ekranda beliren hazır şablonların (Araba, Ayı vb.) üzerine gelip parmağıyla dokunan çocuk, o alanı taşırmadan otomatik olarak boyar. Bu özellik çocukların başarı hissini artırır.
+Ekranda beliren hazır şablonların (Ayı, Araba vb.) üzerine gelindiğinde, uygulama alanı otomatik olarak algılar ve çocukların "taşırmadan" boyama yapmasını sağlar.
 ![Gerçek Ayı Şablonu Boyama Anı](images/gercek_sablon_aksiyon.png)
 
-![Gerçek Balon Patlatma Aksiyonu](images/gercek_balon_aksiyon.png)
-
 #### 4.1.3. Özellik: Eğitici Oyunlar (Balon Patlatma ve Elma Yakala)
-**Açıklama:** El koordinasyonunu geliştirmek için ekrandaki balonları parmakla dokunarak patlatma ve vücut hareketleriyle düşen elmaları toplama oyunlarıdır.
+*   **Balon Patlatma:** El koordinasyonunu artırır.
+*   **Elma Yakala:** Vücut hareketlerini (Pose) kullanarak fiziksel aktivite sağlar.
+![Gerçek Balon Patlatma Aksiyonu](images/gercek_balon_aksiyon.png)
 ![Gerçek Elma Yakalama (Pose Game) Aksiyonu](images/gercek_pose_aksiyon.png)
 
 ---
@@ -71,26 +74,41 @@ Uygulama **Katmanlı Mimari (Layered Architecture)** prensiplerini takip eder:
 ## 5. Kod Kalitesi ve Yazılım Geliştirme Pratikleri
 
 ### 5.1. Kod Organizasyonu ve Okunabilirlik
-Proje modüler bir dosya yapısına sahiptir:
-*   `main.py`: Ana uygulama döngüsü ve state yönetimi.
-*   `hand_detector.py`: Yapay zeka çıkarım modülü.
-*   `canvas.py`: Çizim ve katman yönetimi.
-*   `ui_engine.py`: Parçacık efektleri ve görsel iyileştirmeler.
+Proje, anlamlı isimlendirme ve PEP8 standartlarına uygun yazılmıştır.
 
-Kodlar, Python'un PEP8 standartlarına uygun olarak yazılmış; fonksiyon ve değişken adları ("draw_neon_text", "get_stable_gesture") okunabilirliği artıracak şekilde seçilmiştir.
+**Kod Örneği 1: Jest Algılama Mantığı**
+```python
+# hand_detector.py içinden
+def _detect_gesture_for_hand(self, lms_px):
+    s = self._get_finger_states_for_hand(lms_px)
+    thumb, index, middle, ring, pinky = s
+
+    if index and not middle and not ring and not pinky: return 'draw'    # ☝️ Çizim
+    elif index and middle and not ring and not pinky: return 'erase'    # ✌️ Silme
+    elif thumb and index and middle and ring and pinky: return 'clear'  # 🖐️ Temizle
+```
+
+**Kod Örneği 2: Neon Efekt Motoru**
+```python
+# ui_engine.py içinden
+def draw_neon_text(img, text, x, y, font, scale, color):
+    # Dış parlama (Glow)
+    cv2.putText(img, text, (x, y), font, scale, color, 10, cv2.LINE_AA)
+    # Parlak iç çekirdek (Core)
+    cv2.putText(img, text, (x, y), font, scale, (255, 255, 255), 2, cv2.LINE_AA)
+```
 
 ---
 
 ## 6. Sonuç ve Gelecek Çalışmalar
 
 ### 6.1. Elde Edilen Sonuçlar
-Proje başlangıcında hedeflenen "temassız çocuk atölyesi" vizyonuna ulaşılmıştır. Uygulama, modern bilgisayarlarda 30+ FPS ile akıcı bir şekilde çalışmakta ve el hareketlerini milisaniyeler içinde algılayabilmektedir. Tüm temel çizim, silme ve oyun özellikleri başarıyla test edilmiştir.
+Proje, hedeflenen tüm işlevleri (temassız çizim, oyunlar, şablonlar) başarıyla yerine getirmektedir. Çocukların fiziksel hareketliliğini artırma hedefi, test sürecinde el ve vücut koordinasyonunun aktif kullanımıyla doğrulanmıştır.
 
 ### 6.2. Karşılaşılan Zorluklar ve Sınırlılıklar
-*   **Işıklandırma:** Kameranın bulunduğu ortamdaki çok düşük veya çok parlak ışık, el tespit başarısını %10-%15 oranında düşürebilmektedir. Bu sorun, görüntüye uygulanan otomatik parlaklık dengelemesi ile büyük oranda çözülmüştür.
-*   **Kamera Açısı:** Çocukların kameraya çok yakın olması durumunda elin tüm landmark'larının kare dışına çıkması takibi zorlaştırmaktadır.
+*   **Sınırlılık:** MediaPipe, yetersiz ışık ortamlarında el landmarklarını takip etmekte zorlanabilmektedir.
+*   **Çözüm:** Görüntüye uygulanan `CLAHE` (Kontrast Sınırlı Adaptif Eşikleme) algoritmasıyla düşük ışık performansı artırılmıştır.
 
 ### 6.3. Geliştirme Önerileri
-1.  **Çoklu Oyuncu:** İki çocuğun aynı anda farklı ellerle aynı tuvalde çizim yapabilmesi.
-2.  **Sesli Komut:** "Kırmızı kalem al" gibi sesli komutlarla araç değiştirme desteği.
-3.  **Mobil Entegrasyon:** Uygulamanın Android/iOS tabletlerde de çalışabilecek şekilde port edilmesi.
+*   **Gelecek Çalışma:** Çok oyunculu (multiplayer) modu ile iki çocuğun aynı ekranda iş birliği içinde çizim yapması.
+*   **Gelecek Çalışma:** Çizilen eserlerin bulut sistemine (Firebase vb.) otomatik yedeklenmesi.

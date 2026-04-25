@@ -241,7 +241,7 @@ def main():
             
             for tip in index_tips:
                 tx, ty = tip
-                if w - 100 <= tx <= w - 20 and h - 100 <= ty <= h - 20:
+                if w - 180 <= tx <= w and h - 180 <= ty <= h:
                     current_state = 'menu'
                     time.sleep(0.5); break
 
@@ -266,13 +266,14 @@ def main():
                 draw_glass_panel(frame, bx-10, by-10, 100, 100, 15, color=(100, 100, 255), alpha=0.3)
                 frame[by:by+80, bx:bx+80] = cv2.max(frame[by:by+80, bx:bx+80], icon_home)
 
-            # Burun veya Parmak ucuyla tetikle
+            # Burun veya Parmak ucuyla tetikle (ALAN GENİŞLETİLDİ)
             trigger_points = []
             if nose_pos: trigger_points.append(nose_pos)
             for tip in index_tips: trigger_points.append(tip)
 
+            # 180 piksellik koca bir tetikleme alanı (Daha esnek)
             for p in trigger_points:
-                if w - 100 <= p[0] <= w - 20 and h - 100 <= p[1] <= h - 20:
+                if w - 180 <= p[0] <= w and h - 180 <= p[1] <= h:
                     current_state = 'menu'
                     time.sleep(0.5); break
 
@@ -290,7 +291,7 @@ def main():
 
             for tip in index_tips:
                 tx, ty = tip
-                if w - 100 <= tx <= w - 20 and h - 100 <= ty <= h - 20:
+                if w - 180 <= tx <= w and h - 180 <= ty <= h:
                     current_state = 'menu'
                     time.sleep(0.5); break
 
@@ -305,7 +306,7 @@ def main():
             for tip in index_tips:
                 tx, ty = tip
                 # Menuye don (Ev ikonu - SAĞ ALT)
-                if w - 100 <= tx <= w - 20 and h - 100 <= ty <= h - 20:
+                if w - 180 <= tx <= w and h - 180 <= ty <= h:
                     current_state = 'menu'
                     time.sleep(0.5); break
                 

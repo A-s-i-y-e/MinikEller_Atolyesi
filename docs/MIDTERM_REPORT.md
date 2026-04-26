@@ -49,8 +49,8 @@ Uygulama, **Modüler Katmanlı Mimari** kullanılarak geliştirilmiştir. Ayrıc
 
 **Sistem Katmanları ve Sorumlulukları:**
 *   **Giriş (Input) Katmanı:** Kamera akışının alınması ve görüntü ön işleme işlemlerinden sorumludur. (İlgili Dosya: `main.py`)
-*   **Tespit (Detection) Katmanı:** MediaPipe AI modellerini kullanarak el ve vücut koordinatlarını tespit eder. (İlgili Dosya: `hand_detector.py`, `pose_detector.py`)
-*   **Mantık (Logic) Katmanı:** Tespit edilen koordinatları analiz ederek çizim, silme veya oyun hamlelerine dönüştürür. (İlgili Dosya: `hand_detector.py` - detect_gesture)
+*   **Tespit (Detection) Katmanı:** MediaPipe AI modellerini kullanarak el, vücut ve yüz koordinatlarını tespit eder. (İlgili Dosya: `hand_detector.py`, `pose_detector.py`, `face_detector.py`)
+*   **Mantık (Logic) Katmanı:** Tespit edilen koordinatları analiz ederek çizim, silme veya oyun hamlelerine (balon patlatma, elma yakalama, duygu aynası) dönüştürür. (İlgili Dosya: `hand_detector.py`, `game.py`, `pose_game.py`, `emotion_game.py`)
 *   **Arayüz (UI/UX) Katmanı:** OpenCV kullanarak neon görsel efektlerini, parçacık sistemlerini ve oyun arayüzlerini ekrana basar. (İlgili Dosya: `ui_engine.py`, `menu.py`)
 
 ![Katmanlı Sistem Mimarisi Şeması (Layered Architecture)](images/katmanli_mimari_semasi_v3_1777135367523.png)
@@ -62,17 +62,17 @@ Son yapılan güncellemelerle birlikte uygulamaya entegre edilen eşzamanlı izl
 ```mermaid
 graph TD
     A[Kamera Görüntüsü] --> B{Tespit Katmanı <br/> AI Modelleri}
-    B -->|PoseLandmarker| C[Burun Koordinatı]
+    B -->|PoseLandmarker| C[Vücut/Burun Koordinatı]
     B -->|HandLandmarker| D[İşaret Parmağı Koordinatları]
+    B -->|FaceLandmarker| E[Yüz İfadesi / Blendshapes]
     
-    C --> E{Mantık Katmanı <br/> Hibrit Tetikleyici}
-    D --> E
+    C --> F{Mantık Katmanı <br/> Hibrit Tetikleyici}
+    D --> F
+    E --> F
     
-    E -->|Menü Alanı Kontrolü <br/> Sağ Alt Köşe| F[Geri Dönüş Navigasyonu]
-    E -->|Gövde Çakışması| G[Oyun İçi Etkileşim <br/> Elma Yakalama]
-    
-    F --> H[Ana Menüye Geçiş]
-    G --> I[Skor Güncellemesi ve UI]
+    F -->|Navigasyon| G[Geri Dönüş / Menü Geçişi]
+    F -->|Oyun Etkileşimi| H[Elma Yakalama / Balon Patlatma]
+    F -->|Duygu Analizi| I[Gülümseme Kilidi / Duygu Aynası]
 ```
 
 ---
@@ -124,12 +124,15 @@ Proje, her modülün tek bir sorumluluğu olduğu (Single Responsibility Princip
 OkulOncesi_Cizim/
 ├── main.py              # Ana döngü ve State yönetimi
 ├── hand_detector.py     # MediaPipe el tespit sarmalayıcı
+├── pose_detector.py     # MediaPipe vücut (pose) tespit sarmalayıcı
+├── face_detector.py     # MediaPipe yüz (face) tespit sarmalayıcı
 ├── ui_engine.py         # Neon efektler ve Parçacık motoru
 ├── menu.py              # Holografik menü sınıfları
 ├── canvas.py            # Çizim katmanları ve fırça mantığı
 ├── templates.py         # Boyama şablonları
 ├── game.py              # Balon patlatma oyunu
 ├── pose_game.py         # Elma yakalama oyunu
+├── emotion_game.py      # Duygu aynası oyunu
 ├── tests/               # Birim testleri (Unit Tests)
 │   └── test_logic.py    # Modül doğrulama testleri
 ├── docs/                # Raporlar ve dökümantasyon

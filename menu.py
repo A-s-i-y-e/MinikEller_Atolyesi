@@ -10,12 +10,12 @@ class MainMenu:
         self.h = height
         self.particles = ParticleSystem(width, height, 80)
         
-        self.btn_w, self.btn_h = 280, 220
-        self.gap_x, self.gap_y = 60, 30
+        self.btn_w, self.btn_h = 260, 160
+        self.gap_x, self.gap_y = 60, 25
         self.total_w = (self.btn_w * 2) + self.gap_x
         self.total_h = (self.btn_h * 3) + (self.gap_y * 2)
         self.start_x = (self.w - self.total_w) // 2
-        self.start_y = (self.h - self.total_h) // 2 + 60
+        self.start_y = 160 # Kartlar daha aşağıdan başlasın
         
         # İkonları yükle
         self.icons = {}
@@ -31,7 +31,7 @@ class MainMenu:
             if os.path.exists(fname):
                 img = cv2.imread(fname)
                 if img is not None:
-                    self.icons[key] = cv2.resize(img, (160, 160))
+                    self.icons[key] = cv2.resize(img, (110, 110))
             else:
                 self.icons[key] = None
 
@@ -56,16 +56,19 @@ class MainMenu:
         frame[:] = cv2.addWeighted(blurred_bg, 0.4, black_overlay, 0.6, 0)
         self.particles.update_and_draw(frame)
 
-        # --- LOGO VE BASLIK ---
-        lx, ly = self.w // 2 - 250, 60
-        cv2.circle(frame, (lx, ly), 20, (255, 255, 255), -1, cv2.LINE_AA)
+        # --- LOGO VE BASLIK (Üst Kısımda Şık Bir Panel İçinde) ---
+        draw_glass_panel(frame, self.w // 2 - 350, 20, 700, 100, 20, color=(255, 100, 200), alpha=0.15)
+        
+        lx, ly = self.w // 2 - 280, 70
+        cv2.circle(frame, (lx, ly), 18, (255, 255, 255), -1, cv2.LINE_AA)
         finger_colors = [(0,0,255), (0,255,255), (0,255,0), (255,0,0), (255,0,255)]
         for i, color in enumerate(finger_colors):
             angle = -160 + i * 40
             rad = np.deg2rad(angle)
-            fx, fy = int(lx + np.cos(rad) * 35), int(ly + np.sin(rad) * 35)
-            cv2.line(frame, (lx, ly), (fx, fy), color, 8, cv2.LINE_AA)
-        draw_neon_text(frame, "MINIK ELLER ATOLYESI", self.w // 2 - 200, 80, cv2.FONT_HERSHEY_DUPLEX, 1.4, (255, 100, 200), thickness_base=3)
+            fx, fy = int(lx + np.cos(rad) * 30), int(ly + np.sin(rad) * 30)
+            cv2.line(frame, (lx, ly), (fx, fy), color, 6, cv2.LINE_AA)
+            
+        draw_neon_text(frame, "MINIK ELLER ATOLYESI", self.w // 2 - 230, 85, cv2.FONT_HERSHEY_DUPLEX, 1.2, (255, 100, 200), thickness_base=3)
 
         selected_btn = None
         
@@ -93,7 +96,7 @@ class MainMenu:
             draw_glass_panel(frame, cbx, cby, cbw, cbh, r=30, color=info['color'], alpha=0.1 + anim*0.1)
             
             # --- GÜVENLİ İKON ÇİZİMİ ---
-            isize = 160
+            isize = 110
             ix, iy = cbx + (cbw - isize)//2, cby + (cbh - isize)//2
             
             icon = self.icons.get(key)

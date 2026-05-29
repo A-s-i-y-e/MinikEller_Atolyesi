@@ -108,13 +108,13 @@ class FaceDetectorJS {
                     }, 800);
                 }
             } else if (this.app.state === 'emotion') {
-                // Emotion Game logic
-                if (isSmiling) {
-                    this.app.gameHud.querySelector('#hud-score').innerText = "MUTLU!";
-                } else if (jawOpen) {
-                    this.app.gameHud.querySelector('#hud-score').innerText = "SASKIN!";
-                } else {
-                    this.app.gameHud.querySelector('#hud-score').innerText = "NORMAL";
+                if (this.app.gameEmotion) {
+                    this.app.gameEmotion.update({
+                        smile: smileScore,
+                        blinkLeft: blinkLeft,
+                        blinkRight: blinkRight,
+                        jawOpen: jawOpen
+                    });
                 }
             }
         } else {

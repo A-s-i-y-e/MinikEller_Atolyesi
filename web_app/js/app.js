@@ -29,6 +29,7 @@ class App {
         // Games
         this.gameBalloon = null;
         this.gamePose = null;
+        this.gameEmotion = null;
         
         this.setupCamera();
         this.setupEvents();
@@ -107,6 +108,7 @@ class App {
         // Cleanup Games
         if (this.gameBalloon) this.gameBalloon.stop();
         if (this.gamePose) this.gamePose.stop();
+        if (this.gameEmotion) this.gameEmotion.stop();
         
         // Background effects
         document.body.style.background = 'var(--bg-dark)';
@@ -142,7 +144,8 @@ class App {
             case 'emotion':
                 this.gameHud.style.display = 'flex';
                 this.btnBack.style.display = 'flex';
-                // Emotion Game Logic Here
+                if (!this.gameEmotion) this.gameEmotion = new GameEmotion(this);
+                this.gameEmotion.start();
                 break;
         }
     }

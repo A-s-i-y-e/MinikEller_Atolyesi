@@ -72,10 +72,8 @@ class HandDetectorJS {
                     }
                 }
             } else if (this.app.state === 'balloon') {
-                if (isPinching) {
-                    if (this.app.gameBalloon) {
-                        this.app.gameBalloon.checkHit(x, y);
-                    }
+                if (this.app.gameBalloon) {
+                    this.app.gameBalloon.checkHit(x, y);
                 }
             }
         } else {

@@ -68,7 +68,13 @@ class GamePose {
     updateNosePosition(x, y) {
         this.noseX = x;
         this.noseY = y;
+        this.noseActive = true;
+        this.lastNoseTime = Date.now();
         this.checkCollision();
+    }
+    
+    clearNoseActive() {
+        this.noseActive = false;
     }
     
     spawnApple() {
@@ -105,18 +111,13 @@ class GamePose {
     loop() {
         if (!this.isRunning) return;
         
-        // Note: Canvas is cleared by poseDetector frame update, but we draw over it
-        // Actually poseDetector draws on this canvas. So we just draw apples on top.
-        // Wait, to not overwrite poseDetector's crosshair, we shouldn't clear here.
-        // But poseDetector clears it. So we need to ensure draw order.
-        // Easiest is to let PoseDetector clear, then call game loop, but they are async.
-        // So we will use VFX canvas for apples!
+        // Clear the canvas
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
-        const vfxCtx = this.app.particleSystem.ctx;
-        // Particle system already clears its canvas. We'll hijack it or draw before it.
-        // Since particleSystem calls clearRect, drawing here would be erased.
-        // Let's just draw apples on output-canvas but NOT clear it here (poseDetector clears it).
-        // Actually, let's just draw the apples.
+        // Draw nose crosshair if active (updated within last 200ms)
+        if (this.noseActive && (Date.now() - this.lastNoseTime < 200)) {
+            this.drawCrosshair(this.noseX, this.noseY);
+        }
         
         const now = Date.now();
         if (now - this.lastSpawn > this.spawnInterval) {
@@ -152,5 +153,22 @@ class GamePose {
         }
         
         requestAnimationFrame(() => this.loop());
+    }
+    
+    drawCrosshair(x, y) {
+        this.ctx.beginPath();
+        this.ctx.arc(x, y, 20, 0, Math.PI * 2);
+        this.ctx.strokeStyle = '#00ff66';
+        this.ctx.lineWidth = 3;
+        this.ctx.shadowBlur = 15;
+        this.ctx.shadowColor = '#00ff66';
+        this.ctx.stroke();
+        
+        this.ctx.beginPath();
+        this.ctx.moveTo(x - 30, y); this.ctx.lineTo(x + 30, y);
+        this.ctx.moveTo(x, y - 30); this.ctx.lineTo(x, y + 30);
+        this.ctx.stroke();
+        
+        this.ctx.shadowBlur = 0;
     }
 }

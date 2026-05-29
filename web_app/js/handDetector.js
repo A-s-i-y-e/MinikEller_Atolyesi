@@ -60,11 +60,7 @@ class HandDetectorJS {
             }
             
             if (this.app.state === 'draw') {
-                const screenX = width - x;
-                // Avoid drawing when hovering over the left toolbar (width ~ 300px) or bottom-right back button
-                const isOverUI = screenX < 300 || (screenX > width - 120 && y > height - 120);
-                
-                if (isPinching && !isOverUI) {
+                if (isPinching) {
                     if (!this.canvasManager.isDrawing) {
                         this.canvasManager.startStroke(x, y);
                     } else {

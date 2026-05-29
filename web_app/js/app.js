@@ -83,12 +83,6 @@ class App {
                 }
             });
         });
-        
-        // Magic Mode Button
-        document.getElementById('btn-magic').addEventListener('click', (e) => {
-            this.canvasManager.magicMode = !this.canvasManager.magicMode;
-            e.currentTarget.classList.toggle('active');
-        });
     }
     
     setState(newState) {

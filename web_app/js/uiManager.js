@@ -6,6 +6,7 @@ class UIManager {
         
         // Buttons
         this.btnDraw = document.getElementById('btn-draw');
+        this.btnMagic = document.getElementById('btn-magic');
         this.btnErase = document.getElementById('btn-erase');
         this.btnClear = document.getElementById('btn-clear');
         this.btnSave = document.getElementById('btn-save');
@@ -29,7 +30,17 @@ class UIManager {
         // Tools
         this.btnDraw.addEventListener('click', () => {
             this.canvasManager.setTool('draw');
+            this.canvasManager.magicMode = false;
             this.btnDraw.classList.add('active');
+            this.btnMagic.classList.remove('active');
+            this.btnErase.classList.remove('active');
+        });
+        
+        this.btnMagic.addEventListener('click', () => {
+            this.canvasManager.setTool('draw');
+            this.canvasManager.magicMode = true;
+            this.btnMagic.classList.add('active');
+            this.btnDraw.classList.remove('active');
             this.btnErase.classList.remove('active');
         });
         
@@ -37,6 +48,7 @@ class UIManager {
             this.canvasManager.setTool('erase');
             this.btnErase.classList.add('active');
             this.btnDraw.classList.remove('active');
+            this.btnMagic.classList.remove('active');
         });
         
         this.btnClear.addEventListener('click', () => {
@@ -61,7 +73,7 @@ class UIManager {
                 const color = target.getAttribute('data-color');
                 this.canvasManager.setColor(color);
                 
-                // Switch to draw tool automatically
+                // Switch to draw tool automatically (which also deactivates magic mode)
                 this.btnDraw.click();
             });
         });

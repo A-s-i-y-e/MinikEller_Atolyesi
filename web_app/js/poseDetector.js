@@ -24,21 +24,23 @@ class PoseDetectorJS {
         if (this.app.state !== 'pose') return;
         
         if (results.poseLandmarks && results.poseLandmarks.length > 0) {
-            // Get nose landmark (index 0)
-            const nose = results.poseLandmarks[0];
             const width = this.app.canvasManager.canvas.width;
             const height = this.app.canvasManager.canvas.height;
             
-            const x = nose.x * width;
-            const y = nose.y * height;
+            // Map relative coordinates to absolute canvas pixel dimensions
+            const landmarks = results.poseLandmarks.map(lm => ({
+                x: lm.x * width,
+                y: lm.y * height,
+                visibility: lm.visibility !== undefined ? lm.visibility : 1.0
+            }));
             
-            // Let the game know where the nose is
+            // Let the game know where all landmarks are
             if (this.app.gamePose) {
-                this.app.gamePose.updateNosePosition(x, y);
+                this.app.gamePose.updatePoseLandmarks(landmarks);
             }
         } else {
             if (this.app.gamePose) {
-                this.app.gamePose.clearNoseActive();
+                this.app.gamePose.clearPoseLandmarks();
             }
         }
     }

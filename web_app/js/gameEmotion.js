@@ -55,14 +55,8 @@ class GameEmotion {
         this.ctx.fillStyle = 'rgba(5,5,8,0.85)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
-        this.ctx.font = '800 60px Outfit';
-        this.ctx.fillStyle = '#ff007f';
-        this.ctx.textAlign = 'center';
-        this.ctx.fillText("SÜRE BİTTİ!", this.canvas.width/2, this.canvas.height/2 - 40);
-        
-        this.ctx.font = '600 40px Outfit';
-        this.ctx.fillStyle = '#fff';
-        this.ctx.fillText(`Skor: ${this.score}`, this.canvas.width/2, this.canvas.height/2 + 40);
+        this.drawUnmirroredText("SÜRE BİTTİ!", this.canvas.width / 2, this.canvas.height / 2 - 40, '800 60px Outfit', '#ff007f');
+        this.drawUnmirroredText(`Skor: ${this.score}`, this.canvas.width / 2, this.canvas.height / 2 + 40, '600 40px Outfit', '#ffffff');
         
         setTimeout(() => {
             if (this.app.state === 'emotion') this.app.setState('menu');
@@ -152,14 +146,8 @@ class GameEmotion {
         this.ctx.fill();
         this.ctx.stroke();
         
-        // Draw instruction prompt (Text)
-        this.ctx.font = '800 36px Outfit';
-        this.ctx.fillStyle = '#ffffff';
-        this.ctx.textAlign = 'center';
-        this.ctx.shadowBlur = 10;
-        this.ctx.shadowColor = level.color;
-        this.ctx.fillText(level.prompt, cx, cy - 250);
-        this.ctx.shadowBlur = 0; // Reset glow
+        // Draw instruction prompt (Text) - UNMIRRORED
+        this.drawUnmirroredText(level.prompt, cx, cy - 250, '800 36px Outfit', '#ffffff', 10, level.color);
         
         // Draw vector representation of the emoji target expression
         const scale = 1.0 + (this.pulse * 0.15);
@@ -190,14 +178,9 @@ class GameEmotion {
             }
         }
         
-        // Success Text Overlay
+        // Success Text Overlay - UNMIRRORED
         if (this.isSuccess) {
-            this.ctx.font = '800 48px Outfit';
-            this.ctx.fillStyle = level.color;
-            this.ctx.shadowBlur = 20;
-            this.ctx.shadowColor = level.color;
-            this.ctx.fillText("HARİKASIN! 🌟", cx, cy + 180);
-            this.ctx.shadowBlur = 0;
+            this.drawUnmirroredText("HARİKASIN! 🌟", cx, cy + 180, '800 48px Outfit', level.color, 20, level.color);
         }
         
         requestAnimationFrame(() => this.loop());
@@ -326,5 +309,22 @@ class GameEmotion {
         }
         
         this.ctx.shadowBlur = 0; // Reset
+    }
+    
+    drawUnmirroredText(text, cx, cy, font, color, shadowBlur = 0, shadowColor = '') {
+        this.ctx.save();
+        this.ctx.font = font;
+        this.ctx.fillStyle = color;
+        this.ctx.textAlign = 'center';
+        if (shadowBlur > 0) {
+            this.ctx.shadowBlur = shadowBlur;
+            this.ctx.shadowColor = shadowColor;
+        }
+        
+        // Flip coordinates horizontally to cancel out canvas mirror effect
+        this.ctx.scale(-1, 1);
+        this.ctx.fillText(text, -cx, cy);
+        
+        this.ctx.restore();
     }
 }

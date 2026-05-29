@@ -9,8 +9,9 @@ class GamePose {
         this.time = 60;
         this.isRunning = false;
         
-        this.noseX = 0;
-        this.noseY = 0;
+        this.landmarks = [];
+        this.poseActive = false;
+        this.lastPoseTime = 0;
         
         this.lastSpawn = 0;
         this.spawnInterval = 2000;
@@ -24,6 +25,8 @@ class GamePose {
         this.score = 0;
         this.time = 60;
         this.apples = [];
+        this.landmarks = [];
+        this.poseActive = false;
         this.updateHUD();
         
         this.timerInterval = setInterval(() => {
@@ -43,17 +46,11 @@ class GamePose {
     
     endGame() {
         this.stop();
-        this.ctx.fillStyle = 'rgba(0,0,0,0.7)';
+        this.ctx.fillStyle = 'rgba(5,5,8,0.85)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
-        this.ctx.font = '800 60px Outfit';
-        this.ctx.fillStyle = '#00ff66';
-        this.ctx.textAlign = 'center';
-        this.ctx.fillText("SÜRE BİTTİ!", this.canvas.width/2, this.canvas.height/2 - 40);
-        
-        this.ctx.font = '600 40px Outfit';
-        this.ctx.fillStyle = '#fff';
-        this.ctx.fillText(`Skor: ${this.score}`, this.canvas.width/2, this.canvas.height/2 + 40);
+        this.drawUnmirroredText("SÜRE BİTTİ!", this.canvas.width / 2, this.canvas.height / 2 - 40, '800 60px Outfit', '#00ff66');
+        this.drawUnmirroredText(`Skor: ${this.score}`, this.canvas.width / 2, this.canvas.height / 2 + 40, '600 40px Outfit', '#ffffff');
         
         setTimeout(() => {
             if (this.app.state === 'pose') this.app.setState('menu');
@@ -65,16 +62,16 @@ class GamePose {
         this.hudTime.innerText = this.time;
     }
     
-    updateNosePosition(x, y) {
-        this.noseX = x;
-        this.noseY = y;
-        this.noseActive = true;
-        this.lastNoseTime = Date.now();
+    updatePoseLandmarks(landmarks) {
+        this.landmarks = landmarks;
+        this.poseActive = true;
+        this.lastPoseTime = Date.now();
         this.checkCollision();
     }
     
-    clearNoseActive() {
-        this.noseActive = false;
+    clearPoseLandmarks() {
+        this.poseActive = false;
+        this.landmarks = [];
     }
     
     spawnApple() {
@@ -83,25 +80,37 @@ class GamePose {
             x: Math.random() * (this.canvas.width - r*2) + r,
             y: -r,
             r: r,
-            speed: Math.random() * 3 + 3
+            speed: Math.random() * 4 + 3
         });
     }
     
     checkCollision() {
-        if (!this.isRunning || this.time <= 0) return;
+        if (!this.isRunning || this.time <= 0 || !this.landmarks || this.landmarks.length === 0) return;
         
         for (let i = this.apples.length - 1; i >= 0; i--) {
             const a = this.apples[i];
-            const dist = Math.hypot(a.x - this.noseX, a.y - this.noseY);
+            let hit = false;
             
-            // Nose radius is about 20px
-            if (dist < a.r + 30) {
+            // Check collision against all 33 pose landmarks
+            for (let j = 0; j < this.landmarks.length; j++) {
+                const lm = this.landmarks[j];
+                // Ignore keypoints with low confidence/visibility
+                if (lm.visibility !== undefined && lm.visibility < 0.5) continue;
+                
+                const dist = Math.hypot(a.x - lm.x, a.y - lm.y);
+                if (dist < a.r + 35) { // 35px radius collision box covers body parts
+                    hit = true;
+                    break;
+                }
+            }
+            
+            if (hit) {
                 this.score += 2;
                 this.updateHUD();
                 
                 // VFX
-                this.app.particleSystem.emit(a.x, a.y, '#ff0000', 15, 1.5);
-                this.app.particleSystem.emit(a.x, a.y, '#00ff00', 5, 2);
+                this.app.particleSystem.emit(a.x, a.y, '#ff0040', 15, 1.5);
+                this.app.particleSystem.emit(a.x, a.y, '#00ff66', 5, 2);
                 
                 this.apples.splice(i, 1);
             }
@@ -114,9 +123,9 @@ class GamePose {
         // Clear the canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Draw nose crosshair if active (updated within last 200ms)
-        if (this.noseActive && (Date.now() - this.lastNoseTime < 200)) {
-            this.drawCrosshair(this.noseX, this.noseY);
+        // Draw skeleton if active (updated within last 300ms)
+        if (this.poseActive && (Date.now() - this.lastPoseTime < 300)) {
+            this.drawSkeleton();
         }
         
         const now = Date.now();
@@ -155,20 +164,65 @@ class GamePose {
         requestAnimationFrame(() => this.loop());
     }
     
-    drawCrosshair(x, y) {
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, 20, 0, Math.PI * 2);
-        this.ctx.strokeStyle = '#00ff66';
-        this.ctx.lineWidth = 3;
-        this.ctx.shadowBlur = 15;
-        this.ctx.shadowColor = '#00ff66';
-        this.ctx.stroke();
+    drawSkeleton() {
+        if (!this.landmarks || this.landmarks.length === 0) return;
         
-        this.ctx.beginPath();
-        this.ctx.moveTo(x - 30, y); this.ctx.lineTo(x + 30, y);
-        this.ctx.moveTo(x, y - 30); this.ctx.lineTo(x, y + 30);
-        this.ctx.stroke();
+        const ctx = this.ctx;
+        ctx.strokeStyle = '#00ff66';
+        ctx.lineWidth = 6;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#00ff66';
         
-        this.ctx.shadowBlur = 0;
+        // Define standard skeletal connection indices
+        const connections = [
+            [11, 12], // Shoulders
+            [11, 13], [13, 15], // Left arm
+            [12, 14], [14, 16], // Right arm
+            [11, 23], [12, 24], [23, 24], // Torso
+            [23, 25], [25, 27], // Left leg
+            [24, 26], [26, 28]  // Right leg
+        ];
+        
+        // Draw lines
+        connections.forEach(([p1, p2]) => {
+            const lm1 = this.landmarks[p1];
+            const lm2 = this.landmarks[p2];
+            if (lm1 && lm2 && (lm1.visibility === undefined || lm1.visibility > 0.5) && (lm2.visibility === undefined || lm2.visibility > 0.5)) {
+                ctx.beginPath();
+                ctx.moveTo(lm1.x, lm1.y);
+                ctx.lineTo(lm2.x, lm2.y);
+                ctx.stroke();
+            }
+        });
+        
+        // Draw joints
+        ctx.fillStyle = '#ff007f';
+        ctx.shadowColor = '#ff007f';
+        const keyJoints = [11, 12, 13, 14, 15, 16, 23, 24, 25, 26, 27, 28, 0]; // Joints + Nose (0)
+        keyJoints.forEach(idx => {
+            const lm = this.landmarks[idx];
+            if (lm && (lm.visibility === undefined || lm.visibility > 0.5)) {
+                ctx.beginPath();
+                ctx.arc(lm.x, lm.y, 8, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        });
+        
+        ctx.shadowBlur = 0; // Reset
+    }
+    
+    drawUnmirroredText(text, x, y, font, color) {
+        this.ctx.save();
+        this.ctx.font = font;
+        this.ctx.fillStyle = color;
+        this.ctx.textAlign = 'center';
+        
+        // Flip coordinates horizontally to cancel out canvas mirror effect
+        this.ctx.scale(-1, 1);
+        this.ctx.fillText(text, -x, y);
+        
+        this.ctx.restore();
     }
 }

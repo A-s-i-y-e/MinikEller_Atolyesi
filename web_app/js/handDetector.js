@@ -5,7 +5,10 @@ class HandDetectorJS {
         this.canvasManager = app.canvasManager;
         
         // Settings for drawing
-        this.pinchThreshold = 0.05; // Distance between thumb and index to consider a "click" or "draw"
+        this.pinchThresholdStart = 0.055; // Distance to start drawing (strict)
+        this.pinchThresholdActive = 0.09; // Distance to keep drawing (lax)
+        this.isPinchingState = false;
+        this.nonPinchFrames = 0; // Frame counter for debounce
         
         this.initMediaPipe();
     }
@@ -51,8 +54,25 @@ class HandDetectorJS {
                 Math.pow(indexTip.y - thumbTip.y, 2)
             );
             
-            // Gesture logic
-            const isPinching = distance < this.pinchThreshold;
+            // Hysteresis + Debounce gesture logic to prevent flickering lines
+            let isCurrentlyPinching = false;
+            if (this.isPinchingState) {
+                isCurrentlyPinching = distance < this.pinchThresholdActive;
+            } else {
+                isCurrentlyPinching = distance < this.pinchThresholdStart;
+            }
+
+            if (isCurrentlyPinching) {
+                this.isPinchingState = true;
+                this.nonPinchFrames = 0;
+            } else {
+                this.nonPinchFrames++;
+                if (this.nonPinchFrames >= 4) { // Release drawing state after 4 consecutive non-pinch frames
+                    this.isPinchingState = false;
+                }
+            }
+            
+            const isPinching = this.isPinchingState;
             
             // Update UI Manager with hand position and click/pinch state
             if (this.app.uiManager) {

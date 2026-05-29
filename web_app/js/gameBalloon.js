@@ -40,22 +40,29 @@ class GameBalloon {
     
     endGame() {
         this.stop();
-        this.ctx.fillStyle = 'rgba(0,0,0,0.7)';
+        this.ctx.fillStyle = 'rgba(5,5,8,0.85)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
-        this.ctx.font = '800 60px Outfit';
-        this.ctx.fillStyle = '#00f3ff';
-        this.ctx.textAlign = 'center';
-        this.ctx.fillText("SÜRE BİTTİ!", this.canvas.width/2, this.canvas.height/2 - 40);
+        this.drawUnmirroredText("SÜRE BİTTİ!", this.canvas.width / 2, this.canvas.height / 2 - 40, '800 60px Outfit', '#00f3ff');
+        this.drawUnmirroredText(`Skor: ${this.score}`, this.canvas.width / 2, this.canvas.height / 2 + 40, '600 40px Outfit', '#ffffff');
         
-        this.ctx.font = '600 40px Outfit';
-        this.ctx.fillStyle = '#fff';
-        this.ctx.fillText(`Skor: ${this.score}`, this.canvas.width/2, this.canvas.height/2 + 40);
-        
-        // Return to menu after 3 seconds
+        // Return to menu after 4 seconds
         setTimeout(() => {
             if (this.app.state === 'balloon') this.app.setState('menu');
         }, 4000);
+    }
+    
+    drawUnmirroredText(text, x, y, font, color) {
+        this.ctx.save();
+        this.ctx.font = font;
+        this.ctx.fillStyle = color;
+        this.ctx.textAlign = 'center';
+        
+        // Flip coordinates horizontally to cancel out canvas mirror effect
+        this.ctx.scale(-1, 1);
+        this.ctx.fillText(text, -x, y);
+        
+        this.ctx.restore();
     }
     
     updateHUD() {

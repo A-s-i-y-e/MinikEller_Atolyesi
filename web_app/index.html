@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minik Eller Atölyesi - Premium Web</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="css/style.css?v=3">
+    
+    <!-- MediaPipe JS (Files from CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <!-- Hand Tracking -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <!-- Face Mesh (For Smile Login & Emotion) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+    <!-- Pose (For Apple Game) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Video Input (Used for processing and display) -->
+        <video id="video-input" autoplay playsinline></video>
+        
+        <!-- Output Canvas for Drawing & Games -->
+        <canvas id="output-canvas"></canvas>
+        <!-- VFX Canvas for Particle Effects (On top) -->
+        <canvas id="vfx-canvas"></canvas>
+
+        <!-- Loading Screen -->
+        <div id="screen-loading" class="screen active glass-panel" style="border-radius: 0; background: rgba(5,5,8,0.9);">
+            <h1 class="neon-text">Minik Eller Atölyesi</h1>
+            <p style="color: #ccc; margin-top: 10px;">Yapay Zeka Modülleri Yükleniyor...</p>
+            <div class="loader"></div>
+        </div>
+
+        <!-- Login Screen (Face Detection) -->
+        <div id="screen-login" class="screen" style="background: transparent;">
+            <!-- Main visual container, centering the huge canvas and text without blocking the camera background -->
+            <div style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; z-index: 20; pointer-events: none;">
+                <h1 class="neon-text blue" style="font-size: 3.5rem; margin-top: 0; text-shadow: 0 0 10px rgba(0, 243, 255, 0.8), 0 0 30px rgba(0, 243, 255, 0.4); letter-spacing: 3px; font-weight: 800;">Yüzünü Göster!</h1>
+                <canvas id="login-avatar-canvas" width="600" height="600" style="filter: drop-shadow(0 0 25px rgba(0, 243, 255, 0.4)); transform: scaleX(-1);"></canvas>
+                <p style="font-size: 1.8rem; color: #ffffff; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.9); margin-top: 10px; background: rgba(0,0,0,0.5); padding: 10px 25px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">Kameraya bak ve <b>GÜLÜMSE!</b> 😁</p>
+                <div class="smile-bar-container" style="display: none;">
+                    <div id="smile-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Menu -->
+        <div id="screen-menu" class="screen">
+            <h1 class="neon-text purple" style="font-size: 3rem; margin-bottom: 20px;">ATÖLYE MENÜSÜ</h1>
+            <p>Bir aktivite seç ve eğlenceye başla!</p>
+            
+            <div class="menu-grid">
+                <div class="menu-card" data-mode="draw">
+                    <div class="icon">✏️</div>
+                    <h3 class="neon-text">Serbest Çizim</h3>
+                </div>
+                <div class="menu-card" data-mode="balloon">
+                    <div class="icon">🎈</div>
+                    <h3 class="neon-text">Balon Patlatma</h3>
+                </div>
+                <div class="menu-card" data-mode="pose">
+                    <div class="icon">🍎</div>
+                    <h3 class="neon-text">Elma Yakalama</h3>
+                </div>
+                <div class="menu-card" data-mode="emotion">
+                    <div class="icon">🎭</div>
+                    <h3 class="neon-text">Duygu Oyunu</h3>
+                </div>
+                <div class="menu-card exit-card" data-mode="login" style="border-color: var(--neon-pink);">
+                    <div class="icon">🚪</div>
+                    <h3 class="neon-text" style="--neon-pink: #ff007f; text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-pink);">Girişe Dön</h3>
+                </div>
+                <div class="menu-card" style="opacity: 0.5; cursor: not-allowed; border-color: rgba(255,255,255,0.1);">
+                    <div class="icon">🎁</div>
+                    <h3 class="neon-text" style="text-shadow: none; color: #888;">Yakında!</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- App UI (Draw Mode) -->
+        <div id="toolbar" class="glass-panel" style="display: none;">
+            <div class="logo">
+                <h2 class="neon-text">Araçlar</h2>
+            </div>
+            <div class="tools-section">
+                <button id="btn-draw" class="tool-btn active">✏️ Çiz</button>
+                <button id="btn-magic" class="tool-btn">✨ Sihirli Fırça</button>
+                <button id="btn-erase" class="tool-btn">🧽 Silgi</button>
+                <button id="btn-clear" class="tool-btn danger">🗑️ Temizle</button>
+                <button id="btn-save" class="tool-btn success">💾 Kaydet</button>
+            </div>
+            <div style="height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
+            <div class="palette-section">
+                <h3 style="color:#aaa; font-size:12px;">Renkler</h3>
+                <div class="color-palette">
+                    <div class="color-swatch active" data-color="#ff007f" style="background-color: #ff007f;"></div>
+                    <div class="color-swatch" data-color="#ff9900" style="background-color: #ff9900;"></div>
+                    <div class="color-swatch" data-color="#ffff00" style="background-color: #ffff00;"></div>
+                    <div class="color-swatch" data-color="#00ff66" style="background-color: #00ff66;"></div>
+                    <div class="color-swatch" data-color="#00f3ff" style="background-color: #00f3ff;"></div>
+                    <div class="color-swatch" data-color="#9d00ff" style="background-color: #9d00ff;"></div>
+                    <div class="color-swatch" data-color="#ffffff" style="background-color: #ffffff;"></div>
+                </div>
+            </div>
+            <div style="height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
+            <div class="brush-size-section">
+                <h3 style="color:#aaa; font-size:12px;">Fırça Boyutu: <span id="brush-size-display">15</span>px</h3>
+                <input type="range" id="brush-slider" min="5" max="50" value="15">
+            </div>
+        </div>
+
+        <!-- In-Game HUD -->
+        <div id="game-hud" class="hud" style="display: none;">
+            <div class="hud-panel"><span style="color:var(--neon-pink)">SKOR:</span> <span id="hud-score">0</span></div>
+            <div class="hud-panel"><span style="color:var(--neon-blue)">SÜRE:</span> <span id="hud-time">60</span>s</div>
+        </div>
+
+        <!-- Back Button (Always visible inside apps) -->
+        <button id="btn-back" style="display: none;">🏠</button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/soundSynth.js?v=3"></script>
+    <script src="js/particleSystem.js?v=3"></script>
+    <script src="js/canvasManager.js?v=3"></script>
+    <script src="js/uiManager.js?v=3"></script>
+    
+    <!-- AI Detectors -->
+    <script src="js/faceDetector.js?v=3"></script>
+    <script src="js/poseDetector.js?v=3"></script>
+    <script src="js/handDetector.js?v=3"></script>
+    
+    <!-- Games -->
+    <script src="js/gameBalloon.js?v=3"></script>
+    <script src="js/gamePose.js?v=3"></script>
+    
+    <!-- Main App State Machine -->
+    <script src="js/app.js?v=3"></script>
+</body>
+</html>

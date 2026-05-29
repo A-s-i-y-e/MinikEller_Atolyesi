@@ -1,0 +1,352 @@
+:root {
+    --bg-dark: #050508;
+    --glass-bg: rgba(15, 15, 25, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --neon-pink: #ff007f;
+    --neon-blue: #00f3ff;
+    --neon-purple: #9d00ff;
+    --neon-green: #00ff66;
+    --text-main: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+    user-select: none;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-dark);
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(255, 0, 127, 0.1), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(0, 243, 255, 0.1), transparent 25%);
+    transition: background 1s ease;
+}
+
+.app-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+#video-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    transform: scaleX(-1);
+    z-index: 1;
+    pointer-events: none;
+    display: none;
+}
+
+#output-canvas, #vfx-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transform: scaleX(-1);
+    pointer-events: none; /* Let UI events pass through if needed, though mostly Hand tracked */
+}
+
+#vfx-canvas {
+    z-index: 5;
+}
+
+#output-canvas {
+    z-index: 2;
+}
+
+/* Base Panel & Screen */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: opacity 0.5s ease;
+}
+
+.screen.active {
+    display: flex;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(255,255,255,0.02);
+    color: var(--text-main);
+    padding: 30px;
+}
+
+/* Text Effects */
+.neon-text {
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink);
+    letter-spacing: 2px;
+}
+.neon-text.blue { text-shadow: 0 0 5px #fff, 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue); }
+.neon-text.purple { text-shadow: 0 0 5px #fff, 0 0 20px var(--neon-purple), 0 0 40px var(--neon-purple); }
+
+/* Login Screen */
+.smile-emoji {
+    font-size: 6rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-bottom: 5px;
+    animation: emojiPulse 2s infinite ease-in-out;
+    filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.5));
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+@keyframes emojiPulse {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.5));
+    }
+    50% {
+        transform: scale(1.1) rotate(3deg);
+        filter: drop-shadow(0 0 25px rgba(255, 0, 127, 0.7));
+    }
+}
+
+#screen-login .smile-bar-container {
+    width: 300px;
+    height: 20px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    margin-top: 25px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    position: relative;
+}
+
+#smile-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+    box-shadow: 0 0 15px var(--neon-pink);
+    transition: width 0.1s linear;
+}
+
+/* Menu Screen */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.menu-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+    transform: skewX(-25deg);
+    transition: 0.5s;
+}
+
+.menu-card:hover::before {
+    left: 150%;
+}
+
+.menu-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 30px rgba(0, 243, 255, 0.2);
+    border-color: var(--neon-blue);
+}
+
+.menu-card h3 {
+    font-size: 1.5rem;
+    margin-top: 15px;
+    letter-spacing: 1px;
+}
+
+.menu-card .icon {
+    font-size: 3rem;
+}
+
+/* Game & Draw UI */
+#btn-back {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    width: 70px; height: 70px;
+    font-size: 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    transition: all 0.3s ease;
+}
+#btn-back:hover {
+    background: rgba(255,255,255,0.1);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--neon-pink);
+    border-color: var(--neon-pink);
+}
+
+#toolbar {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 260px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tools-section { display: flex; flex-direction: column; gap: 10px; }
+.tool-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 12px 15px;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex; align-items: center; gap: 10px;
+}
+.tool-btn:hover { background: rgba(255, 255, 255, 0.15); transform: translateX(5px); }
+.tool-btn.active {
+    background: rgba(0, 243, 255, 0.2);
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+}
+
+.color-palette { display: flex; flex-wrap: wrap; gap: 10px; }
+.color-swatch {
+    width: 35px; height: 35px; border-radius: 50%; cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+}
+.color-swatch:hover, .color-swatch.active {
+    border: 2px solid white;
+    box-shadow: 0 0 15px currentColor;
+    transform: scale(1.2);
+}
+
+.hud {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 50px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.hud-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--neon-blue);
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+}
+
+/* Loading */
+.loader {
+    margin-top: 30px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top: 4px solid var(--neon-pink);
+    border-radius: 50%;
+    width: 60px; height: 60px;
+    animation: spin 1s linear infinite;
+    box-shadow: 0 0 15px var(--neon-pink);
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* ==========================================================================
+   Contactless Hand Hover Styles
+   ========================================================================== */
+
+/* Menu Cards Hover */
+.menu-card.hand-hover {
+    transform: translateY(-10px) scale(1.05);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 30px rgba(0, 243, 255, 0.2);
+    border-color: var(--neon-blue);
+}
+
+.menu-card.exit-card.hand-hover {
+    box-shadow: 0 15px 30px rgba(255, 0, 127, 0.2);
+    border-color: var(--neon-pink);
+}
+
+/* Toolbar Buttons Hover */
+.tool-btn.hand-hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateX(5px) scale(1.03);
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+}
+
+/* Color Palette Swatches Hover */
+.color-swatch.hand-hover {
+    border: 2px solid white;
+    box-shadow: 0 0 18px currentColor;
+    transform: scale(1.25);
+}
+
+/* Back Button Hover */
+#btn-back.hand-hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.15);
+    box-shadow: 0 0 25px var(--neon-pink);
+    border-color: var(--neon-pink);
+}
+
+/* Interactive Sliders Hover */
+input[type="range"].hand-hover {
+    filter: brightness(1.2);
+    transform: scaleY(1.1);
+}
+

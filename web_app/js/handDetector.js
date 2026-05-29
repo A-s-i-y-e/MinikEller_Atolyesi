@@ -61,8 +61,8 @@ class HandDetectorJS {
             const middleTip = landmarks[12];
             const middleMcp = landmarks[9];
             
-            const indexOpen = dist2D(indexTip, wrist) > dist2D(indexMcp, wrist) * 1.15;
-            const middleOpen = dist2D(middleTip, wrist) > dist2D(middleMcp, wrist) * 1.15;
+            const indexOpen = dist2D(indexTip, wrist) > dist2D(indexMcp, wrist) * 1.10;
+            const middleOpen = dist2D(middleTip, wrist) > dist2D(middleMcp, wrist) * 1.10;
             
             const isPointing = indexOpen && !middleOpen;
             

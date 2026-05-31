@@ -208,8 +208,8 @@ class GameCoding {
         
         if (cmd.dir === 'up') nextPos.y--;
         else if (cmd.dir === 'down') nextPos.y++;
-        else if (cmd.dir === 'left') nextPos.x--;
-        else if (cmd.dir === 'right') nextPos.x++;
+        else if (cmd.dir === 'left') nextPos.x++; // Mirror correction: left on screen increases canvas x index
+        else if (cmd.dir === 'right') nextPos.x--; // Mirror correction: right on screen decreases canvas x index
         
         // Validate next position
         const grid = this.levels[this.levelIndex].grid;

@@ -593,12 +593,12 @@
                     <span>7</span>
                 </li>
                 <li class="toc-item" style="padding-left: 40px;">
-                    <a href="#islev-sablon">4.1.4. Sihirli Şablon Boyama (Taşırmadan Doldurma)</a>
+                    <a href="#islev-sablon">4.1.4. Sihirli Fırça ve Dinamik Parçacık Efektleri (VFX)</a>
                     <span class="toc-dots"></span>
                     <span>7</span>
                 </li>
                 <li class="toc-item" style="padding-left: 40px;">
-                    <a href="#islev-sekiller">4.1.5. Hazır Şekiller (Sürükle, Boyutlandır ve Sabitle)</a>
+                    <a href="#islev-sekiller">4.1.5. Hazır Şekiller ve Akıllı Şekil Sabitleme (Stamp/Bake)</a>
                     <span class="toc-dots"></span>
                     <span>8</span>
                 </li>
@@ -799,17 +799,21 @@
         <p>
             Küçük çocukların boyama yaparken taşırma stresini önlemek amacıyla sihirli şablon boyama eklenmiştir. Çocuk elini şablonun (örneğin Ayı) üzerine getirdiğinde boya sadece şablon sınırları içerisindeki maske alanına uygulanır, dış alanlar boyanmaz.
         </p>
+        <h3 id="islev-sablon">4.1.4. Sihirli Fırça ve Dinamik Parçacık Efektleri (VFX)</h3>
+        <p>
+            Çocukların çizim yaparken görsel motivasyonunu artırmak amacıyla <strong>Sihirli Fırça</strong> modu entegre edilmiştir. Bu mod aktif edildiğinde, çizilen çizgi HSL renk uzayında zamana bağlı olarak sürekli renk değiştiren gökkuşağı neon rengini alır. Ayrıca, çizimin yapıldığı parmak ucundan fizik kurallarına göre dağılan parıltılı neon parçacıklar (sparks) saçılır. Parçacık motoru (`particleSystem.js`) her karede parçacıkların hızını, yerçekimi etkisini ve sönümlenmesini hesaplayarak ikinci bir canvas katmanı olan <code>vfx-canvas</code> üzerinde akıcı bir görsel şölen sunar.
+        </p>
         <div class="figure">
-            <img src="images/web_drawing_screen.png" alt="Şablon Boyama"/>
-            <div class="figure-caption">Şekil 4.4: Taşırmadan Boyama Yapan Sihirli Şablon Boyama Arayüzü</div>
+            <img src="images/web_drawing_screen.png" alt="Sihirli Fırça"/>
+            <div class="figure-caption">Şekil 4.4: Sihirli Fırça ve Parçacık Sistem Arayüzü</div>
         </div>
 
-        <h3 id="islev-sekiller">4.1.5. Hazır Şekiller (Sürükle, Boyutlandır ve Sabitle)</h3>
+        <h3 id="islev-sekiller">4.1.5. Hazır Şekiller ve Akıllı Şekil Sabitleme (Stamp/Bake)</h3>
         <p>
-            Çocukların geometrik ve sembolik şekiller yerleştirmesini sağlayan modern bir vektörel düzenleme modülü eklenmiştir. Desteklenen şekiller şunlardır: Yıldız (⭐), Daire (⚪), Ev (🏠), Çiçek (🌸), Kalp (❤️), Ağaç (🌲) ve Bulut (☁️).
+            Çocukların tuval üzerine hazır geometrik ve sembolik şekiller yerleştirmesini sağlayan modern bir vektörel düzenleme modülü eklenmiştir. Desteklenen şekiller şunlardır: Yıldız (⭐), Daire (⚪), Ev (🏠), Çiçek (🌸), Kalp (❤️), Ağaç (🌲) ve Bulut (☁️).
         </p>
         <p>
-            Şekil ekleme butonuna basıldığında şekil sağ tarafta temiz bir alanda oluşur. Çocuk elini şeklin üzerine getirip kıstırdığında (pinch) şekli sürükleyebilir; sağ altındaki yeşil halkayı kıstırdığında şekli büyütebilir. Dışarı tıkladığında şeklin seçimi kalkar ancak kilitlenmez. Çocuk şekli istediği konuma aldıktan sonra <strong>📌 Şekli Sabitle</strong> butonuna basarak şekli arka plana damgalar ve üzerine boyama yapabilir.
+            Sol menüden bir şekil butonuna tıklandığında şekil ekranın sağ tarafında (aynalı koordinatta x = 250) neon parlamasıyla boş bir alanda oluşur. Çocuk elini şeklin üzerine getirip kıstırdığında (pinch) şekli sürükleyebilir; sağ altındaki yeşil halkayı kıstırdığında şekli büyütebilir. Dışarı tıkladığında şeklin seçimi kalkar ancak kilitlenmez, çocuk dilediği zaman üzerine tekrar gelip kıstırma yaparak şekli seçebilir. Şekil seçildiğinde araç çubuğunda <strong>📌 Şekli Sabitle</strong> butonu belirir. Çocuk bu butona bastığında şekil arka plan katmanına kalıcı olarak işlenir (stamp/bake). Sabitlenen şekil artık taşınamaz hale gelir ve çocuk şeklin üzerine serbest boyama yapabilir.
         </p>
 
         <h3 id="islev-oyunlar">4.1.6. Eğitici Temassız Oyun Modülleri</h3>
@@ -1045,7 +1049,7 @@ startStroke(x, y) {
         <!-- SECTION 7 -->
         <h1 id="guvenlik">7. Gizlilik ve Veri Güvenliği</h1>
         <p>
-            Platform, çocukların biyometrik verilerinin korunması amacıyla tamamen <strong>offline/yerel</strong> çalışmaktadır. Kamera görüntüleri hiçbir uzak sunucuya gönderilmez, tarayıcı içinde işlem gördükten hemen sonra bellekten silinir. Bu yönüyle çocuk güvenliği standartlarına tam uyum sağlamaktadır.
+            Platform, çocukların biyometrik verilerinin korunması amacıyla tamamen <strong>offline/yerel (istemci tarafında)</strong> çalışmaktadır. Tarayıcı sürümünde MediaPipe JavaScript modelleri ilk açılışta CDN üzerinden tarayıcı belleğine yüklenir; ancak çalışmaya başladıktan sonra tüm yapay zeka çıkarımları (el, yüz ve vücut takibi) kullanıcının bilgisayarında, tarayıcının yerel WebAssembly (WASM) sanal alanında (sandbox) gerçekleştirilir. Web kamerasından alınan görüntüler hiçbir uzak sunucuya veya buluta gönderilmez, tarayıcı belleğinde anlık olarak işlendikten hemen sonra yok edilir. Bu mimari yaklaşım, çocukların biyometrik verilerinin gizliliğini %100 güvence altına alarak KVKK ve GDPR standartlarına tam uyum sağlamaktadır.
         </p>
 
         <h3>Kaynakça</h3>

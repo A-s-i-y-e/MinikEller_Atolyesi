@@ -120,6 +120,10 @@ class App {
             case 'login':
                 this.screens.login.classList.add('active');
                 document.body.style.backgroundImage = 'radial-gradient(circle at 50% 50%, rgba(0, 243, 255, 0.2), transparent 40%)';
+                if (this.faceDetector) {
+                    this.faceDetector.smileProgress = 0;
+                    this.faceDetector.isLoggingIn = false;
+                }
                 break;
             case 'menu':
                 this.screens.menu.classList.add('active');

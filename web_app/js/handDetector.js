@@ -45,16 +45,30 @@ class HandDetectorJS {
             const thumbTip = landmarks[4];
             
             // Map relative coordinates (0-1) to canvas size
-            const x = indexTip.x * width;
-            const y = indexTip.y * height;
-            // Calculate distance between thumb and index tip for button clicks (pinch gesture)
+            const rawX = indexTip.x * width;
+            const rawY = indexTip.y * height;
+            
+            // Exponential smoothing to prevent hand jitter
+            if (this.smoothedX === undefined) {
+                this.smoothedX = rawX;
+                this.smoothedY = rawY;
+            } else {
+                const alpha = 0.25; // 0.25 is perfect for reducing jitter while keeping low latency
+                this.smoothedX = this.smoothedX + alpha * (rawX - this.smoothedX);
+                this.smoothedY = this.smoothedY + alpha * (rawY - this.smoothedY);
+            }
+            
+            const x = this.smoothedX;
+            const y = this.smoothedY;
+            
+            // Calculate distance between thumb and index tip for drawing and button clicks
             const distance = Math.sqrt(
                 Math.pow(indexTip.x - thumbTip.x, 2) + 
                 Math.pow(indexTip.y - thumbTip.y, 2)
             );
             const isPinching = distance < 0.06;
             
-            // Calculate pointing gesture (index finger extended, middle finger folded)
+            // Calculate pointing gesture (index finger extended, middle finger folded) for optional fallback mode
             const dist2D = (p1, p2) => Math.hypot(p1.x - p2.x, p1.y - p2.y);
             const wrist = landmarks[0];
             const indexMcp = landmarks[5];
@@ -63,24 +77,38 @@ class HandDetectorJS {
             
             const indexOpen = dist2D(indexTip, wrist) > dist2D(indexMcp, wrist) * 1.10;
             const middleOpen = dist2D(middleTip, wrist) > dist2D(middleMcp, wrist) * 1.10;
-            
             const isPointing = indexOpen && !middleOpen;
             
-            // Debounce pointing state to prevent line flicker
-            if (!this.nonPointingFrames) this.nonPointingFrames = 0;
-            if (!this.isPointingState) this.isPointingState = false;
-            
-            if (isPointing) {
-                this.isPointingState = true;
-                this.nonPointingFrames = 0;
+            // Determine drawing trigger based on mode
+            let wantToDraw = false;
+            if (this.canvasManager && this.canvasManager.drawingGestureMode === 'point') {
+                wantToDraw = isPointing;
             } else {
-                this.nonPointingFrames++;
-                if (this.nonPointingFrames >= 3) { // Stop drawing after 3 consecutive non-pointing frames
-                    this.isPointingState = false;
+                // Pinch mode with robust hysteresis (tightened to prevent accidental drawing)
+                if (this.isPinchingState) {
+                    wantToDraw = distance <= 0.065; // lax threshold to keep drawing
+                } else {
+                    wantToDraw = distance <= 0.042; // strict threshold to start drawing
                 }
             }
             
-            const activeDrawing = this.isPointingState;
+            // Debounce state to prevent line flicker
+            if (!this.nonPinchFrames) this.nonPinchFrames = 0;
+            if (!this.isPinchingState) this.isPinchingState = false;
+            
+            if (wantToDraw) {
+                this.isPinchingState = true;
+                this.nonPinchFrames = 0;
+            } else {
+                this.nonPinchFrames++;
+                // Sürükleme veya boyutlandırma sırasında elin anlık kaybolmasında çizimin kopmaması için debounce süresini artır
+                const maxDebounce = (this.canvasManager && (this.canvasManager.isDraggingShape || this.canvasManager.isResizingShape)) ? 8 : 3;
+                if (this.nonPinchFrames >= maxDebounce) {
+                    this.isPinchingState = false;
+                }
+            }
+            
+            const activeDrawing = this.isPinchingState;
             
             // Update UI Manager with hand position and click/pinch state
             if (this.app.uiManager) {
@@ -105,7 +133,12 @@ class HandDetectorJS {
                 }
             }
         } else {
-            // No hands
+            // No hands detected - reset smoothing and states
+            this.smoothedX = undefined;
+            this.smoothedY = undefined;
+            this.isPinchingState = false;
+            this.nonPinchFrames = 0;
+            
             if (this.app.uiManager) {
                 this.app.uiManager.clearHandPointer();
             }

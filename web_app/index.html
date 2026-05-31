@@ -90,11 +90,13 @@
                 <h2 class="neon-text">Araçlar</h2>
             </div>
             <div class="tools-section">
+                <button id="btn-toggle-gesture" class="tool-btn" style="border-color: var(--neon-pink); justify-content: center; font-size: 0.85rem; padding: 10px;">🤏 Çizim: Kıstırma</button>
                 <button id="btn-draw" class="tool-btn active">✏️ Çiz</button>
                 <button id="btn-magic" class="tool-btn">✨ Sihirli Fırça</button>
                 <button id="btn-erase" class="tool-btn">🧽 Silgi</button>
                 <button id="btn-clear" class="tool-btn danger">🗑️ Temizle</button>
                 <button id="btn-save" class="tool-btn success">💾 Kaydet</button>
+                <button id="btn-bake-shape" class="tool-btn success" style="border-color: var(--neon-green); display: none; justify-content: center; background: rgba(0, 255, 102, 0.15); box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);">📌 Şekli Sabitle</button>
             </div>
             <div style="height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
             <div class="palette-section">
@@ -107,6 +109,19 @@
                     <div class="color-swatch" data-color="#00f3ff" style="background-color: #00f3ff;"></div>
                     <div class="color-swatch" data-color="#9d00ff" style="background-color: #9d00ff;"></div>
                     <div class="color-swatch" data-color="#ffffff" style="background-color: #ffffff;"></div>
+                </div>
+            </div>
+            <div style="height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
+            <div class="shapes-section">
+                <h3 style="color:#aaa; font-size:12px; margin-bottom: 8px;">Şekiller</h3>
+                <div class="shape-buttons" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
+                    <button id="btn-shape-star" class="tool-btn" style="padding: 8px 10px; font-size: 0.85rem; justify-content: center;">⭐ Yıldız</button>
+                    <button id="btn-shape-circle" class="tool-btn" style="padding: 8px 10px; font-size: 0.85rem; justify-content: center;">⚪ Daire</button>
+                    <button id="btn-shape-house" class="tool-btn" style="padding: 8px 10px; font-size: 0.85rem; justify-content: center;">🏠 Ev</button>
+                    <button id="btn-shape-flower" class="tool-btn" style="padding: 8px 10px; font-size: 0.85rem; justify-content: center;">🌸 Çiçek</button>
+                    <button id="btn-shape-heart" class="tool-btn" style="padding: 8px 10px; font-size: 0.85rem; justify-content: center;">❤️ Kalp</button>
+                    <button id="btn-shape-tree" class="tool-btn" style="padding: 8px 10px; font-size: 0.85rem; justify-content: center;">🌲 Ağaç</button>
+                    <button id="btn-shape-cloud" class="tool-btn" style="padding: 8px 10px; font-size: 0.85rem; justify-content: center; grid-column: span 2;">☁️ Bulut</button>
                 </div>
             </div>
             <div style="height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>

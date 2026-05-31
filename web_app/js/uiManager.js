@@ -10,9 +10,21 @@ class UIManager {
         this.btnErase = document.getElementById('btn-erase');
         this.btnClear = document.getElementById('btn-clear');
         this.btnSave = document.getElementById('btn-save');
+        this.btnBakeShape = document.getElementById('btn-bake-shape');
         
         // Colors
         this.colorSwatches = document.querySelectorAll('.color-swatch');
+        
+        // Shape Buttons
+        this.btnShapeStar = document.getElementById('btn-shape-star');
+        this.btnShapeCircle = document.getElementById('btn-shape-circle');
+        this.btnShapeHouse = document.getElementById('btn-shape-house');
+        this.btnShapeFlower = document.getElementById('btn-shape-flower');
+        this.btnShapeHeart = document.getElementById('btn-shape-heart');
+        this.btnShapeTree = document.getElementById('btn-shape-tree');
+        this.btnShapeCloud = document.getElementById('btn-shape-cloud');
+        // Gesture toggle button
+        this.btnToggleGesture = document.getElementById('btn-toggle-gesture');
         
         // Slider
         this.brushSlider = document.getElementById('brush-slider');
@@ -27,6 +39,39 @@ class UIManager {
     }
     
     setupEventListeners() {
+        // Shapes Click Events
+        const addShapeClick = (btn, type) => {
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    this.canvasManager.addShape(type);
+                    this.canvasManager.setTool('draw');
+                    this.btnDraw.classList.add('active');
+                    this.btnMagic.classList.remove('active');
+                    this.btnErase.classList.remove('active');
+                });
+            }
+        };
+
+        addShapeClick(this.btnShapeStar, 'star');
+        addShapeClick(this.btnShapeCircle, 'circle');
+        addShapeClick(this.btnShapeHouse, 'house');
+        addShapeClick(this.btnShapeFlower, 'flower');
+        addShapeClick(this.btnShapeHeart, 'heart');
+        addShapeClick(this.btnShapeTree, 'tree');
+        addShapeClick(this.btnShapeCloud, 'cloud');
+
+        // Gesture toggle
+        if (this.btnToggleGesture) {
+            this.btnToggleGesture.addEventListener('click', () => {
+                const mode = this.canvasManager.drawingGestureMode === 'point' ? 'pinch' : 'point';
+                this.canvasManager.drawingGestureMode = mode;
+                this.btnToggleGesture.innerText = mode === 'point' ? '👉 Çizim: İşaret Parmağı' : '🤏 Çizim: Kıstırma';
+                if (window.app && window.app.soundSynth) {
+                    window.app.soundSynth.playSuccess();
+                }
+            });
+        }
+
         // Tools
         this.btnDraw.addEventListener('click', () => {
             this.canvasManager.setTool('draw');
@@ -58,6 +103,16 @@ class UIManager {
         this.btnSave.addEventListener('click', () => {
             this.canvasManager.save();
         });
+
+        // Bake Shape Button
+        if (this.btnBakeShape) {
+            this.btnBakeShape.addEventListener('click', () => {
+                this.canvasManager.bakeSelectedShape();
+                if (window.app && window.app.soundSynth) {
+                    window.app.soundSynth.playSuccess();
+                }
+            });
+        }
         
         // Colors
         this.colorSwatches.forEach(swatch => {
@@ -169,5 +224,11 @@ class UIManager {
         this.dwellProgress = 0;
         this.dwellStartTime = null;
         this.lastHoveredElement = null;
+    }
+
+    showBakeButton(visible) {
+        if (this.btnBakeShape) {
+            this.btnBakeShape.style.display = visible ? 'flex' : 'none';
+        }
     }
 }

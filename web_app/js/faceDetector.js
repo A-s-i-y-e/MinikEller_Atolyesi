@@ -2,6 +2,7 @@ class FaceDetectorJS {
     constructor(app) {
         this.app = app;
         this.smileProgress = 0;
+        this.isLoggingIn = false;
         this.smileBar = document.getElementById('smile-bar-fill');
         this.lastBlinkLeft = false;
         this.lastBlinkRight = false;
@@ -29,6 +30,7 @@ class FaceDetectorJS {
     
     onResults(results) {
         if (this.app.state !== 'login' && this.app.state !== 'emotion') return;
+        if (this.app.state === 'login' && this.isLoggingIn) return;
         
         if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
             const landmarks = results.multiFaceLandmarks[0];
@@ -100,7 +102,8 @@ class FaceDetectorJS {
                 this.drawAvatar(this.smileProgress, blinkLeft, blinkRight, jawOpen);
                 
                 if (this.smileProgress >= 100) {
-                    this.smileProgress = 0;
+                    this.isLoggingIn = true;
+                    this.smileProgress = 100;
                     this.app.soundSynth.playSuccess();
                     this.app.particleSystem.emit(window.innerWidth/2, window.innerHeight/2, '#00ff66', 60, 2);
                     setTimeout(() => {

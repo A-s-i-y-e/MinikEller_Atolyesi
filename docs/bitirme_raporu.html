@@ -638,6 +638,15 @@
             <div class="figure-caption">Şekil 4.8: Yüz Takibi ile Duygu Aynası Oyunu Arayüzü</div>
         </div>
 
+        <h3 id="islev-coding">4.1.9. Özellik: Çocuklar İçin Temassız Kodlama Labirenti Oyunu</h3>
+        <p>
+            <strong>Açıklama:</strong> 5-6 yaş grubundaki çocukların mantıksal sıralama (sequential thinking) ve temel kodlama/algoritma geliştirme becerilerini desteklemek üzere tasarlanmıştır. Çocuklar ekranın sol tarafındaki cam panelde yer alan yön butonlarına el hareketleriyle (temassız bekleme veya kıstırma) basarak robotu 🤖 hedefe 🏆 ulaştırmak için komut sırasını (algoritmayı) yazar. "🚀 Çalıştır" butonuyla kod dizisi adım adım çalıştırılır. Robot engellere çarparsa başa döner, hedefe ulaşırsa sevimli başarı sesleri ve parçacık animasyonlarıyla ödüllendirilir.
+        </p>
+        <div class="figure">
+            <img src="images/web_coding_game.png" alt="Kodlama Labirenti Oyunu"/>
+            <div class="figure-caption">Şekil 4.9: Yapay Zeka Destekli ve Temassız Kodlama Labirenti Oyunu</div>
+        </div>
+
         <!-- SECTION 5 -->
         <h1 id="kalite">5. Kod Kalitesi ve Yazılım Geliştirme Pratikleri</h1>
         
@@ -653,6 +662,7 @@
             <li>`js/uiManager.js`: Temassız hover, dwell (bekleme) ve pinch tıklama olay yöneticisi.</li>
             <li>`js/handDetector.js`: MediaPipe el koordinatları sarmalayıcısı, Kalman tipi yumuşatma ve histerezis eşikleri.</li>
             <li>`js/faceDetector.js`: Yüz landmarks işleyicisi ve pürüzsüz gülüş algılayıcısı.</li>
+            <li>`js/gameCoding.js`: Kodlama labirenti oyununun grid haritası ve komut kuyruğu işletim motoru.</li>
         </ul>
 
         <h3>Kod Örneği 1: Koordinat Yumuşatma ve Jest Histerezisi (handDetector.js)</h3>

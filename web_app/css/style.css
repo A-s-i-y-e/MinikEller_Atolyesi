@@ -350,3 +350,11 @@ input[type="range"].hand-hover {
     transform: scaleY(1.1);
 }
 
+/* Coding Queue Cards Active highlight */
+.queue-card.active {
+    background: rgba(0, 243, 255, 0.25) !important;
+    border-color: var(--neon-blue) !important;
+    box-shadow: 0 0 18px var(--neon-blue) !important;
+    transform: scale(1.1);
+}
+

@@ -89,6 +89,14 @@ class GameCoding {
             });
         }
         
+        const btnUndo = document.getElementById('btn-code-undo');
+        if (btnUndo) {
+            btnUndo.addEventListener('click', () => {
+                if (this.isExecuting || !this.isRunning) return;
+                this.undoLastCommand();
+            });
+        }
+        
         const btnClear = document.getElementById('btn-code-clear');
         if (btnClear) {
             btnClear.addEventListener('click', () => {
@@ -157,6 +165,11 @@ class GameCoding {
     
     clearCommands() {
         this.commands = [];
+        this.renderQueue();
+    }
+    
+    undoLastCommand() {
+        this.commands.pop();
         this.renderQueue();
     }
     

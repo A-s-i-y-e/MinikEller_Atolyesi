@@ -161,7 +161,7 @@ class UIManager {
         // Find closest interactive element
         let interactiveElement = null;
         if (element) {
-            interactiveElement = element.closest('button, .menu-card, .color-swatch, input[type="range"]');
+            interactiveElement = element.closest('button, .menu-card:not(.disabled-card), .color-swatch, input[type="range"]');
         }
         
         // Handle hover classes transition

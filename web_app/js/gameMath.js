@@ -155,6 +155,52 @@ class GameMath {
         this.ctx.restore();
     }
     
+    drawVectorCross(x, y, size, color) {
+        this.ctx.save();
+        this.ctx.strokeStyle = color || '#ff007f';
+        this.ctx.lineWidth = 6;
+        this.ctx.lineCap = 'round';
+        this.ctx.shadowBlur = 15;
+        this.ctx.shadowColor = color || '#ff007f';
+        
+        this.ctx.beginPath();
+        // Diagonal 1
+        this.ctx.moveTo(x - size / 2, y - size / 2);
+        this.ctx.lineTo(x + size / 2, y + size / 2);
+        // Diagonal 2
+        this.ctx.moveTo(x + size / 2, y - size / 2);
+        this.ctx.lineTo(x - size / 2, y + size / 2);
+        this.ctx.stroke();
+        
+        this.ctx.restore();
+    }
+    
+    drawVectorOperator(op, x, y, size, color) {
+        this.ctx.save();
+        this.ctx.strokeStyle = color;
+        this.ctx.lineWidth = 6;
+        this.ctx.lineCap = 'round';
+        this.ctx.shadowBlur = 15;
+        this.ctx.shadowColor = color;
+        
+        this.ctx.beginPath();
+        if (op === '+') {
+            // Horizontal line
+            this.ctx.moveTo(x - size / 2, y);
+            this.ctx.lineTo(x + size / 2, y);
+            // Vertical line
+            this.ctx.moveTo(x, y - size / 2);
+            this.ctx.lineTo(x, y + size / 2);
+        } else if (op === '-') {
+            // Horizontal line
+            this.ctx.moveTo(x - size / 2, y);
+            this.ctx.lineTo(x + size / 2, y);
+        }
+        this.ctx.stroke();
+        
+        this.ctx.restore();
+    }
+    
     loop() {
         if (!this.isRunning) return;
         
@@ -179,44 +225,50 @@ class GameMath {
         const cellW = 75;
         const iconA = '🍎'; // Fruits for A
         const iconB = '🍌'; // Fruits for B
-        
-        // Draw A items
-        const startX_A = this.canvas.width / 2 - 250;
         const startY = 240;
-        for (let i = 0; i < this.numA; i++) {
-            const visualX = startX_A + i * cellW;
-            this.drawUnmirroredText(iconA, visualX, startY, '48px Outfit', '');
-        }
-        
-        // Draw sign
-        this.drawUnmirroredText(
-            this.operation, 
-            this.canvas.width / 2, 
-            startY - 5, 
-            '800 48px Outfit', 
-            this.operation === '+' ? '#00ff66' : '#ff007f'
-        );
-        
-        // Draw B items
-        const startX_B = this.canvas.width / 2 + 100;
         
         if (this.operation === '+') {
-            // Draw additive items normally
+            // Draw A items on the left growing to the left to avoid overlapping the middle operator
+            const startX_A = this.canvas.width / 2 - 60;
+            for (let i = 0; i < this.numA; i++) {
+                const visualX = startX_A - i * cellW;
+                this.drawUnmirroredText(iconA, visualX, startY, '48px Outfit', '');
+            }
+            
+            // Draw plus operator in the center (aligned to center of fruit height, about startY - 20)
+            this.drawVectorOperator(
+                '+', 
+                this.canvas.width / 2, 
+                startY - 20, 
+                28, 
+                '#00ff66'
+            );
+            
+            // Draw B items on the right growing to the right
+            const startX_B = this.canvas.width / 2 + 60;
             for (let i = 0; i < this.numB; i++) {
                 const visualX = startX_B + i * cellW;
                 this.drawUnmirroredText(iconB, visualX, startY, '48px Outfit', '');
             }
         } else {
-            // Visual Subtraction: Draw crossed-out apples on the original A set!
-            // We draw red 'X' over the last B apples of group A to show subtraction visually
-            for (let i = this.numA - this.numB; i < this.numA; i++) {
-                const visualX = startX_A + i * cellW;
-                this.drawUnmirroredText('❌', visualX, startY + 5, '36px Outfit', '');
+            // Subtraction: Draw A items centered on the screen (since B items are represented by crosses)
+            const totalW = (this.numA - 1) * cellW;
+            const startX = this.canvas.width / 2 - totalW / 2;
+            
+            for (let i = 0; i < this.numA; i++) {
+                const visualX = startX + i * cellW;
+                this.drawUnmirroredText(iconA, visualX, startY, '48px Outfit', '');
             }
             
-            // Draw hint text for subtraction
+            // Draw vector crosses centered on the subtracted fruits (center of 48px fruit is approx startY - 20)
+            for (let i = this.numA - this.numB; i < this.numA; i++) {
+                const visualX = startX + i * cellW;
+                this.drawVectorCross(visualX, startY - 20, 36, '#ff007f');
+            }
+            
+            // Draw hint text for subtraction without emojis
             this.drawUnmirroredText(
-                "❌ Olmayan elmaları say!", 
+                "Üzeri çizilmemiş olan elmaları say!", 
                 this.canvas.width / 2, 
                 startY + 65, 
                 '600 20px Outfit', 

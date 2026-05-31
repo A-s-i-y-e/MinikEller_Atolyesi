@@ -156,20 +156,24 @@ body, html {
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    margin-top: 40px;
+    gap: 20px;
+    margin-top: 25px;
 }
 
 .menu-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 20px;
-    padding: 40px;
-    text-align: center;
+    padding: 15px 35px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 25px;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     overflow: hidden;
+    height: 90px;
 }
 
 .menu-card::before {
@@ -187,20 +191,21 @@ body, html {
 }
 
 .menu-card:hover {
-    transform: translateY(-10px) scale(1.05);
+    transform: translateY(-5px) scale(1.03);
     background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 15px 30px rgba(0, 243, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 243, 255, 0.15);
     border-color: var(--neon-blue);
 }
 
 .menu-card h3 {
-    font-size: 1.5rem;
-    margin-top: 15px;
+    font-size: 1.35rem;
+    margin-top: 0;
     letter-spacing: 1px;
+    text-align: left;
 }
 
 .menu-card .icon {
-    font-size: 3rem;
+    font-size: 2.6rem;
 }
 
 /* Game & Draw UI */
@@ -359,7 +364,22 @@ input[type="range"].hand-hover {
 }
 
 /* Menu Screen Exit Card full width span */
-.menu-card.exit-card {
-    grid-column: span 2;
+.menu-card.exit-card:hover {
+    border-color: var(--neon-pink) !important;
+    box-shadow: 0 10px 25px rgba(255, 0, 127, 0.2) !important;
+}
+
+.menu-card.disabled-card {
+    opacity: 0.45 !important;
+    cursor: not-allowed !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    background: rgba(255, 255, 255, 0.01) !important;
+}
+
+.menu-card.disabled-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    background: rgba(255, 255, 255, 0.01) !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
 }
 

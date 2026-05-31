@@ -78,7 +78,7 @@ class App {
         });
         
         // Menu Cards
-        document.querySelectorAll('.menu-card').forEach(card => {
+        document.querySelectorAll('.menu-card:not(.disabled-card)').forEach(card => {
             card.addEventListener('click', (e) => {
                 const mode = e.currentTarget.getAttribute('data-mode');
                 if (mode) {

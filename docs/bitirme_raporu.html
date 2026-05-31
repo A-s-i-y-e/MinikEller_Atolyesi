@@ -640,6 +640,15 @@
             <div class="figure-caption">Şekil 4.7: Yapay Zeka Destekli ve Temassız Kodlama Labirenti Oyunu</div>
         </div>
 
+        <h3 id="islev-math">4.1.8. Özellik: Çocuklar İçin Sihirli Matematik Oyunu</h3>
+        <p>
+            <strong>Açıklama:</strong> 5-6 yaş grubu çocukların toplama ve çıkarma işlemlerini görselleştirerek ve eğlenerek öğrenmelerini sağlayan matematik modülüdür. Ekranda rastgele oluşturulan ve toplamı 9'u geçmeyen işlemler (örn: 4 + 2 veya 6 - 2) neon yazı olarak gösterilir. Çocukların sayma becerisini desteklemek için toplama işleminde meyveler (Elma 🍎 ve Muz 🍌) ekranda görsel olarak çizilir. Çıkarma işleminde ise çıkarılan miktar kadar elmanın üzerine kırmızı çarpı işareti (❌) konularak görsel eksilme pedagojik olarak canlandırılır. Çocuk, ekranda yüzen neon Glassmorphic balonlar içerisindeki şıklardan (örneğin 5, 6, 7) doğru olana elini uzatarak (temassız dwell hover veya pinch click) balonu patlatır ve puan kazanır.
+        </p>
+        <div class="figure">
+            <img src="images/web_math_game.png" alt="Sihirli Matematik Oyunu"/>
+            <div class="figure-caption">Şekil 4.8: Yapay Zeka Destekli ve Temassız Sihirli Matematik Oyunu</div>
+        </div>
+
         <!-- SECTION 5 -->
         <h1 id="kalite">5. Kod Kalitesi ve Yazılım Geliştirme Pratikleri</h1>
         
@@ -656,6 +665,7 @@
             <li>`js/handDetector.js`: MediaPipe el koordinatları sarmalayıcısı, Kalman tipi yumuşatma ve histerezis eşikleri.</li>
             <li>`js/faceDetector.js`: Yüz landmarks işleyicisi ve pürüzsüz gülüş algılayıcısı.</li>
             <li>`js/gameCoding.js`: Kodlama labirenti oyununun grid haritası ve komut kuyruğu işletim motoru.</li>
+            <li>`js/gameMath.js`: Sihirli Matematik oyunu rastgele soru üretimi, görsel meyve çizimleri ve yüzen şık balonları kontrolcüsü.</li>
         </ul>
 
         <h3>Kod Örneği 1: Koordinat Yumuşatma ve Jest Histerezisi (handDetector.js)</h3>

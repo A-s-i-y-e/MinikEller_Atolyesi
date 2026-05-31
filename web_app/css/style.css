@@ -358,3 +358,8 @@ input[type="range"].hand-hover {
     transform: scale(1.1);
 }
 
+/* Menu Screen Exit Card full width span */
+.menu-card.exit-card {
+    grid-column: span 2;
+}
+

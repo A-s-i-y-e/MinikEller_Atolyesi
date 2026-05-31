@@ -155,20 +155,22 @@ body, html {
 /* Menu Screen */
 .menu-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     margin-top: 25px;
+    width: 90%;
+    max-width: 1150px;
 }
 
 .menu-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 20px;
-    padding: 15px 35px;
+    padding: 15px 20px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 25px;
+    gap: 15px;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;

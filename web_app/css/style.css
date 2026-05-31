@@ -369,6 +369,16 @@ input[type="range"].hand-hover {
     box-shadow: 0 10px 25px rgba(255, 0, 127, 0.2) !important;
 }
 
+.menu-card[data-mode="memory"]:hover {
+    border-color: var(--neon-purple) !important;
+    box-shadow: 0 10px 25px rgba(157, 0, 255, 0.25) !important;
+}
+
+.menu-card[data-mode="memory"].hand-hover {
+    border-color: var(--neon-purple) !important;
+    box-shadow: 0 15px 30px rgba(157, 0, 255, 0.3) !important;
+}
+
 .menu-card.disabled-card {
     opacity: 0.45 !important;
     cursor: not-allowed !important;

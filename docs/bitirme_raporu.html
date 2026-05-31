@@ -649,6 +649,15 @@
             <div class="figure-caption">Şekil 4.8: Yapay Zeka Destekli ve Temassız Sihirli Matematik Oyunu</div>
         </div>
 
+        <h3 id="islev-memory">4.1.9. Özellik: Çocuklar İçin Temassız Hafıza Oyunu</h3>
+        <p>
+            <strong>Açıklama:</strong> 5-6 yaş grubu çocukların görsel hafıza, odaklanma ve eşleştirme yeteneklerini desteklemek için tasarlanmıştır. Ekranda 4 sütun ve 2 satırdan oluşan 8 adet kapalı kart listelenir. Çocuk el koordinatıyla (temassız pinch veya dwell click) kartlara dokunarak onları açar. Kartlar açılırken 3D bükülme animasyonuyla döner. İki kart açıldığında eğer aynı hayvan emojisi (🦁, 🐵, 🐼 vb.) bulunursa kartlar neon yeşil parlayarak sabitlenir ve başarı parçacıkları saçılır. Yanlış eşleşmede ise kartlar kısa süre açık kaldıktan sonra otomatik olarak geri kapanır. Tüm eşleşmeler bittiğinde sevimli tebrik efektleri tetiklenerek oyun yeniden kurulur.
+        </p>
+        <div class="figure">
+            <img src="images/web_memory_game.png" alt="Sihirli Hafıza Oyunu"/>
+            <div class="figure-caption">Şekil 4.9: Yapay Zeka Destekli ve Temassız Sihirli Hafıza Oyunu</div>
+        </div>
+
         <!-- SECTION 5 -->
         <h1 id="kalite">5. Kod Kalitesi ve Yazılım Geliştirme Pratikleri</h1>
         
@@ -666,6 +675,7 @@
             <li>`js/faceDetector.js`: Yüz landmarks işleyicisi ve pürüzsüz gülüş algılayıcısı.</li>
             <li>`js/gameCoding.js`: Kodlama labirenti oyununun grid haritası ve komut kuyruğu işletim motoru.</li>
             <li>`js/gameMath.js`: Sihirli Matematik oyunu rastgele soru üretimi, görsel meyve çizimleri ve yüzen şık balonları kontrolcüsü.</li>
+            <li>`js/gameMemory.js`: Sihirli Hafıza oyunu karıştırılmış kart çiftleri oluşturma, 3D dönme efekti ve eşleşme kontrolcü motoru.</li>
         </ul>
 
         <h3>Kod Örneği 1: Koordinat Yumuşatma ve Jest Histerezisi (handDetector.js)</h3>

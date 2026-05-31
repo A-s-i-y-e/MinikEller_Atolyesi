@@ -32,6 +32,7 @@ class App {
         this.gameEmotion = null;
         this.gameCoding = null;
         this.gameMath = null;
+        this.gameMemory = null;
         
         this.setupCamera();
         this.setupEvents();
@@ -64,7 +65,7 @@ class App {
         if (this.state === 'login' || this.state === 'emotion') {
             await this.faceDetector.process(this.videoElement);
         } 
-        else if (this.state === 'draw' || this.state === 'balloon' || this.state === 'menu' || this.state === 'coding' || this.state === 'math') {
+        else if (this.state === 'draw' || this.state === 'balloon' || this.state === 'menu' || this.state === 'coding' || this.state === 'math' || this.state === 'memory') {
             await this.handDetector.process(this.videoElement);
         }
         else if (this.state === 'pose') {
@@ -113,6 +114,7 @@ class App {
         if (this.gameEmotion) this.gameEmotion.stop();
         if (this.gameCoding) this.gameCoding.stop();
         if (this.gameMath) this.gameMath.stop();
+        if (this.gameMemory) this.gameMemory.stop();
         
         // Background effects
         document.body.style.background = 'var(--bg-dark)';
@@ -166,6 +168,12 @@ class App {
                 this.btnBack.style.display = 'flex';
                 if (!this.gameMath) this.gameMath = new GameMath(this);
                 this.gameMath.start();
+                break;
+            case 'memory':
+                this.gameHud.style.display = 'flex';
+                this.btnBack.style.display = 'flex';
+                if (!this.gameMemory) this.gameMemory = new GameMemory(this);
+                this.gameMemory.start();
                 break;
         }
     }

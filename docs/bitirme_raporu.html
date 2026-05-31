@@ -78,12 +78,13 @@
         /* Cover Page (Fırat University Format) */
         .cover-page {
             text-align: center;
+            height: 100%;
+            min-height: 850px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            padding: 40px 0;
-            border-bottom: 3px double var(--border-color);
-            margin-bottom: 40px;
+            justify-content: space-between;
+            page-break-after: always;
+            padding: 20px 0;
         }
 
         .cover-header h1 {
@@ -102,7 +103,7 @@
         }
 
         .cover-title {
-            margin: 40px 0;
+            margin: 80px 0;
         }
 
         .cover-title h3 {
@@ -129,7 +130,7 @@
         }
 
         .cover-meta {
-            margin-top: 30px;
+            margin-top: 50px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
@@ -162,7 +163,7 @@
         }
 
         .cover-footer {
-            margin-top: 30px;
+            margin-top: 60px;
             font-size: 1.1rem;
             font-weight: 600;
             color: #718096;
@@ -264,13 +265,13 @@
         pre {
             background-color: #1a202c;
             color: #edf2f7;
-            padding: 20px;
+            padding: 12px 16px;
             border-radius: 8px;
             overflow-x: auto;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9rem;
+            font-size: 0.78rem;
             line-height: 1.4;
-            margin: 20px 0;
+            margin: 15px 0;
             border: 1px solid #2d3748;
             page-break-inside: avoid;
         }
@@ -279,9 +280,9 @@
             font-family: 'Courier New', Courier, monospace;
             background-color: #edf2f7;
             color: #e53e3e;
-            padding: 2px 6px;
+            padding: 2px 5px;
             border-radius: 4px;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         pre code {
@@ -363,7 +364,8 @@
                 background: #f7fafc !important;
                 color: black !important;
                 border: 1pt solid #cbd5e0 !important;
-                font-size: 10pt;
+                font-size: 8.5pt;
+                padding: 10px !important;
                 white-space: pre-wrap;
                 word-wrap: break-word;
             }
@@ -372,6 +374,7 @@
                 background: #f7fafc !important;
                 color: black !important;
                 border: 0.5pt solid #cbd5e0 !important;
+                font-size: 8.5pt;
             }
 
             th {
@@ -651,107 +654,48 @@
         </ul>
 
         <h3>Kod Örneği 1: Koordinat Yumuşatma ve Jest Histerezisi (handDetector.js)</h3>
-        <pre><code class="language-javascript">// handDetector.js - El Landmark İşleme ve Histerezis Çizim Kontrolü
+        <pre><code class="language-javascript">// handDetector.js - Koordinat Yumuşatma ve Histerezis Mantığı
 onResults(results) {
-    const width = this.canvasManager.canvas.width;
-    const height = this.canvasManager.canvas.height;
-    
     if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-        const landmarks = results.multiHandLandmarks[0]; // İlk el verisini al
-        
+        const landmarks = results.multiHandLandmarks[0];
         const indexTip = landmarks[8];  // İşaret parmağı ucu
         const thumbTip = landmarks[4];  // Başparmak ucu
         
-        const rawX = indexTip.x * width;
-        const rawY = indexTip.y * height;
+        // Üstel Düzeltme ile Titreme Engelleme (Smoothing)
+        this.smoothedX = this.smoothedX + 0.25 * (indexTip.x * width - this.smoothedX);
+        this.smoothedY = this.smoothedY + 0.25 * (indexTip.y * height - this.smoothedY);
         
-        // El titremesini önleyen Üstel Düzeltme (Exponential Smoothing)
-        if (this.smoothedX === undefined) {
-            this.smoothedX = rawX;
-            this.smoothedY = rawY;
-        } else {
-            const alpha = 0.25; // Gecikmesiz akıcı yumuşatma katsayısı
-            this.smoothedX = this.smoothedX + alpha * (rawX - this.smoothedX);
-            this.smoothedY = this.smoothedY + alpha * (rawY - this.smoothedY);
-        }
+        // Çift Eşikli Histerezis (Kıstırma Mesafesi Kontrolü)
+        const dist = Math.sqrt(Math.pow(indexTip.x - thumbTip.x, 2) + Math.pow(indexTip.y - thumbTip.y, 2));
+        this.isPinchingState = this.isPinchingState ? (dist <= 0.065) : (dist <= 0.042);
         
-        const x = this.smoothedX;
-        const y = this.smoothedY;
-        
-        // Başparmak ile işaret parmağı arasındaki 3B mesafeyi hesapla
-        const distance = Math.sqrt(
-            Math.pow(indexTip.x - thumbTip.x, 2) + 
-            Math.pow(indexTip.y - thumbTip.y, 2)
-        );
-        
-        // Çift Eşikli Histerezis Mantığı (Kazara çizimleri önler)
-        let wantToDraw = false;
-        if (this.isPinchingState) {
-            wantToDraw = distance <= 0.065; // Çizimi sürdürmek için toleranslı eşik
-        } else {
-            wantToDraw = distance <= 0.042; // Çizimi başlatmak için katı eşik
-        }
-        
-        if (wantToDraw) {
-            this.isPinchingState = true;
-            this.nonPinchFrames = 0;
-        } else {
-            this.nonPinchFrames++;
-            const maxDebounce = (this.canvasManager && (this.canvasManager.isDraggingShape || this.canvasManager.isResizingShape)) ? 8 : 3;
-            if (this.nonPinchFrames >= maxDebounce) {
-                this.isPinchingState = false;
-            }
-        }
-        
-        // Çizim tuvaline koordinatları gönder
-        if (this.app.state === 'draw') {
-            if (this.isPinchingState) {
-                if (!this.canvasManager.isDrawing) {
-                    this.canvasManager.startStroke(x, y);
-                } else {
-                    this.canvasManager.continueStroke(x, y);
-                }
-            } else {
-                if (this.canvasManager.isDrawing) {
-                    this.canvasManager.endStroke();
-                }
-            }
+        // Tuval Çizim Tetikleyicisi
+        if (this.app.state === 'draw' && this.isPinchingState) {
+            this.canvasManager.continueStroke(this.smoothedX, this.smoothedY);
         }
     }
 }</code></pre>
 
         <h3>Kod Örneği 2: Şekil Seçimi ve Sabitleme Kontrolü (canvasManager.js)</h3>
-        <pre><code class="language-javascript">// canvasManager.js - Şekil Yakalama ve Dışarı Tıklamada Seçimi Kaldırma
+        <pre><code class="language-javascript">// canvasManager.js - Şekil Seçimi ve Sabitleme Kontrolü
 startStroke(x, y) {
     if (this.selectedShape && this.selectedShape.isNearResizeHandle(x, y)) {
         this.isResizingShape = true;
-        this.isDrawing = true;
         return;
     }
-
     for (let i = this.shapes.length - 1; i >= 0; i--) {
         if (this.shapes[i].containsPoint(x, y)) {
             this.selectedShape = this.shapes[i];
             this.isDraggingShape = true;
-            this.isDrawing = true;
-            this.dragOffsetX = x - this.shapes[i].x;
-            this.dragOffsetY = y - this.shapes[i].y;
-            if (window.app && window.app.uiManager) {
-                window.app.uiManager.showBakeButton(true);
-            }
+            window.app.uiManager.showBakeButton(true);
             return;
         }
     }
-
     if (this.selectedShape) {
         this.selectedShape = null;
-        if (window.app && window.app.uiManager) {
-            window.app.uiManager.showBakeButton(false);
-        }
+        window.app.uiManager.showBakeButton(false);
     }
     this.isDrawing = true;
-    this.lastX = x;
-    this.lastY = y;
 }</code></pre>
 
         <!-- SECTION 6 -->

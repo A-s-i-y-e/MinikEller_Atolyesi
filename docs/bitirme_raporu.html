@@ -584,67 +584,60 @@
             <div class="figure-caption">Şekil 4.2: Premium Glassmorphism Arayüzü ve Aktivite Menüsü</div>
         </div>
 
-        <h3 id="islev-cizim">4.1.3. Özellik: Çift Jest Modlu Temassız Çizim Ekranı</h3>
+        <h3 id="islev-cizim">4.1.3. Özellik: Temassız Çizim Ekranı ve Çizim Araçları</h3>
         <p>
-            <strong>Açıklama:</strong> Çizim yaparken çocukların yorulmaması için çift mod geliştirilmiştir. "Kıstırma" modunda kalem tutar gibi başparmak ve işaret parmağı birleştirilir; hassas histerezis eşikleri (0.042 başlangıç, 0.065 devam) sayesinde çizginin kopması engellenir. "İşaret Parmağı" modunda ise sadece işaret parmağı havaya kaldırılıp çizilir.
+            <strong>Açıklama:</strong> Çocukların serbest çizim yapabildiği, geometrik şekiller yerleştirebildiği ve sihirli fırçaları deneyimlediği ana etkileşimli tuval ekranıdır. Bu ekran tek bir arayüz üzerinde çocukların yaratıcılığını ve el-göz koordinasyonunu destekleyen üç temel yeteneği bir arada sunar:
         </p>
+        <ul>
+            <li>
+                <strong>Çift Jest Modlu Çizim Desteği:</strong> Çocukların yorulmasını engellemek amacıyla iki farklı çizim modu sunulur. <em>"Kıstırma"</em> modunda başparmak ve işaret parmağı birleştirilerek kalem tutma hareketi taklit edilir; hassas histerezis eşikleri (0.042 başlangıç, 0.065 devam) sayesinde çizginin kopması önlenir. <em>"İşaret Parmağı"</em> modunda ise sadece işaret parmağı havaya kaldırılıp çizim yapılabilir.
+            </li>
+            <li>
+                <strong>Sihirli Fırça ve Dinamik Parçacık Efektleri (VFX):</strong> Çizilen çizgiler, HSL renk uzayında zamana bağlı olarak sürekli renk değiştiren gökkuşağı rengini alır. Ayrıca çizimin yapıldığı parmak ucundan yerçekimi ve rüzgar fizik kurallarına göre dağılan parıltılı neon parçacıklar (sparks) saçılır.
+            </li>
+            <li>
+                <strong>Hazır Şekiller ve Akıllı Şekil Sabitleme (Stamp/Bake):</strong> Sol panelden seçilen geometrik semboller (Yıldız, Daire, Ev vb.) tuvalin boş alanında oluşur. Çocuk elini şeklin üzerine getirip kıstırarak (pinch) şekli taşıyabilir; sağ altındaki yeşil halkayı kıstırarak boyutunu değiştirebilir. Sol paneldeki <strong>📌 Şekli Sabitle</strong> butonuyla şekil arka plana kalıcı olarak işlenir (bake).
+            </li>
+        </ul>
         <div class="figure">
-            <img src="images/web_drawing_screen.png" alt="Serbest Çizim"/>
-            <div class="figure-caption">Şekil 4.3: Temassız Serbest Çizim Arayüzü ve Araç Kutusu</div>
+            <img src="images/web_drawing_screen.png" alt="Temassız Çizim Ekranı"/>
+            <div class="figure-caption">Şekil 4.3: Temassız Serbest Çizim, Sihirli Fırça ve Hazır Şekiller Ortak Ekran Arayüzü</div>
         </div>
-
-        <h3 id="islev-firca">4.1.4. Özellik: Sihirli Fırça ve Dinamik Parçacık Efektleri (VFX)</h3>
-        <p>
-            <strong>Açıklama:</strong> Çocukların çizim yaparken görsel motivasyonunu artırmak amacıyla <strong>Sihirli Fırça</strong> modu entegre edilmiştir. Bu mod aktif edildiğinde, çizilen çizgi HSL renk uzayında zamana bağlı olarak sürekli renk değiştiren gökkuşağı neon rengini alır. Ayrıca, çizimin yapıldığı parmak ucundan fizik kurallarına göre dağılan parıltılı neon parçacıklar (sparks) saçılır.
-        </p>
-        <div class="figure">
-            <img src="images/web_drawing_screen.png" alt="Sihirli Fırça"/>
-            <div class="figure-caption">Şekil 4.4: Sihirli Fırça ve Parçacık Sistem Arayüzü</div>
-        </div>
-
-        <h3 id="islev-sekiller">4.1.5. Özellik: Hazır Şekiller ve Akıllı Şekil Sabitleme (Stamp/Bake)</h3>
-        <p>
-            <strong>Açıklama:</strong> Çocukların geometrik ve sembolik şekiller yerleştirmesini sağlayan modern bir vektörel düzenleme modülü eklenmiştir. Sol menüden bir şekil butonuna tıklandığında şekil ekranın sağ tarafında (aynalı koordinatta x = 250) neon parlamasıyla boş bir alanda oluşur. Çocuk elini şeklin üzerine getirip kıstırdığında (pinch) şekli sürükleyebilir; sağ altındaki yeşil halkayı kıstırdığında şekli büyütebilir. Dışarı tıkladığında şeklin seçimi kalkar ancak kilitlenmez. Çocuk şekli sabitlemek istediğinde sol paneldeki <strong>📌 Şekli Sabitle</strong> butonuna basarak şekli arka plana damgalar ve üzerine boyama yapabilir.
-        </p>
-        <div class="figure">
-            <img src="images/web_drawing_screen.png" alt="Hazır Şekiller"/>
-            <div class="figure-caption">Şekil 4.5: Hazır Şekiller Yerleştirme ve Sürükleme Arayüzü</div>
-        </div>
-
-        <h3 id="islev-balon">4.1.6. Özellik: Eğitici Temassız Balon Patlatma Oyunu</h3>
+        
+        <h3 id="islev-balon">4.1.4. Özellik: Eğitici Temassız Balon Patlatma Oyunu</h3>
         <p>
             <strong>Açıklama:</strong> Havaya doğru yükselen renkli neon balonları, çocuk parmağını balonların üzerine götürerek patlatır. Balonlar patlarken parçacık animasyonu ve dinamik ses sentezleyici ile patlama sesleri üretilir. El-göz koordinasyonunu geliştiren eğlenceli bir oyundur.
         </p>
         <div class="figure">
             <img src="images/web_balloon_game.png" alt="Balon Patlatma"/>
-            <div class="figure-caption">Şekil 4.6: Temassız Balon Patlatma Oyunu Arayüzü</div>
+            <div class="figure-caption">Şekil 4.4: Temassız Balon Patlatma Oyunu Arayüzü</div>
         </div>
-
-        <h3 id="islev-pose">4.1.7. Özellik: Vücut Pose Takibi ile Elma Yakalama Oyunu</h3>
+        
+        <h3 id="islev-pose">4.1.5. Özellik: Vücut Pose Takibi ile Elma Yakalama Oyunu</h3>
         <p>
             <strong>Açıklama:</strong> Yukarıdan düşen elmaları çocuk iki elini sağa sola açarak veya vücudunu kaydırarak yakalamaya çalışır. Ekranda çocuğun vücut iskelet yapısı neon çizgilerle gösterilir. Vücut koordinasyonunu ve fiziksel hareketliliği artıran dinamik bir oyundur.
         </p>
         <div class="figure">
             <img src="images/web_pose_game.png" alt="Elma Yakalama"/>
-            <div class="figure-caption">Şekil 4.7: Vücut Pose Takibi ile Elma Yakalama Oyunu</div>
+            <div class="figure-caption">Şekil 4.5: Vücut Pose Takibi ile Elma Yakalama Oyunu</div>
         </div>
-
-        <h3 id="islev-emotion">4.1.8. Özellik: Duygu Aynası Eğitici Oyunu</h3>
+        
+        <h3 id="islev-emotion">4.1.6. Özellik: Duygu Aynası Eğitici Oyunu</h3>
         <p>
             <strong>Açıklama:</strong> Çocukların duygusal farkındalıklarını artırmak amacıyla geliştirilmiştir. AI, çocuğun yüzündeki 468'den fazla noktayı takip ederek anlık Face Mesh gridini çizer. Oyun, çocuktan belirli yüz ifadelerini (Mutlu, Şaşkın, Göz Kırpma vb.) yapmasını ister. AI bu ifadeleri gerçek zamanlı analiz ederek başarı durumuna göre puan verir.
         </p>
         <div class="figure">
             <img src="images/web_emotion_game.png" alt="Duygu Aynası"/>
-            <div class="figure-caption">Şekil 4.8: Yüz Takibi ile Duygu Aynası Oyunu Arayüzü</div>
+            <div class="figure-caption">Şekil 4.6: Yüz Takibi ile Duygu Aynası Oyunu Arayüzü</div>
         </div>
-
-        <h3 id="islev-coding">4.1.9. Özellik: Çocuklar İçin Temassız Kodlama Labirenti Oyunu</h3>
+        
+        <h3 id="islev-coding">4.1.7. Özellik: Çocuklar İçin Temassız Kodlama Labirenti Oyunu</h3>
         <p>
             <strong>Açıklama:</strong> 5-6 yaş grubundaki çocukların mantıksal sıralama (sequential thinking) ve temel kodlama/algoritma geliştirme becerilerini desteklemek üzere tasarlanmıştır. Çocuklar ekranın sol tarafındaki cam panelde yer alan yön butonlarına el hareketleriyle (temassız bekleme veya kıstırma) basarak robotu 🤖 hedefe 🏆 ulaştırmak için komut sırasını (algoritmayı) yazar. "🚀 Çalıştır" butonuyla kod dizisi adım adım çalıştırılır. Robot engellere çarparsa başa döner, hedefe ulaşırsa sevimli başarı sesleri ve parçacık animasyonlarıyla ödüllendirilir.
         </p>
         <div class="figure">
             <img src="images/web_coding_game.png" alt="Kodlama Labirenti Oyunu"/>
-            <div class="figure-caption">Şekil 4.9: Yapay Zeka Destekli ve Temassız Kodlama Labirenti Oyunu</div>
+            <div class="figure-caption">Şekil 4.7: Yapay Zeka Destekli ve Temassız Kodlama Labirenti Oyunu</div>
         </div>
 
         <!-- SECTION 5 -->

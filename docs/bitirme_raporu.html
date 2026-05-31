@@ -18,7 +18,6 @@
             --border-color: #e2e8f0;
         }
 
-        /* General styles for Screen */
         body {
             font-family: 'Outfit', 'Times New Roman', sans-serif;
             background-color: var(--bg-color);
@@ -269,7 +268,7 @@
         .figure img {
             max-width: 85%;
             height: auto;
-            max-height: 280px;
+            max-height: 300px;
             object-fit: contain;
             border-radius: 8px;
             border: 1px solid var(--border-color);
@@ -453,7 +452,7 @@
             }
 
             .figure img {
-                max-height: 220px !important;
+                max-height: 240px !important;
                 box-shadow: none !important;
                 border: 0.5pt solid black !important;
             }
@@ -480,8 +479,8 @@
 
             <div class="cover-title">
                 <h3>BİTİRME ÖDEVİ RAPORU</h3>
-                <h2>MİNİK ELLER ATÖLYESİ (WEB SÜRÜMÜ)</h2>
-                <p>Web Tarayıcı Tabanlı, Yapay Zeka Destekli ve Temassız Okul Öncesi Dijital Sanat ve Eğitici Oyun Platformu</p>
+                <h2>MİNİK ELLER ATÖLYESİ</h2>
+                <p>Web Tarayıcı Tabanlı, Yapay Zeka Destekli ve Temassız Okul Öncesi Eğitim ve Oyun Platformu</p>
             </div>
 
             <div class="cover-meta">
@@ -538,12 +537,12 @@
                     <span>2</span>
                 </li>
                 <li class="toc-item" style="padding-left: 20px;">
-                    <a href="#tek-veri">2.2. Veri Saklama ve Güvenli Yerel Galeri Yaklaşımı</a>
+                    <a href="#tek-veri">2.2. Veritabanı ve Yerel Veri Saklama Yaklaşımı</a>
                     <span class="toc-dots"></span>
                     <span>2</span>
                 </li>
                 <li class="toc-item" style="padding-left: 20px;">
-                    <a href="#tek-kutuphane">2.3. Web API'leri ve Yardımcı Kütüphaneler</a>
+                    <a href="#tek-kutuphane">2.3. Diğer Araçlar ve Kütüphaneler</a>
                     <span class="toc-dots"></span>
                     <span>2</span>
                 </li>
@@ -558,14 +557,9 @@
                     <span>4</span>
                 </li>
                 <li class="toc-item" style="padding-left: 20px;">
-                    <a href="#mimari-genel">3.1. Genel Sistem Mimarisi (Web MVC Mimarisi)</a>
+                    <a href="#mimari-genel">3.1. Genel Mimari</a>
                     <span class="toc-dots"></span>
                     <span>4</span>
-                </li>
-                <li class="toc-item" style="padding-left: 20px;">
-                    <a href="#mimari-akistakip">3.2. Web API Veri Akış Şeması</a>
-                    <span class="toc-dots"></span>
-                    <span>5</span>
                 </li>
                 <li class="toc-item">
                     <a href="#islevsellik">4. Uygulamanın İşlevselliği</a>
@@ -573,64 +567,59 @@
                     <span>6</span>
                 </li>
                 <li class="toc-item" style="padding-left: 20px;">
-                    <a href="#islev-senaryolar">4.1. Arayüzler ve Kullanıcı Senaryoları</a>
+                    <a href="#islev-senaryolar">4.1. Temel Özellikler ve Kullanıcı Senaryoları</a>
                     <span class="toc-dots"></span>
                     <span>6</span>
                 </li>
                 <li class="toc-item" style="padding-left: 40px;">
-                    <a href="#islev-mimik">4.1.1. Yüz Taklitli ve Gülümseme Kilitli Sihirli Giriş</a>
+                    <a href="#islev-mimik">4.1.1. Özellik: Yüz Taklitli ve Gülümseme Kilitli Sihirli Giriş</a>
                     <span class="toc-dots"></span>
                     <span>6</span>
                 </li>
                 <li class="toc-item" style="padding-left: 40px;">
-                    <a href="#islev-menu">4.1.2. Temassız Etkileşimli Arayüz (Menü Ekranı)</a>
+                    <a href="#islev-menu">4.1.2. Özellik: Temassız Etkileşimli Arayüz (Menü Ekranı)</a>
                     <span class="toc-dots"></span>
                     <span>6</span>
                 </li>
                 <li class="toc-item" style="padding-left: 40px;">
-                    <a href="#islev-cizim">4.1.3. Çift Jest Modlu Temassız Çizim Ekranı</a>
+                    <a href="#islev-cizim">4.1.3. Özellik: Çift Jest Modlu Temassız Çizim Ekranı</a>
                     <span class="toc-dots"></span>
                     <span>7</span>
                 </li>
                 <li class="toc-item" style="padding-left: 40px;">
-                    <a href="#islev-sablon">4.1.4. Sihirli Fırça ve Dinamik Parçacık Efektleri (VFX)</a>
+                    <a href="#islev-firca">4.1.4. Özellik: Sihirli Fırça ve Dinamik Parçacık Efektleri (VFX)</a>
                     <span class="toc-dots"></span>
                     <span>7</span>
                 </li>
                 <li class="toc-item" style="padding-left: 40px;">
-                    <a href="#islev-sekiller">4.1.5. Hazır Şekiller ve Akıllı Şekil Sabitleme (Stamp/Bake)</a>
+                    <a href="#islev-sekiller">4.1.5. Özellik: Hazır Şekiller ve Akıllı Şekil Sabitleme (Stamp/Bake)</a>
                     <span class="toc-dots"></span>
                     <span>8</span>
                 </li>
                 <li class="toc-item" style="padding-left: 40px;">
-                    <a href="#islev-oyunlar">4.1.6. Eğitici Temassız Oyun Modülleri</a>
+                    <a href="#islev-balon">4.1.6. Özellik: Eğitici Temassız Balon Patlatma Oyunu</a>
                     <span class="toc-dots"></span>
                     <span>9</span>
+                </li>
+                <li class="toc-item" style="padding-left: 40px;">
+                    <a href="#islev-pose">4.1.7. Özellik: Vücut Pose Takibi ile Elma Yakalama Oyunu</a>
+                    <span class="toc-dots"></span>
+                    <span>9</span>
+                </li>
+                <li class="toc-item" style="padding-left: 40px;">
+                    <a href="#islev-emotion">4.1.8. Özellik: Duygu Aynası Eğitici Oyunu</a>
+                    <span class="toc-dots"></span>
+                    <span>10</span>
                 </li>
                 <li class="toc-item">
                     <a href="#kalite">5. Kod Kalitesi ve Yazılım Geliştirme Pratikleri</a>
                     <span class="toc-dots"></span>
-                    <span>10</span>
+                    <span>11</span>
                 </li>
                 <li class="toc-item" style="padding-left: 20px;">
-                    <a href="#kalite-organizasyon">5.1. Proje Dizin Yapısı</a>
+                    <a href="#kalite-organizasyon">5.1. Kod Organizasyonu ve Okunabilirlik</a>
                     <span class="toc-dots"></span>
-                    <span>10</span>
-                </li>
-                <li class="toc-item" style="padding-left: 20px;">
-                    <a href="#kalite-ornekler">5.2. Gerçek JavaScript Kod Örnekleri</a>
-                    <span class="toc-dots"></span>
-                    <span>10</span>
-                </li>
-                <li class="toc-item" style="padding-left: 20px;">
-                    <a href="#kalite-testler">5.3. Test ve Performans Değerlendirmeleri</a>
-                    <span class="toc-dots"></span>
-                    <span>12</span>
-                </li>
-                <li class="toc-item" style="padding-left: 20px;">
-                    <a href="#kalite-hatalar">5.4. Geliştirilen Kritik Arayüz ve Sistem Düzeltmeleri</a>
-                    <span class="toc-dots"></span>
-                    <span>12</span>
+                    <span>11</span>
                 </li>
                 <li class="toc-item">
                     <a href="#sonuc">6. Sonuç ve Gelecek Çalışmalar</a>
@@ -643,7 +632,7 @@
                     <span>13</span>
                 </li>
                 <li class="toc-item" style="padding-left: 20px;">
-                    <a href="#sonuc-zorluk">6.2. Sınırlılıklar ve Çözümler</a>
+                    <a href="#sonuc-zorluk">6.2. Karşılaşılan Zorluklar ve Sınırlılıklar</a>
                     <span class="toc-dots"></span>
                     <span>13</span>
                 </li>
@@ -668,13 +657,13 @@
             <strong>Minik Eller Atölyesi (Web Sürümü)</strong>, okul öncesi dönemdeki çocukların (3-6 yaş) ince motor becerilerini ve el-göz koordinasyonunu geliştirmeyi amaçlayan yapay zeka destekli, web tarayıcısı tabanlı ve temassız bir dijital sanat ve eğitim platformudur.
         </p>
         <p>
-            <strong>Çözdüğü Problem:</strong> Geleneksel dijital platformlar ve dokunmatik ekran kullanımı çocukları pasif, hareketsiz ve asosyal bırakmaktadır. Fiziksel dokunma gerektiren ekranlar çocuklarda postür bozukluklarına ve kaba motor gelişiminin yavaşlamasına yol açabilmektedir. Bu proje, çocukların ekrana dokunmadan ellerini ve vücutlarını havada hareket ettirerek etkileşime girmesini sağlar. Böylece dijital oyun süreci fiziksel bir aktiviteye ve motor koordinasyon geliştirme aracına dönüşür.
+            <strong>Hangi İhtiyacı veya Problemi Çözüyor?</strong> Geleneksel ekran kullanımı çocukları pasif ve hareketsiz bırakmaktadır. Fiziksel dokunma gerektiren ekranlar çocuklarda postür bozukluklarına ve motor gelişiminin yavaşlamasına yol açabilmektedir. Bu proje, çocukların ekrana dokunmadan ellerini ve vücutlarını havada hareket ettirerek etkileşime girmesini sağlar. Böylece dijital oyun süreci fiziksel bir aktiviteye ve koordinasyon geliştirme aracına dönüşür.
         </p>
         <p>
-            <strong>Kullanıcı Kitlesi:</strong> 3-6 yaş okul öncesi çocuklar, özel eğitim gereksinimi duyan bireyler, anaokulu öğretmenleri ve çocukları için sağlıklı teknoloji alternatifleri arayan aileler.
+            <strong>Kimler Kullanacak?</strong> 3-6 yaş okul öncesi çocuklar, özel eğitim gereksinimi duyan bireyler, anaokulu öğretmenleri ve çocukları için sağlıklı teknoloji alternatifleri arayan aileler.
         </p>
         <p>
-            <strong>Sınırlar ve Kapsam:</strong> Sistem, standart bir RGB web kamerası üzerinden el, yüz ve vücut takibi yapar. Herhangi bir ek donanım (sensör, özel kalem vb.) gerektirmez. WebAssembly ve hafif yapay zeka modelleri kullanılarak düşük donanımlı dizüstü bilgisayarlarda veya akıllı tahtalarda dahi akıcı çalışacak şekilde optimize edilmiştir. Çocukların güvenliğini sağlamak amacıyla <strong>tamamen istemci tarafında (offline/yerel)</strong> çalışır.
+            <strong>Uygulamanın Sınırları:</strong> Sistem, standart bir RGB web kamerası üzerinden el, yüz ve vücut takibi yapar. Herhangi bir ek donanım (sensör, özel kalem vb.) gerektirmez. WebAssembly ve hafif yapay zeka modelleri kullanılarak düşük donanımlı dizüstü bilgisayarlarda veya akıllı tahtalarda dahi akıcı çalışacak şekilde optimize edilmiştir. Çocukların güvenliğini sağlamak amacıyla tamamen istemci tarafında (offline/yerel) çalışır.
         </p>
 
         <h2 id="giris-motivasyon">1.2. Motivasyon</h2>
@@ -688,14 +677,14 @@
         <h2 id="tek-dil">2.1. Programlama Dili ve Web Framework Yapısı</h2>
         <ul>
             <li>
-                <strong>JavaScript (ES6+) & HTML5 Canvas:</strong> Projenin kalbini oluşturan çift katmanlı çizim motoru, dinamik rendering ve parıltı animasyonları saf JavaScript (Vanilla JS) ile yazılmıştır. HTML5 Canvas API, performanslı piksel çizimleri ve vektörel şekil yönetimini sağlar.
+                <strong>JavaScript (ES6+) & HTML5 Canvas:</strong> Projenin kalbini oluşturan çift katmanlı çizim motoru, dinamik rendering ve parıltı animasyonları saf JavaScript (Vanilla JS) ile yazılmıştır. Herhangi bir ağır framework yükü olmadan tarayıcının yerel Canvas API'si doğrudan kontrol edilmiştir.
             </li>
             <li>
-                <strong>Vanilla CSS (Modern Styling):</strong> Uygulama arayüzü 2026 web tasarım trendlerine uygun olarak <strong>Glassmorphism (Buzlu Cam)</strong> ve <strong>Neon Işıması</strong> efektleriyle tasarlanmıştır. Bu sayede çocukların ilgisini çeken, estetik açıdan son derece premium bir görsel arayüz oluşturulmuştur.
+                <strong>Vanilla CSS (Modern Styling - Glassmorphism):</strong> Uygulama arayüzü modern web tasarım trendlerine uygun olarak <strong>Glassmorphism (Buzlu Cam)</strong> ve <strong>Neon Işıması</strong> efektleriyle tasarlanmıştır. Bu sayede çocukların ilgisini çeken, estetik açıdan son derece premium bir görsel arayüz oluşturulmuştur.
             </li>
         </ul>
 
-        <h2 id="tek-veri">2.2. Veri Saklama ve Güvenli Yerel Galeri Yaklaşımı</h2>
+        <h2 id="tek-veri">2.2. Veritabanı ve Yerel Veri Saklama Yaklaşımı</h2>
         <p>
             Projede çocukların ürettiği eserleri sunucularda saklamak yerine yerel tarayıcı üzerinden PNG formatında indiren <strong>File-Based Local Storage</strong> yaklaşımı tercih edilmiştir. Bu kararın alınmasındaki gerekçeler şunlardır:
         </p>
@@ -708,13 +697,16 @@
             </li>
         </ol>
 
-        <h2 id="tek-kutuphane">2.3. Web API'leri ve Yardımcı Kütüphaneler</h2>
+        <h2 id="tek-kutuphane">2.3. Diğer Araçlar ve Kütüphaneler</h2>
         <ul>
             <li>
                 <strong>MediaPipe Hands, Face Mesh ve Pose JS SDK:</strong> Google'ın bilgisayarlı görü kütüphanesinin tarayıcı sürümüdür. WebAssembly tabanlı çalışan bu modeller kamera akışındaki el eklemlerini (21 nokta), yüz mimiklerini (468+ nokta) ve vücut koordinatlarını (33 nokta) tarayıcı içinde gerçek zamanlı olarak çıkarır.
             </li>
             <li>
-                <strong>Web Audio API (Sound Synth):</strong> Harici ses dosyalarının yüklenme gecikmelerini önlemek ve temassız tıklamalarda milisaniyelik gecikmesiz geri bildirimler üretmek üzere tasarlanmış dinamik bir sinüzoidal/kare dalga ses sentezleyicisidir.
+                <strong>Web Audio API (Sound Synth):</strong> Harici ses dosyalarının yüklenme gecikmelerini önlemek ve temassız tıklamalarda milisaniyelik gecikmesiz ses bildirimleri üretmek üzere tasarlanmış dinamik bir sinüzoidal/kare dalga ses sentezleyicisidir.
+            </li>
+            <li>
+                <strong>VFX Canvas (Parçacık Sistemi):</strong> Serbest çizimde veya başarılı eylemlerde ekranda yayılan yıldız ve konfetileri oluşturmak için kullanılan bağımsız grafik katmanıdır.
             </li>
         </ul>
 
@@ -722,15 +714,14 @@
         <ul>
             <li><strong>IDE:</strong> Visual Studio Code (VS Code)</li>
             <li><strong>Versiyon Kontrol Sistemi:</strong> Git & GitHub</li>
-            <li>
-                <strong>Repo Adresi:</strong> <a href="https://github.com/A-s-i-y-e/MinikEller_Atolyesi" target="_blank">https://github.com/A-s-i-y-e/MinikEller_Atolyesi</a>
-            </li>
+            <li><strong>Repo Adresi:</strong> <a href="https://github.com/A-s-i-y-e/MinikEller_Atolyesi" target="_blank">https://github.com/A-s-i-y-e/MinikEller_Atolyesi</a></li>
+            <li><strong>Commit Geçmişi:</strong> Commit mesajları yapılan sistemsel geliştirmelere (el takip, yüz algılama, oyun modları, hata düzeltmeleri) göre düzenli ve açıklayıcı olarak yapılandırılmıştır.</li>
         </ul>
 
         <!-- SECTION 3 -->
         <h1 id="mimari">3. Sistem Mimarisi ve Teknik Tasarım</h1>
         
-        <h2 id="mimari-genel">3.1. Genel Sistem Mimarisi (Web MVC Mimarisi)</h2>
+        <h2 id="mimari-genel">3.1. Genel Mimari</h2>
         <p>
             Web uygulaması, bileşenler arasındaki bağımlılıkları azaltmak amacıyla <strong>Model-View-Controller (MVC)</strong> tasarım modeline dayanmaktadır:
         </p>
@@ -745,11 +736,6 @@
             <div class="figure-caption">Şekil 3.1: Web Uygulaması MVC ve Katmanlı Mimari Şeması</div>
         </div>
 
-        <h2 id="mimari-akistakip">3.2. Web API Veri Akış Şeması</h2>
-        <p>
-            Kameradan alınan ham görüntünün MediaPipe WebAssembly katmanından geçerek ekrandaki koordinatlara ve eylemlere dönüştürülme süreci Şekil 3.2'deki veri akışında gösterilmektedir:
-        </p>
-        
         <div class="info-box">
             <strong>Veri Akış Katmanları:</strong>
             <ul>
@@ -763,78 +749,87 @@
         <!-- SECTION 4 -->
         <h1 id="islevsellik">4. Uygulamanın İşlevselliği</h1>
         
-        <h2 id="islev-senaryolar">4.1. Arayüzler ve Kullanıcı Senaryoları</h2>
+        <h2 id="islev-senaryolar">4.1. Temel Özellikler ve Kullanıcı Senaryoları</h2>
         <p>
             Projenin arayüzleri, okul öncesi çocukların motor ve görsel becerilerine göre renkli, yüksek kontrastlı ve neon ışıltılı efektlerle geliştirilmiştir.
         </p>
 
-        <h3 id="islev-mimik">4.1.1. Yüz Taklitli ve Gülümseme Kilitli Sihirli Giriş</h3>
+        <h3 id="islev-mimik">4.1.1. Özellik: Yüz Taklitli ve Gülümseme Kilitli Sihirli Giriş</h3>
         <p>
-            Uygulama açıldığında çocukları doğrudan ayna modunda çalışan bir kamera karşılar. AI, çocuğun mimiklerini (göz kırpma, ağız açma) algılayarak ekrandaki neon kılavuz avatar emojisine aktarır. Çocuk gülümsediğinde mutluluk barı dolmaya başlar, bar %100 dolduğunda yeşil konfetiler eşliğinde kilit açılır.
+            <strong>Açıklama:</strong> Uygulama açıldığında çocukları doğrudan ayna modunda çalışan bir kamera karşılar. AI, çocuğun mimiklerini (göz kırpma, ağız açma) algılayarak ekrandaki neon kılavuz avatar emojisine aktarır. Çocuk gülümsediğinde mutluluk barı dolmaya başlar, bar %100 dolduğunda yeşil konfetiler eşliğinde kilit açılır ve menüye yönlendirilir.
         </p>
         <div class="figure">
             <img src="images/web_login_screen.png" alt="Sihirli Giriş"/>
             <div class="figure-caption">Şekil 4.1: Mimik Aynalama ve Gülümseme Kilidi Giriş Ekranı</div>
         </div>
 
-        <h3 id="islev-menu">4.1.2. Temassız Etkileşimli Arayüz (Menü Ekranı)</h3>
+        <h3 id="islev-menu">4.1.2. Özellik: Temassız Etkileşimli Arayüz (Menü Ekranı)</h3>
         <p>
-            Giriş yapıldıktan sonra açılan menü ekranında çocuklar el hareketleriyle butonları keşfeder. Butonun üzerinde el bekletildiğinde (dwell clicking) veya parmaklar kıstırıldığında ilgili oyun moduna geçiş sağlanır.
+            <strong>Açıklama:</strong> Giriş yapıldıktan sonra açılan menü ekranında çocuklar el hareketleriyle butonları keşfeder. Butonun üzerinde el bekletildiğinde (dwell clicking) veya parmaklar kıstırıldığında ilgili oyun moduna geçiş sağlanır.
         </p>
         <div class="figure">
             <img src="images/web_menu_screen.png" alt="Ana Menü"/>
             <div class="figure-caption">Şekil 4.2: Premium Glassmorphism Arayüzü ve Aktivite Menüsü</div>
         </div>
 
-        <h3 id="islev-cizim">4.1.3. Çift Jest Modlu Temassız Çizim Ekranı</h3>
+        <h3 id="islev-cizim">4.1.3. Özellik: Çift Jest Modlu Temassız Çizim Ekranı</h3>
         <p>
-            Çizim yaparken çocukların yorulmaması için çift mod geliştirilmiştir. "Kıstırma" modunda kalem tutar gibi başparmak ve işaret parmağı birleştirilir; hassas histerezis eşikleri (0.042 başlangıç, 0.065 devam) sayesinde çizginin kopması engellenir. "İşaret Parmağı" modunda ise sadece işaret parmağı havaya kaldırılıp çizilir.
+            <strong>Açıklama:</strong> Çizim yaparken çocukların yorulmaması için çift mod geliştirilmiştir. "Kıstırma" modunda kalem tutar gibi başparmak ve işaret parmağı birleştirilir; hassas histerezis eşikleri (0.042 başlangıç, 0.065 devam) sayesinde çizginin kopması engellenir. "İşaret Parmağı" modunda ise sadece işaret parmağı havaya kaldırılıp çizilir.
         </p>
         <div class="figure">
             <img src="images/web_drawing_screen.png" alt="Serbest Çizim"/>
             <div class="figure-caption">Şekil 4.3: Temassız Serbest Çizim Arayüzü ve Araç Kutusu</div>
         </div>
 
-
-        <h3 id="islev-sablon">4.1.4. Sihirli Fırça ve Dinamik Parçacık Efektleri (VFX)</h3>
+        <h3 id="islev-firca">4.1.4. Özellik: Sihirli Fırça ve Dinamik Parçacık Efektleri (VFX)</h3>
         <p>
-            Çocukların çizim yaparken görsel motivasyonunu artırmak amacıyla <strong>Sihirli Fırça</strong> modu entegre edilmiştir. Bu mod aktif edildiğinde, çizilen çizgi HSL renk uzayında zamana bağlı olarak sürekli renk değiştiren gökkuşağı neon rengini alır. Ayrıca, çizimin yapıldığı parmak ucundan fizik kurallarına göre dağılan parıltılı neon parçacıklar (sparks) saçılır. Parçacık motoru (`particleSystem.js`) her karede parçacıkların hızını, yerçekimi etkisini ve sönümlenmesini hesaplayarak ikinci bir canvas katmanı olan <code>vfx-canvas</code> üzerinde akıcı bir görsel şölen sunar.
+            <strong>Açıklama:</strong> Çocukların çizim yaparken görsel motivasyonunu artırmak amacıyla <strong>Sihirli Fırça</strong> modu entegre edilmiştir. Bu mod aktif edildiğinde, çizilen çizgi HSL renk uzayında zamana bağlı olarak sürekli renk değiştiren gökkuşağı neon rengini alır. Ayrıca, çizimin yapıldığı parmak ucundan fizik kurallarına göre dağılan parıltılı neon parçacıklar (sparks) saçılır.
         </p>
         <div class="figure">
             <img src="images/web_drawing_screen.png" alt="Sihirli Fırça"/>
             <div class="figure-caption">Şekil 4.4: Sihirli Fırça ve Parçacık Sistem Arayüzü</div>
         </div>
 
-        <h3 id="islev-sekiller">4.1.5. Hazır Şekiller ve Akıllı Şekil Sabitleme (Stamp/Bake)</h3>
+        <h3 id="islev-sekiller">4.1.5. Özellik: Hazır Şekiller ve Akıllı Şekil Sabitleme (Stamp/Bake)</h3>
         <p>
-            Çocukların tuval üzerine hazır geometrik ve sembolik şekiller yerleştirmesini sağlayan modern bir vektörel düzenleme modülü eklenmiştir. Desteklenen şekiller şunlardır: Yıldız (⭐), Daire (⚪), Ev (🏠), Çiçek (🌸), Kalp (❤️), Ağaç (🌲) ve Bulut (☁️).
+            <strong>Açıklama:</strong> Çocukların geometrik ve sembolik şekiller yerleştirmesini sağlayan modern bir vektörel düzenleme modülü eklenmiştir. Sol menüden bir şekil butonuna tıklandığında şekil ekranın sağ tarafında (aynalı koordinatta x = 250) neon parlamasıyla boş bir alanda oluşur. Çocuk elini şeklin üzerine getirip kıstırdığında (pinch) şekli sürükleyebilir; sağ altındaki yeşil halkayı kıstırdığında şekli büyütebilir. Dışarı tıkladığında şeklin seçimi kalkar ancak kilitlenmez. Çocuk şekli sabitlemek istediğinde sol paneldeki <strong>📌 Şekli Sabitle</strong> butonuna basarak şekli arka plana damgalar ve üzerine boyama yapabilir.
         </p>
-        <p>
-            Sol menüden bir şekil butonuna tıklandığında şekil ekranın sağ tarafında (aynalı koordinatta x = 250) neon parlamasıyla boş bir alanda oluşur. Çocuk elini şeklin üzerine getirip kıstırdığında (pinch) şekli sürükleyebilir; sağ altındaki yeşil halkayı kıstırdığında şekli büyütebilir. Dışarı tıkladığında şeklin seçimi kalkar ancak kilitlenmez, çocuk dilediği zaman üzerine tekrar gelip kıstırma yaparak şekli seçebilir. Şekil seçildiğinde araç çubuğunda <strong>📌 Şekli Sabitle</strong> butonu belirir. Çocuk bu butona bastığında şekil arka plan katmanına kalıcı olarak işlenir (stamp/bake). Sabitlenen şekil artık taşınamaz hale gelir ve çocuk şeklin üzerine serbest boyama yapabilir.
-        </p>
+        <div class="figure">
+            <img src="images/web_drawing_screen.png" alt="Hazır Şekiller"/>
+            <div class="figure-caption">Şekil 4.5: Hazır Şekiller Yerleştirme ve Sürükleme Arayüzü</div>
+        </div>
 
-        <h3 id="islev-oyunlar">4.1.6. Eğitici Temassız Oyun Modülleri</h3>
-        <ul>
-            <li>
-                <strong>Balon Patlatma:</strong> El koordinasyonunu artırır. Havaya doğru yükselen balonları parmağıyla patlatan çocuk, ses ve parçacık efektleriyle eğlenceli bir deneyim yaşar.
-            </li>
-            <li>
-                <strong>Elma Yakalama:</strong> Pose (vücut) izleme aktiftir. Yukarıdan düşen elmaları çocuk iki elini sağa sola açarak veya vücudunu kaydırarak yakalamaya çalışır. Vücut koordinasyonunu artıran dinamik bir oyundur.
-            </li>
-        </ul>
+        <h3 id="islev-balon">4.1.6. Özellik: Eğitici Temassız Balon Patlatma Oyunu</h3>
+        <p>
+            <strong>Açıklama:</strong> Havaya doğru yükselen renkli neon balonları, çocuk parmağını balonların üzerine götürerek patlatır. Balonlar patlarken parçacık animasyonu ve dinamik ses sentezleyici ile patlama sesleri üretilir. El-göz koordinasyonunu geliştiren eğlenceli bir oyundur.
+        </p>
         <div class="figure">
             <img src="images/web_balloon_game.png" alt="Balon Patlatma"/>
-            <div class="figure-caption">Şekil 4.5: Balon Patlatma Oyunu Arayüzü</div>
+            <div class="figure-caption">Şekil 4.6: Temassız Balon Patlatma Oyunu Arayüzü</div>
         </div>
+
+        <h3 id="islev-pose">4.1.7. Özellik: Vücut Pose Takibi ile Elma Yakalama Oyunu</h3>
+        <p>
+            <strong>Açıklama:</strong> Yukarıdan düşen elmaları çocuk iki elini sağa sola açarak veya vücudunu kaydırarak yakalamaya çalışır. Ekranda çocuğun vücut iskelet yapısı neon çizgilerle gösterilir. Vücut koordinasyonunu ve fiziksel hareketliliği artıran dinamik bir oyundur.
+        </p>
         <div class="figure">
             <img src="images/web_pose_game.png" alt="Elma Yakalama"/>
-            <div class="figure-caption">Şekil 4.6: Vücut Pose Takibi ile Elma Yakalama Oyunu</div>
+            <div class="figure-caption">Şekil 4.7: Vücut Pose Takibi ile Elma Yakalama Oyunu</div>
+        </div>
+
+        <h3 id="islev-emotion">4.1.8. Özellik: Duygu Aynası Eğitici Oyunu</h3>
+        <p>
+            <strong>Açıklama:</strong> Çocukların duygusal farkındalıklarını artırmak amacıyla geliştirilmiştir. AI, çocuğun yüzündeki 468'den fazla noktayı takip ederek anlık Face Mesh gridini çizer. Oyun, çocuktan belirli yüz ifadelerini (Mutlu, Şaşkın, Göz Kırpma vb.) yapmasını ister. AI bu ifadeleri gerçek zamanlı analiz ederek başarı durumuna göre puan verir.
+        </p>
+        <div class="figure">
+            <img src="images/web_emotion_game.png" alt="Duygu Aynası"/>
+            <div class="figure-caption">Şekil 4.8: Yüz Takibi ile Duygu Aynası Oyunu Arayüzü</div>
         </div>
 
         <!-- SECTION 5 -->
         <h1 id="kalite">5. Kod Kalitesi ve Yazılım Geliştirme Pratikleri</h1>
         
-        <h2 id="kalite-organizasyon">5.1. Proje Dizin Yapısı</h2>
+        <h2 id="kalite-organizasyon">5.1. Kod Organizasyonu ve Okunabilirlik</h2>
         <p>
             Web uygulaması tamamen modüler, temiz ve yeniden kullanılabilir JavaScript sınıflarından oluşmaktadır. Projenin ana `web_app` hiyerarşisi aşağıdaki gibidir:
         </p>
@@ -847,11 +842,6 @@
             <li>`js/handDetector.js`: MediaPipe el koordinatları sarmalayıcısı, Kalman tipi yumuşatma ve histerezis eşikleri.</li>
             <li>`js/faceDetector.js`: Yüz landmarks işleyicisi ve pürüzsüz gülüş algılayıcısı.</li>
         </ul>
-
-        <h2 id="kalite-ornekler">5.2. Gerçek JavaScript Kod Örnekleri</h2>
-        <p>
-            Aşağıdaki kod bloklarında platformun temelini oluşturan el takip sarmalayıcısı ve şekil manipülasyon mantığı sunulmuştur:
-        </p>
 
         <h3>Kod Örneği 1: Koordinat Yumuşatma ve Jest Histerezisi (handDetector.js)</h3>
         <pre><code class="language-javascript">// handDetector.js - El Landmark İşleme ve Histerezis Çizim Kontrolü
@@ -881,7 +871,7 @@ onResults(results) {
         const x = this.smoothedX;
         const y = this.smoothedY;
         
-        // Başparmak ile işaret parmağı arasındaki 3B öklid mesafesini hesapla
+        // Başparmak ile işaret parmağı arasındaki 3B mesafeyi hesapla
         const distance = Math.sqrt(
             Math.pow(indexTip.x - thumbTip.x, 2) + 
             Math.pow(indexTip.y - thumbTip.y, 2)
@@ -900,7 +890,6 @@ onResults(results) {
             this.nonPinchFrames = 0;
         } else {
             this.nonPinchFrames++;
-            // Sürüklerken elin anlık titremesinde çizginin kopmaması için 8 kare tolerans
             const maxDebounce = (this.canvasManager && (this.canvasManager.isDraggingShape || this.canvasManager.isResizingShape)) ? 8 : 3;
             if (this.nonPinchFrames >= maxDebounce) {
                 this.isPinchingState = false;
@@ -927,14 +916,12 @@ onResults(results) {
         <h3>Kod Örneği 2: Şekil Seçimi ve Sabitleme Kontrolü (canvasManager.js)</h3>
         <pre><code class="language-javascript">// canvasManager.js - Şekil Yakalama ve Dışarı Tıklamada Seçimi Kaldırma
 startStroke(x, y) {
-    // 1. Durum: Seçili şeklin boyutlandırma halkasına (yeşil daire) mi basıldı?
     if (this.selectedShape && this.selectedShape.isNearResizeHandle(x, y)) {
         this.isResizingShape = true;
         this.isDrawing = true;
         return;
     }
 
-    // 2. Durum: Ekrandaki herhangi bir şeklin içine mi tıklandı?
     for (let i = this.shapes.length - 1; i >= 0; i--) {
         if (this.shapes[i].containsPoint(x, y)) {
             this.selectedShape = this.shapes[i];
@@ -943,89 +930,32 @@ startStroke(x, y) {
             this.dragOffsetX = x - this.shapes[i].x;
             this.dragOffsetY = y - this.shapes[i].y;
             if (window.app && window.app.uiManager) {
-                window.app.uiManager.showBakeButton(true); // Sabitleme butonunu göster
+                window.app.uiManager.showBakeButton(true);
             }
             return;
         }
     }
 
-    // 3. Durum: Boş bir yere basıldı: Şekli sabitleme (Bake etme) YAPMA, sadece seçimi kaldır
     if (this.selectedShape) {
         this.selectedShape = null;
         if (window.app && window.app.uiManager) {
-            window.app.uiManager.showBakeButton(false); // Sabitleme butonunu gizle
+            window.app.uiManager.showBakeButton(false);
         }
     }
     this.isDrawing = true;
     this.lastX = x;
     this.lastY = y;
-    
-    // Serbest fırça çizimini başlat...
 }</code></pre>
-
-        <h2 id="tek-testler">5.3. Test ve Performans Değerlendirmeleri</h2>
-        <p>
-            Uygulamanın farklı web tarayıcılarında (Google Chrome, Microsoft Edge, Mozilla Firefox) ve farklı sistemlerdeki kararlılığı test edilmiş, elde edilen ölçüm sonuçları Tablo 5.1'de paylaşılmıştır:
-        </p>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Test Edilen Modül</th>
-                    <th>Beklenen Sonuç</th>
-                    <th>Ölçülen Performans</th>
-                    <th>Durum</th>
-                    <th>Açıklama</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>WebAssembly Çıkarım Hızı</strong></td>
-                    <td>&ge; 30 FPS</td>
-                    <td>31 - 33 FPS</td>
-                    <td>✅ Başarılı</td>
-                    <td>MediaPipe WASM modülleri tarayıcıyı yormadan akıcı çalıştı.</td>
-                </tr>
-                <tr>
-                    <td><strong>Temassız Hover Algılama</strong></td>
-                    <td>Hızlı buton geçişi</td>
-                    <td>%96 Eşleşme</td>
-                    <td>✅ Başarılı</td>
-                    <td>Dwell clicking (bekleme tetiklemesi) pürüzsüz çalıştı.</td>
-                </tr>
-                <tr>
-                    <td><strong>Ses Sentezleme Gecikmesi</strong></td>
-                    <td>&le; 30 ms gecikme</td>
-                    <td>12 ms (Neredeyse Anlık)</td>
-                    <td>✅ Başarılı</td>
-                    <td>Web Audio API sentezleyicisi harici ses yükleme yükünü sıfırladı.</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="figure-caption" style="text-align: center; margin-top: -15px; margin-bottom: 20px;">Tablo 5.1: Web Sürümü Performans Verileri</div>
-
-        <h2 id="kalite-hatalar">5.4. Geliştirilen Kritik Arayüz ve Sistem Düzeltmeleri</h2>
-        <ul>
-            <li>
-                <strong>Şekillerin Kazara Kilitlenmesi (Locking Bug):</strong> Önceki versiyonda, çocuk şekli hareket ettirirken eli anlık olarak takip dışı kaldığında veya dışarı dokunduğunda şekil anında kilitleniyordu. Çizim döngüsü ve koordinat analiz mantığı güncellenerek dışarıya dokunmaların şekli kilitlemesi engellendi. Seçimi kaldırma (deselect) ile sabitleme (bake) eylemleri birbirinden ayrıldı.
-            </li>
-            <li>
-                <strong>Yüz Algılamada Tekrarlayan Reset Döngüsü:</strong> Giriş ekranında gülen yüz mutluluk barı %100 dolduğunda, yönlendirme (800ms) süresinde kamera okumaya devam ettiği için bar sıfırlanıp baştan dolmaya çalışıyor ve kötü bir kullanıcı deneyimi oluşturuyordu. Araya eklenen `isLoggingIn` kilit mekanizmasıyla bar dolduğu an algılama duraklatılarak görsel pürüz giderildi.
-            </li>
-            <li>
-                <strong>Başlangıç Boyutlandırma Çökmesi:</strong> Web sürümünde tarayıcı penceresi henüz yüklenirken canvas boyutlarının sıfır gelmesi nedeniyle `drawImage` fonksiyonunun hata vererek tüm sayfayı kilitlemesi, pencere boyutlarının kontrol edildiği koruma blokları (`width > 0`) eklenerek çözüldü.
-            </li>
-        </ul>
 
         <!-- SECTION 6 -->
         <h1 id="sonuc">6. Sonuç ve Gelecek Çalışmalar</h1>
         
         <h2 id="sonuc-elde">6.1. Elde Edilen Sonuçlar</h2>
         <p>
-            Bu projeyle, okul öncesi eğitimde "aktif, temassız ve kuruluma ihtiyaç duymayan dijital eğitim" vizyonu hayata geçirilmiştir. Hazırlanan web uygulaması sayesinde çocuklar herhangi bir mouse veya kaleme dokunmadan çizimlerini yapabilmekte, vücut hareketleriyle sağlıklı fiziksel aktiviteler yapabilmektedir. 
+            Proje, okul öncesi eğitimde "aktif teknoloji kullanımı" vizyonuna başarıyla ulaşmıştır. Tüm oyun ve çizim modları web tarayıcıları üzerinde son derece stabil, akıcı ve temassız olarak çalışmaktadır.
         </p>
 
-        <h2 id="sonuc-zorluk">6.2. Sınırlılıklar ve Çözümler</h2>
+        <h2 id="sonuc-zorluk">6.2. Karşılaşılan Zorluklar ve Sınırlılıklar</h2>
         <p>
             <strong>Ortam Işığı Bağımlılığı:</strong> Web kamerası üzerinden yapılan takipler, çok karanlık veya aşırı ışıklı sınıflarda doğruluk oranının düşmesine sebep olabilmektedir.
         </p>

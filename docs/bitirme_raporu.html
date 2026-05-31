@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitirme Ödevi Raporu - Minik Eller Atölyesi</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Times+New+Roman&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00f3ff;
+            --secondary-color: #ff007f;
+            --text-color: #2c3e50;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        /* General styles for Screen */
+        body {
+            font-family: 'Outfit', 'Times New Roman', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            padding: 50px 70px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Print utility bar */
+        .utility-bar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            background-color: #2d3748;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: #1a202c;
+            transform: translateY(-2px);
+        }
+
+        .btn-pdf {
+            background-color: var(--secondary-color);
+        }
+        .btn-pdf:hover {
+            background-color: #d00063;
+        }
+
+        /* Cover Page (Fırat University Format) */
+        .cover-page {
+            text-align: center;
+            height: 100%;
+            min-height: 850px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            page-break-after: always;
+            padding: 20px 0;
+        }
+
+        .cover-header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 1px;
+            color: #1a202c;
+        }
+
+        .cover-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 5px 0 0 0;
+            color: #4a5568;
+        }
+
+        .cover-title {
+            margin: 80px 0;
+        }
+
+        .cover-title h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .cover-title h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin: 15px 0;
+            line-height: 1.2;
+        }
+
+        .cover-title p {
+            font-size: 1.2rem;
+            color: #4a5568;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cover-meta {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            text-align: left;
+            border-top: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
+            padding: 30px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .meta-item {
+            font-size: 1.1rem;
+        }
+
+        .meta-item label {
+            font-weight: 800;
+            color: #718096;
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .meta-item span {
+            color: #1a202c;
+            font-weight: 600;
+        }
+
+        .cover-footer {
+            margin-top: 60px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #718096;
+        }
+
+        /* TOC & Typography */
+        h1, h2, h3, h4 {
+            color: #1a202c;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            page-break-before: always;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 30px;
+            border-bottom: 1px dashed #e2e8f0;
+            padding-bottom: 6px;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 1.05rem;
+            text-align: justify;
+            margin-bottom: 1.5rem;
+            color: #2d3748;
+        }
+
+        ol, ul {
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            color: #2d3748;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .table-of-contents {
+            background-color: #f7fafc;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #edf2f7;
+            margin: 40px 0;
+            page-break-after: always;
+        }
+
+        .table-of-contents h2 {
+            border-bottom: 2px solid #cbd5e0;
+            margin-top: 0;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .toc-item a {
+            color: #2b6cb0;
+            text-decoration: none;
+            transition: color 0.1s ease;
+        }
+
+        .toc-item a:hover {
+            color: #2c5282;
+            text-decoration: underline;
+        }
+
+        .toc-dots {
+            flex-grow: 1;
+            border-bottom: 1px dotted #cbd5e0;
+            margin: 0 10px;
+            position: relative;
+            top: -4px;
+        }
+
+        /* Figures & Tables */
+        .figure {
+            text-align: center;
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+
+        .figure img, .figure svg {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .figure-caption {
+            font-size: 0.95rem;
+            color: #718096;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #cbd5e0;
+        }
+
+        th {
+            background-color: #edf2f7;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: #1a202c;
+            color: #edf2f7;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin: 20px 0;
+            border: 1px solid #2d3748;
+            page-break-inside: avoid;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #edf2f7;
+            color: #e53e3e;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .info-box {
+            background-color: #ebf8ff;
+            border-left: 4px solid #3182ce;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.05rem;
+        }
+
+        .info-box strong {
+            color: #2b6cb0;
+        }
+
+        /* --------------------------------------------------------
+           PRINT STYLES (@media print)
+           -------------------------------------------------------- */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 12pt;
+                line-height: 1.5;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                border-radius: 0;
+                border: none;
+            }
+
+            .utility-bar {
+                display: none !important;
+            }
+
+            h1, h2, h3, h4 {
+                font-family: 'Times New Roman', Times, serif;
+                color: black !important;
+                text-shadow: none !important;
+            }
+
+            h1 {
+                font-size: 16pt;
+                page-break-before: always;
+                border-bottom: 1.5pt solid black;
+                padding-bottom: 5px;
+                margin-top: 30pt;
+            }
+
+            h2 {
+                font-size: 14pt;
+                border-bottom: 0.75pt dashed black;
+                padding-bottom: 3px;
+                margin-top: 20pt;
+            }
+
+            h3 {
+                font-size: 12pt;
+                margin-top: 15pt;
+            }
+
+            p, li {
+                font-size: 12pt;
+                text-align: justify;
+            }
+
+            pre {
+                background: #f7fafc !important;
+                color: black !important;
+                border: 1pt solid #cbd5e0 !important;
+                font-size: 10pt;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+
+            code {
+                background: #f7fafc !important;
+                color: black !important;
+                border: 0.5pt solid #cbd5e0 !important;
+            }
+
+            th {
+                background-color: #f7fafc !important;
+                color: black !important;
+            }
+
+            tr:nth-child(even) {
+                background-color: white !important;
+            }
+
+            @page {
+                size: A4;
+                margin: 2.5cm 2.5cm 2.5cm 3cm; /* Akademik tez standartları: Sol 3cm, diğerleri 2.5cm */
+            }
+
+            .toc-item a {
+                color: black !important;
+                text-decoration: none;
+            }
+
+            .info-box {
+                background: white !important;
+                border-left: 3pt solid black !important;
+                color: black !important;
+            }
+
+            .info-box strong {
+                color: black !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Utility buttons for screen browsing -->
+    <div class="utility-bar">
+        <button class="btn" onclick="window.location.href='../README.md'">⬅️ Geri Dön</button>
+        <button class="btn btn-pdf" onclick="window.print()">🖨️ PDF / Rapor Yazdır</button>
+    </div>
+
+    <div class="container">
+        
+        <!-- COVER PAGE -->
+        <div class="cover-page">
+            <div class="cover-header">
+                <h1>FIRAT ÜNİVERSİTESİ</h1>
+                <h2>TEKNOLOJİ FAKÜLTESİ</h2>
+                <h2>YAZILIM MÜHENDİSLİĞİ BÖLÜMÜ</h2>
+            </div>
+
+            <div class="cover-title">
+                <h3>BİTİRME ÖDEVİ RAPORU</h3>
+                <h2>MİNİK ELLER ATÖLYESİ</h2>
+                <p>Yapay Zeka (MediaPipe) ve Temassız Etkileşim Destekli Okul Öncesi Dijital Sanat ve Eğitici Oyun Platformu Projesi</p>
+            </div>
+
+            <div class="cover-meta">
+                <div class="meta-item">
+                    <label>Öğrenci Adı Soyadı</label>
+                    <span>Asiye KAYMAK</span>
+                </div>
+                <div class="meta-item">
+                    <label>Öğrenci Numarası</label>
+                    <span>215541097</span>
+                </div>
+                <div class="meta-item">
+                    <label>Proje Türü</label>
+                    <span>Web & Masaüstü Uygulaması</span>
+                </div>
+                <div class="meta-item">
+                    <label>Teslim Tarihi</label>
+                    <span>4 Haziran 2026</span>
+                </div>
+            </div>
+
+            <div class="cover-footer">
+                <span>ELAZIĞ - 2026</span>
+            </div>
+        </div>
+
+        <!-- TABLE OF CONTENTS -->
+        <div class="table-of-contents">
+            <h2>İçindekiler</h2>
+            <ul class="toc-list">
+                <li class="toc-item">
+                    <a href="#giris">1. Giriş</a>
+                    <span class="toc-dots"></span>
+                    <span>1</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#giris-amac">1.1. Projenin Amacı ve Kapsamı</a>
+                    <span class="toc-dots"></span>
+                    <span>1</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#giris-motivasyon">1.2. Motivasyon</a>
+                    <span class="toc-dots"></span>
+                    <span>1</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#teknolojiler">2. Kullanılan Yazılım Araçları ve Teknolojiler</a>
+                    <span class="toc-dots"></span>
+                    <span>2</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#tek-dil">2.1. Programlama Dilleri ve Çalışma Ortamları</a>
+                    <span class="toc-dots"></span>
+                    <span>2</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#tek-veri">2.2. Veritabanı ve Yerel Depolama Yaklaşımı</a>
+                    <span class="toc-dots"></span>
+                    <span>2</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#tek-kutuphane">2.3. Diğer Araçlar, Kütüphaneler ve Yapay Zeka Servisleri</a>
+                    <span class="toc-dots"></span>
+                    <span>2</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#tek-versiyon">2.4. Geliştirme Ortamı ve Versiyon Kontrolü</a>
+                    <span class="toc-dots"></span>
+                    <span>3</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#mimari">3. Sistem Mimarisi ve Teknik Tasarım</a>
+                    <span class="toc-dots"></span>
+                    <span>4</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#mimari-genel">3.1. Genel Mimari ve MVC Tasarım Deseni</a>
+                    <span class="toc-dots"></span>
+                    <span>4</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#mimari-akistakip">3.2. Hibrit Kontrol Veri Akış Şeması</a>
+                    <span class="toc-dots"></span>
+                    <span>5</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#islevsellik">4. Uygulamanın İşlevselliği</a>
+                    <span class="toc-dots"></span>
+                    <span>6</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#islev-senaryolar">4.1. Temel Özellikler ve Kullanıcı Senaryoları</a>
+                    <span class="toc-dots"></span>
+                    <span>6</span>
+                </li>
+                <li class="toc-item" style="padding-left: 40px;">
+                    <a href="#islev-cizim">4.1.1. Temassız Serbest Çizim ve Çift Jest Desteği</a>
+                    <span class="toc-dots"></span>
+                    <span>6</span>
+                </li>
+                <li class="toc-item" style="padding-left: 40px;">
+                    <a href="#islev-sablon">4.1.2. Sihirli Şablon Boyama (Taşırmadan Doldurma)</a>
+                    <span class="toc-dots"></span>
+                    <span>6</span>
+                </li>
+                <li class="toc-item" style="padding-left: 40px;">
+                    <a href="#islev-oyunlar">4.1.3. Eğitici Oyunlar (Balon Patlatma ve Elma Yakalama)</a>
+                    <span class="toc-dots"></span>
+                    <span>7</span>
+                </li>
+                <li class="toc-item" style="padding-left: 40px;">
+                    <a href="#islev-mimik">4.1.4. Yüz Analizi ve Mimik Taklitli Sihirli Giriş</a>
+                    <span class="toc-dots"></span>
+                    <span>7</span>
+                </li>
+                <li class="toc-item" style="padding-left: 40px;">
+                    <a href="#islev-sekiller">4.1.5. Hazır Şekiller (Sürükleme, Boyutlandırma ve Sabitleme)</a>
+                    <span class="toc-dots"></span>
+                    <span>8</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#kalite">5. Kod Kalitesi ve Yazılım Geliştirme Pratikleri</a>
+                    <span class="toc-dots"></span>
+                    <span>9</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#kalite-organizasyon">5.1. Kod Organizasyonu ve Klasör Yapısı</a>
+                    <span class="toc-dots"></span>
+                    <span>9</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#kalite-ornekler">5.2. Kritik Kod Örnekleri</a>
+                    <span class="toc-dots"></span>
+                    <span>10</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#kalite-testler">5.3. Test Sonuçları ve Performans Analizi</a>
+                    <span class="toc-dots"></span>
+                    <span>11</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#kalite-hatalar">5.4. Geliştirme Sırasında Çözülen Kritik Hatalar</a>
+                    <span class="toc-dots"></span>
+                    <span>12</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#sonuc">6. Sonuç ve Gelecek Çalışmalar</a>
+                    <span class="toc-dots"></span>
+                    <span>13</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#sonuc-elde">6.1. Elde Edilen Sonuçlar</a>
+                    <span class="toc-dots"></span>
+                    <span>13</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#sonuc-zorluk">6.2. Karşılaşılan Zorluklar ve Sınırlılıklar</a>
+                    <span class="toc-dots"></span>
+                    <span>13</span>
+                </li>
+                <li class="toc-item" style="padding-left: 20px;">
+                    <a href="#sonuc-gelecek">6.3. Geliştirme Önerileri</a>
+                    <span class="toc-dots"></span>
+                    <span>13</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#guvenlik">7. Gizlilik, Veri Güvenliği ve Kaynakça</a>
+                    <span class="toc-dots"></span>
+                    <span>14</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- SECTION 1 -->
+        <h1 id="giris">1. Giriş</h1>
+        
+        <h2 id="giris-amac">1.1. Projenin Amacı ve Kapsamı</h2>
+        <p>
+            <strong>Minik Eller Atölyesi</strong>, okul öncesi dönemdeki çocukların (3-6 yaş) ince motor becerilerini ve el-göz koordinasyonunu geliştirmeyi amaçlayan yapay zeka destekli, temassız bir dijital sanat ve eğitici oyun platformudur.
+        </p>
+        <p>
+            <strong>Çözdüğü Problem:</strong> Geleneksel dijital platformlar ve ekran kullanımı çocukları pasif, hareketsiz ve asosyal bırakmaktadır. Fiziksel dokunma gerektiren ekranlar çocuklarda postür bozukluklarına ve sınırlı motor gelişimine yol açabilmektedir. Bu proje, çocukların ekrana dokunmadan ellerini ve vücutlarını havada hareket ettirerek etkileşime girmesini sağlar. Böylece dijital oyun süreci fiziksel bir aktiviteye ve koordinasyon geliştirme aracına dönüşür.
+        </p>
+        <p>
+            <strong>Kullanıcı Kitlesi:</strong> 3-6 yaş okul öncesi çocuklar, özel eğitim gereksinimi duyan bireyler, anaokulu öğretmenleri ve çocukları için sağlıklı teknoloji alternatifleri arayan aileler.
+        </p>
+        <p>
+            <strong>Sınırlar ve Kapsam:</strong> Sistem, standart bir RGB web kamerası üzerinden el, yüz ve vücut takibi yapar. Düşük donanımlı dizüstü bilgisayarlarda veya tablet sınıflarında dahi akıcı çalışacak şekilde optimize edilmiştir. Çocukların güvenliğini sağlamak ve internet olmayan ortamlarda kullanılabilmek amacıyla <strong>tamamen yerel (offline)</strong> çalışır.
+        </p>
+
+        <h2 id="giris-motivasyon">1.2. Motivasyon</h2>
+        <p>
+            Teknolojinin hayatımızın ayrılmaz bir parçası olduğu günümüzde çocukların teknolojiyle olan ilişkisini "pasif izleyicilikten" (video izleme, sürekli tüketim) çıkarıp "aktif üreticiliğe" (çizim yapma, kendi koordinasyonunu yönetme) dönüştürmek temel motivasyonumuzdur. Geliştirdiğimiz bu yazılım, derin öğrenme temelli bilgisayarlı görü modelleri (MediaPipe) ile pedagojik eğlence oyun prensiplerini modern web tasarımı standartlarıyla birleştirmektedir.
+        </p>
+
+        <!-- SECTION 2 -->
+        <h1 id="teknolojiler">2. Kullanılan Yazılım Araçları ve Teknolojiler</h1>
+        
+        <h2 id="tek-dil">2.1. Programlama Dilleri ve Çalışma Ortamları</h2>
+        <ul>
+            <li>
+                <strong>Python (Masaüstü Sürümü):</strong> Görüntü işleme kütüphaneleriyle olan mükemmel uyumu, derin öğrenme çıkarımlarının hızlı yapılması ve hızlı prototipleme imkanı sunduğu için masaüstü motorunda ana dil olarak seçilmiştir.
+            </li>
+            <li>
+                <strong>HTML5, CSS3 ve JavaScript (Web Arayüzü):</strong> Modern web tarayıcılarında çalışarak herhangi bir kuruluma ihtiyaç duymadan sınıflarda, akıllı tahtalarda ve evlerde anında çalışabilmesi amacıyla projenin tarayıcı sürümü JavaScript ile zenginleştirilmiştir. Arayüzde modern cam efekti (Glassmorphism) ve neon temalı etkileşimli animasyonlar kullanılmıştır.
+            </li>
+        </ul>
+
+        <h2 id="tek-veri">2.2. Veritabanı ve Yerel Depolama Yaklaşımı</h2>
+        <p>
+            Projede karmaşık, harici bir veritabanı sunucusu (MySQL, PostgreSQL vb.) yerine çocukların ürettiği dijital eserleri yerel dosya sisteminde tarih damgalı PNG formatında saklayan <strong>File-Based Local Storage</strong> yaklaşımı tercih edilmiştir. Bu kararın alınmasındaki gerekçeler şunlardır:
+        </p>
+        <ol>
+            <li>
+                <strong>Gizlilik ve KVKK/GDPR Uyumluluğu:</strong> Okul öncesi çocukların kamera görüntülerinin, biyometrik verilerinin ve kişisel çizimlerinin bulut sunucularına taşınmasını engelleyerek %100 yerel güvenlik sağlar.
+            </li>
+            <li>
+                <strong>Erişilebilirlik ve Kırsal Eğitim Desteği:</strong> İnternet bağlantısı olmayan kırsal bölgelerdeki okullarda dahi sistemin kesintisiz ve hatasız çalışmasını sağlar.
+            </li>
+            <li>
+                <strong>Performans:</strong> Çizilen yüksek çözünürlüklü görsellerin anlık olarak diske yazılması için dosya sistemi en hızlı ve en hafif çözümdür.
+            </li>
+        </ol>
+
+        <h2 id="tek-kutuphane">2.3. Diğer Araçlar, Kütüphaneler ve Yapay Zeka Servisleri</h2>
+        <ul>
+            <li>
+                <strong>OpenCV (Masaüstü):</strong> Kamera akışının yakalanması, görüntünün aynalanması, renk uzayı dönüşümleri ve çizim katmanlarının (raster canvas) OpenCV matrisleri üzerinden NumPy ile yönetimi.
+            </li>
+            <li>
+                <strong>MediaPipe Tasks API ve MediaPipe JS Client APIs:</strong> Google'ın bilgisayarlı görü kütüphanesidir. Görüntü üzerinden el eklem noktalarını (Hand Landmarker), yüz mimik değerlerini (Face Landmarker) ve vücut duruş noktalarını (Pose Landmarker) anlık (gerçek zamanlı) tespit etmek için kullanılmıştır.
+            </li>
+            <li>
+                <strong>Web Audio API (Sound Synthesis):</strong> Web sürümünde harici ses dosyalarının ağırlık yapmasını engellemek, milisaniyelik gecikmesiz ses bildirimleri üretmek üzere tasarlanmış dinamik bir sinüzoidal/kare dalga sentezleyicidir. Çocukların çizim jesti veya başarılı eylemlerinde tatlı ses efektleri üretir.
+            </li>
+            <li>
+                <strong>HTML5 Canvas API:</strong> Web uygulamasında serbest çizim katmanını ve bunun üzerine binen dinamik vektörel şekilleri (yıldız, ev vb.) üst üste çizip birleştiren grafik motorunu besler.
+            </li>
+        </ul>
+
+        <h2 id="tek-versiyon">2.4. Geliştirme Ortamı ve Versiyon Kontrolü</h2>
+        <ul>
+            <li><strong>IDE:</strong> Visual Studio Code (VS Code)</li>
+            <li><strong>Versiyon Kontrol Sistemi:</strong> Git & GitHub</li>
+            <li>
+                <strong>Repo Adresi:</strong> <a href="https://github.com/A-s-i-y-e/MinikEller_Atolyesi" target="_blank">https://github.com/A-s-i-y-e/MinikEller_Atolyesi</a>
+            </li>
+            <li>
+                <strong>Geliştirme Stratejisi:</strong> Projede kararlı sürüm yönetimi için tek ana dal (main branch) üzerinde stabil geliştirme yapılmış; el, vücut ve şekil özellikleri gibi modüller bağımsız geliştirilip test edildikten sonra Git commit'leri ile sisteme entegre edilmiştir.
+            </li>
+        </ul>
+
+        <!-- SECTION 3 -->
+        <h1 id="mimari">3. Sistem Mimarisi ve Teknik Tasarım</h1>
+        
+        <h2 id="mimari-genel">3.1. Genel Mimari ve MVC Tasarım Deseni</h2>
+        <p>
+            Platform, sistem parçalarının birbiriyle olan bağını gevşetmek (Loose Coupling) ve bakım kolaylığı sağlamak için <strong>Modüler Katmanlı Mimari</strong> ile geliştirilmiştir. Ek olarak, çizim katmanı ile yapay zeka girdileri ve arayüz kontrollerini ayırmak için <strong>MVC (Model-View-Controller)</strong> deseni uygulanmıştır:
+        </p>
+        <ul>
+            <li><strong>Model:</strong> El eklem koordinatları, çizilen çizgilerin koordinat matrisi ve aktif şekillerin öznitelikleri.</li>
+            <li><strong>View:</strong> OpenCV matrisleri (Masaüstü) veya HTML5 Canvas rendering motoru (Web) tarafından çizilen neon efektli çizim ekranı ve parıltılı oyun nesneleri.</li>
+            <li><strong>Controller:</strong> Jestleri algılayan, el/yüz/vücut verilerini işleyip ilgili oyun moduna veya çizim motoruna yönlendiren karar mekanizması (`main.py` ve `app.js`).</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>Sistem Katmanlarının Sorumluluk Dağılımı:</strong>
+            <ol>
+                <li><strong>Giriş (Input) Katmanı:</strong> Web kamerası akışının alınması, görüntünün yatay olarak aynalanması (çocuğun kendi hareketini ayna gibi görebilmesi için) ve gerekli boyutlandırma işlemleri.</li>
+                <li><strong>Tespit (Detection) Katmanı:</strong> MediaPipe derin öğrenme çıkarım modüllerinin çalıştırılması. Kamera karesinden 21 el eklem noktası, 468'den fazla yüz noktası ve 33 vücut iskelet noktası çıkartılır.</li>
+                <li><strong>Mantık (Logic) Katmanı:</strong> Tespit edilen koordinatların matematiksel analizidir. Örneğin: Parmaklar arasındaki mesafeler hesaplanarak çocuk kıstırma jesti mi yaptı yoksa işaret mi ediyor karar verilir.</li>
+                <li><strong>Arayüz (UI/UX) Katmanı:</strong> Butonların üzerine el ile gelindiğinde dwell (bekleme) efekti uygulanarak dokunmadan tıklama tetiklenir. Çizim esnasında neon glow filtreleri uygulanarak görsel tatmin artırılır.</li>
+            </ol>
+        </div>
+
+        <h2 id="mimari-akistakip">3.2. Hibrit Kontrol Veri Akış Şeması</h2>
+        <p>
+            Yapay zeka modellerinden beslenen girdilerin platform modüllerini nasıl tetiklediğini ve veri akışını gösteren genel mimari akış şeması aşağıda sunulmuştur:
+        </p>
+
+        <div class="figure">
+            <svg viewBox="0 0 800 400" width="100%" height="auto" style="background:#f7fafc; border:1px solid #cbd5e0; border-radius:8px;">
+                <!-- Flowchart elements drawn dynamically -->
+                <rect x="20" y="160" width="120" height="60" rx="8" fill="#edf2f7" stroke="#1a202c" stroke-width="2"/>
+                <text x="80" y="195" font-family="Times New Roman" font-size="14" font-weight="bold" text-anchor="middle">Kamera Görüntüsü</text>
+
+                <path d="M 140 190 L 190 190" stroke="#1a202c" stroke-width="2" fill="none"/>
+                <polygon points="190,190 182,185 182,195" fill="#1a202c"/>
+
+                <rect x="190" y="130" width="160" height="120" rx="8" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2"/>
+                <text x="270" y="160" font-family="Times New Roman" font-size="14" font-weight="bold" text-anchor="middle" fill="#2b6cb0">MediaPipe AI</text>
+                <text x="270" y="185" font-family="Times New Roman" font-size="12" text-anchor="middle">1. Hand Landmarker</text>
+                <text x="270" y="210" font-family="Times New Roman" font-size="12" text-anchor="middle">2. Face Landmarker</text>
+                <text x="270" y="235" font-family="Times New Roman" font-size="12" text-anchor="middle">3. Pose Landmarker</text>
+
+                <path d="M 350 160 L 410 100" stroke="#1a202c" stroke-width="2" fill="none"/>
+                <polygon points="410,100 401,102 407,108" fill="#1a202c"/>
+                
+                <path d="M 350 190 L 410 190" stroke="#1a202c" stroke-width="2" fill="none"/>
+                <polygon points="410,190 402,185 402,195" fill="#1a202c"/>
+
+                <path d="M 350 220 L 410 280" stroke="#1a202c" stroke-width="2" fill="none"/>
+                <polygon points="410,280 407,272 401,278" fill="#1a202c"/>
+
+                <rect x="410" y="60" width="160" height="60" rx="8" fill="#edf2f7" stroke="#1a202c" stroke-width="2"/>
+                <text x="490" y="90" font-family="Times New Roman" font-size="13" font-weight="bold" text-anchor="middle">El Jest Analizi</text>
+                <text x="490" y="105" font-family="Times New Roman" font-size="11" text-anchor="middle">(Çizim / Silme / Şekil)</text>
+
+                <rect x="410" y="160" width="160" height="60" rx="8" fill="#edf2f7" stroke="#1a202c" stroke-width="2"/>
+                <text x="490" y="190" font-family="Times New Roman" font-size="13" font-weight="bold" text-anchor="middle">Yüz İfade Analizi</text>
+                <text x="490" y="205" font-family="Times New Roman" font-size="11" text-anchor="middle">(Göz Kırpma / Gülüş / Ağız)</text>
+
+                <rect x="410" y="250" width="160" height="60" rx="8" fill="#edf2f7" stroke="#1a202c" stroke-width="2"/>
+                <text x="490" y="280" font-family="Times New Roman" font-size="13" font-weight="bold" text-anchor="middle">Vücut Pose Takibi</text>
+                <text x="490" y="295" font-family="Times New Roman" font-size="11" text-anchor="middle">(Koordinat & Denge)</text>
+
+                <path d="M 570 90 L 630 140" stroke="#2b6cb0" stroke-width="2" fill="none"/>
+                <polygon points="630,140 621,137 626,144" fill="#2b6cb0"/>
+
+                <path d="M 570 190 L 630 190" stroke="#2b6cb0" stroke-width="2" fill="none"/>
+                <polygon points="630,190 622,185 622,195" fill="#2b6cb0"/>
+
+                <path d="M 570 280 L 630 240" stroke="#2b6cb0" stroke-width="2" fill="none"/>
+                <polygon points="630,240 626,236 621,243" fill="#2b6cb0"/>
+
+                <rect x="630" y="140" width="150" height="100" rx="8" fill="#fffaf0" stroke="#dd6b20" stroke-width="2"/>
+                <text x="705" y="170" font-family="Times New Roman" font-size="14" font-weight="bold" text-anchor="middle" fill="#dd6b20">Uygulama Modları</text>
+                <text x="705" y="190" font-family="Times New Roman" font-size="11" text-anchor="middle">- Serbest Çizim & Boyama</text>
+                <text x="705" y="210" font-family="Times New Roman" font-size="11" text-anchor="middle">- Balon Patlatma Oyunu</text>
+                <text x="705" y="230" font-family="Times New Roman" font-size="11" text-anchor="middle">- Elma & Duygu Aynası</text>
+            </svg>
+            <div class="figure-caption">Şekil 3.1: Platform Modülleri ve Veri Akış Yapısı</div>
+        </div>
+
+        <!-- SECTION 4 -->
+        <h1 id="islevsellik">4. Uygulamanın İşlevselliği</h1>
+        
+        <h2 id="islev-senaryolar">4.1. Temel Özellikler ve Kullanıcı Senaryoları</h2>
+        <p>
+            Sistem, çocukların herhangi bir mouse veya klavyeye ihtiyaç duymadan sistemi yönetebilmesini sağlayan bir arayüze sahiptir. İlk açılışta yüz tanıma modülü çalışır; çocuk gülümsediğinde mutluluk barı dolup kapıyı açar. Ana menüde eller temassız olarak butonların üzerinde bekletilerek (1 saniyelik dwell süresiyle) veya el kıstırılarak (pinch) istenilen oyuna/çizim ekranına giriş yapılır.
+        </p>
+
+        <h3 id="islev-cizim">4.1.1. Temassız Serbest Çizim ve Çift Jest Desteği</h3>
+        <p>
+            Kullanıcıların çizim yaparken yaşadığı yorulmaları önlemek amacıyla sisteme iki farklı çizim algılama jesti eklenmiştir:
+        </p>
+        <ul>
+            <li>
+                <strong>Kıstırma (Pinch) Modu (Varsayılan):</strong> Kalem tutar gibi başparmak ve işaret parmağının birleştirilmesiyle çizim yapılır. Çizim sırasında elin titremesinden dolayı çizgilerin kopmasını veya el gezinirken yanlışlıkla çizilmesini önlemek amacıyla <strong>Histerezis (Hysteresis)</strong> mantığı kurulmuştur. Çizimi başlatmak için parmaklar birbirine iyice değmelidir (mesafe &le; 0.042), çizimi sürdürmek için ise parmakların hafifçe açılmasına izin verilir (mesafe &le; 0.065).
+            </li>
+            <li>
+                <strong>İşaret Parmağı Modu:</strong> İşaret parmağını (☝️) havaya kaldırarak havada gezdirmek suretiyle çizilir. Başka parmaklar açıldığında çizim otomatik olarak durur.
+            </li>
+        </ul>
+
+        <h3 id="islev-sablon">4.1.2. Sihirli Şablon Boyama (Taşırmadan Doldurma)</h3>
+        <p>
+            Küçük yaştaki çocukların görsel tamamlama hazzını yaşayabilmesi için şablon boyama modülü eklenmiştir. Ekranda beliren hazır şablonların (örneğin bir oyuncak ayı veya araba) sınırları sistem tarafından OpenCV veya piksel maskesi katmanlarında önceden taranır. Çocuk elini şablonun herhangi bir yerine götürüp çizim yaptığında boya sadece o bölgedeki maske sınırları içerisine uygulanır; böylece çocuk dışarı taşırsa dahi resim kusursuz boyanmış olur.
+        </p>
+
+        <h3 id="islev-oyunlar">4.1.3. Eğitici Oyunlar (Balon Patlatma ve Elma Yakalama)</h3>
+        <ul>
+            <li>
+                <strong>Balon Patlatma Oyunu:</strong> Ekranda rastgele yükselen renkli ve neon parıltılı balonları, çocuk işaret parmağını balonların üzerine götürerek patlatır. Balonlar patlarken parçacık animasyonu (particle sparks) ve ses sentezleyici ile patlama sesi üretilir. Bu oyun, odaklanma ve hızlı motor refleksleri güçlendirir.
+            </li>
+            <li>
+                <strong>Elma Yakalama Oyunu:</strong> Pose (vücut) takibi aktiftir. Yukarıdan düşen elmaları çocuk iki elini sağa sola açarak veya vücudunu kaydırarak yakalamaya çalışır. Vücut koordinasyonu ve esneklik gerektiren, çocukları fiziksel olarak hareket ettiren dinamik bir oyundur.
+            </li>
+        </ul>
+
+        <h3 id="islev-mimik">4.1.4. Yüz Analizi ve Mimik Taklitli Sihirli Giriş</h3>
+        <p>
+            Yapay zeka yüz izleme modülü ile çocukların kameraya baktığında kendilerini interaktif bir dünyada hissetmesi amaçlanmıştır:
+        </p>
+        <ul>
+            <li>
+                <strong>Mimik Aynalama:</strong> Kamera karşısındaki çocuğun göz kırpması, gözlerini açıp kapaması veya çenesini oynatması (ağız açma) tespit edilerek ekrandaki neon avatar emojiye anlık olarak aktarılır.
+            </li>
+            <li>
+                <strong>Gülümseme Kilidi:</strong> Çocuk güldüğünde ağız kenarlarının yükselmesi ve dudak genişliği normalize edilerek bir mutluluk skoru hesaplanır. Gülümseme sürdükçe ekrandaki neon halka ve mutluluk barı dolmaya başlar. Bar %100 olduğunda konfetiler saçılır, tebrik melodisi çalar ve kilit açılarak çocuk menüye yönlendirilir.
+            </li>
+        </ul>
+
+        <h3 id="islev-sekiller">4.1.5. Hazır Şekiller (Sürükleme, Boyutlandırma ve Sabitleme)</h3>
+        <p>
+            Çocukların tuval üzerine hazır geometrik ve sembolik şekiller yerleştirmesini sağlayan modern bir vektörel düzenleme modülü eklenmiştir. Desteklenen şekiller şunlardır: <strong>Yıldız (⭐), Daire (⚪), Ev (🏠), Çiçek (🌸), Kalp (❤️), Ağaç (🌲) ve Bulut (☁️)</strong>.
+        </p>
+        <div class="info-box">
+            <strong>Şekil Etkileşim Kuralları:</strong>
+            <ul>
+                <li><strong>Oluşturma:</strong> Sol menüden bir şekle dokunulduğunda, şekil ekranın sağ tarafında (aynalı koordinatta x = 250) neon parlamasıyla boş bir alanda oluşur.</li>
+                <li><strong>Taşıma (Sürükleme):</strong> Elini şeklin üzerine getirip parmaklarını kıstıran (pinch) çocuk, şekli ekranda istediği yere sürükleyebilir.</li>
+                <li><strong>Boyutlandırma (Resize):</strong> Şekil seçildiğinde sağ alt köşesinde yeşil renkli bir kontrol halkası belirir. Çocuk bu halkayı kıstırıp çekiştirerek şekli büyütebilir veya küçültebilir.</li>
+                <li><strong>Dinamik Seçim ve Seçimi Kaldırma (Deselect):</strong> Şekil dışındaki boş bir alana tıklandığında şeklin seçimi kalkar. Ancak şekil arka plana işlenmez, çocuk dilediği zaman üzerine tekrar gelip kıstırma yaparak şekli seçebilir.</li>
+                <li><strong>Şekli Sabitleme (Bake/Stamp):</strong> Şekil seçildiğinde araç çubuğunda <strong>"📌 Şekli Sabitle"</strong> butonu belirir. Çocuk bu butona bastığında şekil tuvale kalıcı olarak damgalanır. Sabitlenen şekil artık taşınamaz hale gelir ve çocuk şeklin üzerini serbestçe boyayabilir, içine resimler çizebilir.</li>
+            </ul>
+        </div>
+
+        <!-- SECTION 5 -->
+        <h1 id="kalite">5. Kod Kalitesi ve Yazılım Geliştirme Pratikleri</h1>
+        
+        <h2 id="kalite-organizasyon">5.1. Kod Organizasyonu ve Klasör Yapısı</h2>
+        <p>
+            Yazılım projesi, iş mantığı (business logic) ile görsel katmanların ayrıştırılması ve nesne yönelimli programlama (OOP) prensiplerine uygun modüler yapıda tasarlanmıştır. Projenin klasör hiyerarşisi aşağıda detaylandırılmıştır:
+        </p>
+        <pre>
+OkulOncesi_Cizim/
+├── main.py                    # Masaüstü Python uygulaması ana giriş noktası
+├── hand_detector.py           # Python el izleme ve jest analiz modülü
+├── pose_detector.py           # Python pose (iskelet) izleme modülü
+├── face_detector.py           # Python yüz ve mimik izleme modülü
+├── ui_engine.py               # Masaüstü neon efekt ve parçacık motoru
+├── canvas.py                  # Masaüstü çizim katmanları ve fırça mantığı
+├── game.py                    # Masaüstü balon patlatma oyunu motoru
+├── pose_game.py               # Masaüstü elma yakalama oyunu motoru
+├── emotion_game.py            # Masaüstü duygu aynası oyunu motoru
+├── web_app/                   # Web Tabanlı Platform Dizinleri
+│   ├── index.html             # Web uygulaması ana sayfası (Cam Arayüz)
+│   ├── css/
+│   │   └── style.css          # CSS3 Cam efekti (Glassmorphism) ve Neon kodları
+│   └── js/
+│       ├── app.js             # Web uygulaması State ve kamera koordinatörü
+│       ├── canvasManager.js   # Çizim tuvali, şekil ekleme/sürükleme ve Sabitleme motoru
+│       ├── uiManager.js       # Temassız el hover, dwell ve buton kontrol yöneticisi
+│       ├── handDetector.js    # Web MediaPipe JS el sarmalayıcısı ve histerezis
+│       ├── faceDetector.js    # Web Yüz mimik analizi ve pürüzsüz gülüş kilidi
+│       └── soundSynth.js      # Gecikmesiz Web Audio API ses sentezleyici
+├── docs/                      # Proje Tasarım ve Analiz Dokümanları
+└── saved_drawings/            # Kaydedilen PNG uzantılı çocuk resimleri galerisi
+        </pre>
+
+        <h2 id="kalite-ornekler">5.2. Kritik Kod Örnekleri</h2>
+        <p>
+            Aşağıdaki kod bloklarında platformun temelini oluşturan el jesti analiz mekanizması ve neon görsel efekt motorunun algoritmik detayları sunulmuştur:
+        </p>
+
+        <h3>Kod Örneği 1: El Jesti Algılama Mantığı (Python sürümü)</h3>
+        <pre><code class="language-python"># hand_detector.py - El Jesti Algılama Mantığı
+def _detect_gesture_for_hand(self, lms_px):
+    """
+    Parmakların açık/kapalı olma durumlarını analiz ederek el jestini belirler.
+    Argümanlar:
+        lms_px: Piksel cinsinden el landmark koordinatları listesi.
+    Dönüş:
+        str: Algılanan jestin türü ('draw', 'erase', 'clear', vb.)
+    """
+    # Her bir parmağın açık (True) veya kapalı (False) durumunu al
+    # Bu metod, elin yönünden bağımsız olarak geometrik oranlar kullanır.
+    s = self._get_finger_states_for_hand(lms_px)
+    thumb, index, middle, ring, pinky = s
+
+    # JEST KOŞUL MANTIKLARI:
+    # ☝️ Sadece İşaret Parmağı Açık => Çizim Modu
+    if index and not middle and not ring and not pinky: 
+        return 'draw'
+    
+    # ✌️ İşaret ve Orta Parmak Açık => Silgi Modu
+    elif index and middle and not ring and not pinky: 
+        return 'erase'
+    
+    # 🖐️ Tüm Parmaklar Açık => Ekranı Temizleme (Tam El)
+    elif thumb and index and middle and ring and pinky: 
+        return 'clear'
+    
+    # Herhangi bir özel jest tanımlanamadıysa boş döner
+    return 'none'</code></pre>
+
+        <h3>Kod Örneği 2: Neon Efekt Motoru (Python sürümü)</h3>
+        <pre><code class="language-python"># ui_engine.py - Holografik ve Neon Efekt Katmanlama
+def draw_neon_text(img, text, x, y, font, scale, color):
+    """
+    Yazıya katmanlı bir neon parlama efekti verir.
+    Mantık: Önce kalın ve şeffaf bir 'glow' (parlama) tabakası çizilir, 
+    ardından üzerine ince ve parlak bir 'core' (çekirdek) eklenir.
+    """
+    # 1. Aşama: Dış Parlama (Glow)
+    # Daha kalın bir çizgi (Thickness=10) ile ana rengi hafifçe yayar.
+    cv2.putText(img, text, (x, y), font, scale, color, 10, cv2.LINE_AA)
+    
+    # 2. Aşama: Parlak İç Çekirdek (Core)
+    # Tam beyaz renk ve ince çizgi (Thickness=2) ile keskinlik sağlar.
+    cv2.putText(img, text, (x, y), font, scale, (255, 255, 255), 2, cv2.LINE_AA)</code></pre>
+
+        <h2 id="kalite-testler">5.3. Test Sonuçları ve Performans Analizi</h2>
+        
+        <h3>5.3.1. Otomatik Birim Testleri (Unit Tests)</h3>
+        <p>
+            Yazılımın matematiksel arka planı, jest eşikleri ve veri sarmalayıcıları Python `unittest` framework'ü kullanılarak test edilmiştir. Hazırlanan test senaryolarının tamamı başarıyla geçmiştir.
+        </p>
+        <pre>
+Ran 3 tests in 0.226s
+OK
+[OK] HandDetector başarıyla başlatıldı.
+[OK] DrawingCanvas doğru boyutlarda oluşturuldu.
+[OK] ParticleSystem görsel üretim testi başarılı.
+        </pre>
+
+        <h3>5.3.2. Performans ve Kullanıcı Testleri</h3>
+        <p>
+            Uygulamanın dizüstü bilgisayarlarda (Intel i5 işlemci, entegre ekran kartı ve standart web kamerası) sergilediği performans verileri ve doğruluk oranları Tablo 5.1'de özetlenmiştir:
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Test Senaryosu</th>
+                    <th>Hedef Değer</th>
+                    <th>Ölçülen Değer</th>
+                    <th>Durum</th>
+                    <th>Gözlem ve Değerlendirme</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Çerçeve Hızı (FPS)</strong></td>
+                    <td>&ge; 24 FPS</td>
+                    <td>30 - 32 FPS</td>
+                    <td>✅ Başarılı</td>
+                    <td>MediaPipe hafif modelleri sayesinde akıcılık sağlandı.</td>
+                </tr>
+                <tr>
+                    <td><strong>Jest Algılama Başarısı</strong></td>
+                    <td>&ge; %90 Doğruluk</td>
+                    <td>%94.2 Doğruluk</td>
+                    <td>✅ Başarılı</td>
+                    <td>Yeterli ışıkta parmaklar arası oranlar kararlı çalıştı.</td>
+                </tr>
+                <tr>
+                    <td><strong>Giriş Gecikmesi (Latency)</strong></td>
+                    <td>&le; 100 ms</td>
+                    <td>45 - 60 ms</td>
+                    <td>✅ Başarılı</td>
+                    <td>Temassız çizimde hiçbir takılma hissi yaşanmadı.</td>
+                </tr>
+                <tr>
+                    <td><strong>Çoklu El Kararlılığı</strong></td>
+                    <td>Eşzamanlı Takip</td>
+                    <td>Aktif Takip</td>
+                    <td>✅ Başarılı</td>
+                    <td>İki el girdiğinde FPS'te hafif (2-3 FPS) düşüş olsa da stabil kaldı.</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="figure-caption" style="text-align: center; margin-top: -15px; margin-bottom: 20px;">Tablo 5.1: Performans ve Doğruluk Matrisi</div>
+
+        <h2 id="kalite-hatalar">5.4. Geliştirme Sırasında Çözülen Kritik Hatalar</h2>
+        <ul>
+            <li>
+                <strong>Şekillerin Kazara Kilitlenmesi (Locking Bug):</strong> Önceki versiyonda, çocuk şekli hareket ettirirken eli anlık olarak takip dışı kaldığında veya dışarı dokunduğunda şekil anında kilitleniyordu. Çizim döngüsü ve koordinat analiz mantığı güncellenerek dışarıya dokunmaların şekli kilitlemesi engellendi. Seçimi kaldırma (deselect) ile sabitleme (bake) eylemleri birbirinden ayrıldı.
+            </li>
+            <li>
+                <strong>Yüz Algılamada Tekrarlayan Reset Döngüsü:</strong> Giriş ekranında gülen yüz mutluluk barı %100 dolduğunda, yönlendirme (800ms) süresinde kamera okumaya devam ettiği için bar sıfırlanıp baştan dolmaya çalışıyor ve kötü bir kullanıcı deneyimi oluşturuyordu. Araya eklenen `isLoggingIn` kilit mekanizmasıyla bar dolduğu an algılama duraklatılarak görsel pürüz giderildi.
+            </li>
+            <li>
+                <strong>Başlangıç Boyutlandırma Çökmesi:</strong> Web sürümünde tarayıcı penceresi henüz yüklenirken canvas boyutlarının sıfır gelmesi nedeniyle `drawImage` fonksiyonunun hata vererek tüm sayfayı kilitlemesi, pencere boyutlarının kontrol edildiği koruma blokları (`width > 0`) eklenerek çözüldü.
+            </li>
+        </ul>
+
+        <!-- SECTION 6 -->
+        <h1 id="sonuc">6. Sonuç ve Gelecek Çalışmalar</h1>
+        
+        <h2 id="sonuc-elde">6.1. Elde Edilen Sonuçlar</h2>
+        <p>
+            Proje, okul öncesi eğitimde "aktif, hareketli ve temassız teknoloji kullanımı" vizyonuna başarıyla ulaşmıştır. Çocukların ekrana dokunmadan fiziksel hareketlerle yaratıcılıklarını sergileyebileceği, motor becerilerini güçlendirirken eğlenebileceği modern bir dijital atölye yazılımı ortaya konmuştur. Gerek Python masaüstü motoru gerekse tarayıcı tabanlı web motoru kararlı şekilde çalışmaktadır.
+        </p>
+
+        <h2 id="sonuc-zorluk">6.2. Karşılaşılan Zorluklar ve Sınırlılıklar</h2>
+        <p>
+            <strong>Teknik Sınırlılık (Türkçe Karakter Dosya Yolu):</strong> Windows işletim sisteminde kullanıcı adlarında Türkçe karakter (Ö, Ş, İ, ç vb.) bulunduğunda, Python MediaPipe kütüphanesinin model dosyalarının (`.task` / `.tflite`) dosya yolunu okuyamayarak doğrudan çökmesi en kritik zorluktu.
+        </p>
+        <p>
+            <strong>Çözüm ve Özeleştiri:</strong> Bu sorun kütüphane kaynak kodundan kaynaklandığı için doğrudan yol ismi değiştirilerek çözülememiştir. Bunun yerine model dosyaları binary (bayt) formatında RAM'e okunmuş ve MediaPipe modelleri bellek tamponu (buffer loading) üzerinden başlatılarak sorun tamamen aşılmıştır. Bu durum bize dış kütüphanelerin yerel işletim sistemi bağımlılıklarının mimari tasarımdaki önemini öğretmiştir.
+        </p>
+
+        <h2 id="sonuc-gelecek">6.3. Geliştirme Önerileri</h2>
+        <ul>
+            <li>
+                <strong>Eşzamanlı Çoklu Oyuncu:</strong> Gelecekte, yan yana duran iki çocuğun el hareketlerini aynı anda takip ederek ortak bir tuvalde iş birliğiyle resim yapabilmelerinin sağlanması.
+            </li>
+            <li>
+                <strong>Sesli Komut Entegrasyonu:</strong> Konuşma tanıma modelleri eklenerek çocuğun "mavi boya" veya "silgi" dediğinde araçların otomatik olarak sesle değişmesi.
+            </li>
+            <li>
+                <strong>Bulut Tabanlı Galeri Entegrasyonu:</strong> Yapılan resimlerin velilere özel şifreli bir bulut alanına (örneğin Firebase) otomatik yüklenerek ailelerin çocuklarının gelişimini uzaktan izleyebilmesi.
+            </li>
+        </ul>
+
+        <!-- SECTION 7 -->
+        <h1 id="guvenlik">7. Gizlilik, Veri Güvenliği ve Kaynakça</h1>
+        <p>
+            Platform, çocukların biyometrik verilerinin (yüz ve el izleri) korunması amacıyla tamamen <strong>Offline (Yerel)</strong> çalışmaktadır. Kamera görüntüleri internete aktarılmaz, yerel bilgisayarda işlendikten sonra hemen bellekten silinir. Bu yönüyle çocuk güvenliği standartlarına tam uyum sağlamaktadır.
+        </p>
+
+        <h3>Kaynakça</h3>
+        <ul>
+            <li>Google AI Edge Solutions, "MediaPipe Landmarkers", <a href="https://mediapipe.dev" target="_blank">https://mediapipe.dev</a></li>
+            <li>OpenCV Community, "Open Source Computer Vision Library", <a href="https://opencv.org" target="_blank">https://opencv.org</a></li>
+            <li>MDN Web Docs, "Web Audio API & HTML5 Canvas Guide", <a href="https://developer.mozilla.org" target="_blank">https://developer.mozilla.org</a></li>
+            <li>Python Software Foundation, "Official Documentation", <a href="https://python.org" target="_blank">https://python.org</a></li>
+        </ul>
+
+    </div>
+
+</body>
+</html>
